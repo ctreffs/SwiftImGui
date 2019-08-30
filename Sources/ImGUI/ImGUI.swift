@@ -16,11 +16,11 @@ public enum ImGui {
         let ctx = igCreateContext(nil)
         let io = igGetIO()
 
-        var out_pixels: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>! = UnsafeMutablePointer.allocate(capacity: 0)
+        let out_pixels: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>! = UnsafeMutablePointer.allocate(capacity: 0)
         var out_width: Int32 = 0
         var out_height: Int32 = 0
 
-        var atlas = ImFontAtlas_ImFontAtlas()
+        let atlas = ImFontAtlas_ImFontAtlas()
         ImFontAtlas_GetTexDataAsRGBA32(atlas!,
                                        out_pixels,
                                        &out_width,

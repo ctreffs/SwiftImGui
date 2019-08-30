@@ -1,5 +1,5 @@
-#ifndef CIMGUI_HEADER_SHIMS
-#define CIMGUI_HEADER_SHIMS
+#ifndef CIMGUI_UMBRELLA_HEADER
+#define CIMGUI_UMBRELLA_HEADER
 
 #define CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 #define CIMGUI_NO_EXPORT
@@ -7,4 +7,4 @@
 
 #include "../cimgui/cimgui.h"
 
-#endif //CIMGUI_HEADER_SHIMS
+#endif // CIMGUI_UMBRELLA_HEADER

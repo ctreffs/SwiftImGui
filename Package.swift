@@ -25,7 +25,7 @@ let package = Package(
         .target(name: "CImGUI",
                 exclude: ["cimgui/"],
                 cSettings: [
-                    .unsafeFlags(["-I", "Sources/CImGUI/include"]),
+                    .unsafeFlags(["-I", "Sources/CImGUI/include"])
             ],
                 linkerSettings: [
                     .unsafeFlags(["-L", "Sources/CImGUI/lib"]),

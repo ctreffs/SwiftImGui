@@ -3,11 +3,11 @@ import ImGUI
 
 final class ImGUITests: XCTestCase {
     func testVersion() {
-        XCTAssertFalse(ImGui.version().isEmpty)
+        XCTAssertFalse(ImGui.GetVersion().isEmpty)
     }
 
     func testCreateContext() {
-        XCTAssertNotNil(ImGui.createContext())
+        XCTAssertNotNil(ImGui.CreateContext())
     }
 
     func testShowDemoWindow() {

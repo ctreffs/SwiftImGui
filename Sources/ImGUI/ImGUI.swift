@@ -1,14 +1,14 @@
 import CImGUI
 
-@_exported import struct CImGUI.ImVec2
-
 public enum ImGui {
-    public static func version() -> String {
+    public typealias ImGuiContext = OpaquePointer
+
+    public static func GetVersion() -> String {
         return String(cString: igGetVersion()!)
     }
-    public static func createContext() {
-        let ctx = igCreateContext(nil)
-        precondition(ctx != nil)
+
+    public static func GetIO() -> ImGuiIO {
+        return igGetIO().pointee
     }
 
     public static func showDemoWindow() {
@@ -47,11 +47,40 @@ public enum ImGui {
 
         igDestroyContext(ctx!)
     }
+
+    @discardableResult
+    public static func DebugCheckVersionAndDataLayout() -> Bool {
+        return igDebugCheckVersionAndDataLayout(igGetVersion(),
+                                                MemoryLayout<ImGuiIO>.size,
+                                                MemoryLayout<ImGuiStyle>.size,
+                                                MemoryLayout<ImVec2>.size,
+                                                MemoryLayout<ImVec4>.size,
+                                                MemoryLayout<ImDrawVert>.size,
+                                                MemoryLayout<ImDrawIdx>.size)
+    }
+
+    @discardableResult
+    public static func CreateContext(_ sharedFontAtlas: UnsafeMutablePointer<ImFontAtlas>! = nil) -> ImGuiContext {
+        return igCreateContext(sharedFontAtlas)
+    }
+
+    public static func StyleColorsDark(_ dst: UnsafeMutablePointer<ImGuiStyle>! = nil) {
+        igStyleColorsDark(dst)
+    }
+
 }
 
-extension ImVec2: Equatable {
-    public static func == (lhs: ImVec2, rhs: ImVec2) -> Bool {
-        return lhs.x == rhs.x &&
-            lhs.y == rhs.y
+extension ImFontAtlas {
+    public mutating func GetTexDataAsRGBA32(
+        _ out_pixels: inout UnsafeMutablePointer<UInt8>?,
+        _ out_width: inout Int32,
+        _ out_height: inout Int32,
+        _ out_bytes_per_pixel: inout Int32) {
+        ImFontAtlas_GetTexDataAsRGBA32(&self,
+                                       &out_pixels,
+                                       &out_width,
+                                       &out_height,
+                                       &out_bytes_per_pixel)
     }
+
 }

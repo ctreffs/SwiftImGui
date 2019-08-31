@@ -5,7 +5,8 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
-// MARK: - helper
+import Foundation
+
 extension String {
     public func cStrPtr(using encoding: String.Encoding = .utf8) -> UnsafePointer<CChar>! {
         guard let cString: [CChar] = self.cString(using: encoding) else {

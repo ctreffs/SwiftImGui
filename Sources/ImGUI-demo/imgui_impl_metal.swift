@@ -7,6 +7,7 @@
 
 import ImGUI
 import CImGUI
+import Foundation
 import AppKit
 import Metal
 import MetalKit
@@ -18,11 +19,13 @@ var g_sharedMetalContext: MetalContext = MetalContext()
 @discardableResult
 func ImGui_ImplMetal_Init(_ device: MTLDevice) -> Bool {
 
-    var io = ImGui.GetIO()
+    var io: ImGuiIO = ImGui.GetIO()
     io.BackendRendererName = "imgui_impl_metal".cStrPtr()
 
     // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
     io.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasVtxOffset.rawValue)
+
+    ImGui.SetIO(to: &io)
 
     ImGui_ImplMetal_CreateDeviceObjects(device)
     return true
@@ -62,22 +65,25 @@ func ImGui_ImplMetal_CreateDeviceObjects(_ device: MTLDevice) -> Bool {
 func ImGui_ImplMetal_CreateFontsTexture(_ device: MTLDevice) -> Bool {
     g_sharedMetalContext.makeFontTexture(with: device)
 
-    let io: ImGuiIO = ImGui.GetIO()
+    var io: ImGuiIO = ImGui.GetIO()
 
     let texId: ImTextureID = withUnsafePointer(to: &g_sharedMetalContext.fontTexture!) { ptr in
         return UnsafeMutableRawPointer(mutating: ptr)
     }
 
     io.Fonts.pointee.TexID = texId // ImTextureID == void*
+    ImGui.SetIO(to: &io)
 
     return g_sharedMetalContext.fontTexture != nil
 }
 
 @available(OSX 10.11, *)
 func ImGui_ImplMetal_DestroyFontsTexture() {
-    let io = ImGui.GetIO()
+    var io: ImGuiIO = ImGui.GetIO()
     g_sharedMetalContext.fontTexture = nil
     io.Fonts.pointee.TexID = nil
+
+    ImGui.SetIO(to: &io)
 }
 
 @available(OSX 10.11, *)
@@ -121,8 +127,8 @@ struct FramebufferDescriptor {
     init(_ renderPassDescriptor: MTLRenderPassDescriptor) {
         sampleCount = renderPassDescriptor.colorAttachments[0].texture!.sampleCount
         colorPixelFormat = renderPassDescriptor.colorAttachments[0].texture!.pixelFormat
-        depthPixelFormat = renderPassDescriptor.depthAttachment.texture!.pixelFormat
-        stencilPixelFormat = renderPassDescriptor.stencilAttachment.texture!.pixelFormat
+        depthPixelFormat = renderPassDescriptor.depthAttachment.texture?.pixelFormat ?? .invalid
+        stencilPixelFormat = renderPassDescriptor.stencilAttachment.texture?.pixelFormat ?? .invalid
     }
 }
 @available(OSX 10.11, *)
@@ -178,7 +184,7 @@ class MetalContext {
     /// to render users own textures.
     /// You can make that change in your implementation.
     func makeFontTexture(with device: MTLDevice) {
-        let io = ImGui.GetIO()
+        var io: ImGuiIO = ImGui.GetIO()
 
         var pixels: UnsafeMutablePointer<UInt8>?
         var width: Int32 = 0
@@ -186,6 +192,7 @@ class MetalContext {
         var bytesPerPixel: Int32 = 0
         io.Fonts.pointee.GetTexDataAsRGBA32(&pixels, &width, &height, &bytesPerPixel)
 
+        ImGui.SetIO(to: &io)
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
                                                                          width: Int(width),
                                                                          height: Int(height),
@@ -294,15 +301,13 @@ class MetalContext {
         let N: Float = Float(viewport.znear)
         let F: Float = Float(viewport.zfar)
 
-        var ortho_projection: [[Float]] = [
-            [2.0/(R-L), 0.0, 0.0, 0.0],
-            [0.0, 2.0/(T-B), 0.0, 0.0],
-            [0.0, 0.0, 1/(F-N), 0.0],
-            [(R+L)/(L-R), (T+B)/(B-T), N/(F-N), 1.0]
-        ]
+        var ortho_projection = simd_float4x4([2.0/(R-L), 0.0, 0.0, 0.0],
+        [0.0, 2.0/(T-B), 0.0, 0.0],
+        [0.0, 0.0, 1/(F-N), 0.0],
+        [(R+L)/(L-R), (T+B)/(B-T), N/(F-N), 1.0])
 
         commandEncoder.setVertexBytes(UnsafeRawPointer(&ortho_projection),
-                                      length: MemoryLayout.size(ofValue: ortho_projection),
+                                      length: MemoryLayout<simd_float4x4>.size,
                                       index: 1)
 
         commandEncoder.setRenderPipelineState(renderPipelineState)
@@ -355,8 +360,13 @@ class MetalContext {
         for n in 0..<Int(drawData.CmdListsCount) {
             var cmd_list: ImDrawList = drawData.CmdLists[n]!.pointee
 
-            memcpy(vertexBuffer.buffer.contents() + vertexBufferOffset, cmd_list.VtxBuffer.Data, Int(cmd_list.VtxBuffer.Size) * MemoryLayout<ImDrawVert>.size)
-            memcpy(indexBuffer.buffer.contents() + indexBufferOffset, cmd_list.IdxBuffer.Data, Int(cmd_list.IdxBuffer.Size) * MemoryLayout<ImDrawIdx>.size)
+            memcpy(vertexBuffer.buffer.contents().advanced(by: vertexBufferOffset),
+                   cmd_list.VtxBuffer.Data,
+                   Int(cmd_list.VtxBuffer.Size) * MemoryLayout<ImDrawVert>.size)
+
+            memcpy(indexBuffer.buffer.contents().advanced(by: indexBufferOffset),
+                   cmd_list.IdxBuffer.Data,
+                   Int(cmd_list.IdxBuffer.Size) * MemoryLayout<ImDrawIdx>.size)
 
             for cmd_i in 0..<Int(cmd_list.CmdBuffer.Size) {
                 var pcmd: ImDrawCmd = cmd_list.CmdBuffer.Data[cmd_i]
@@ -391,17 +401,22 @@ class MetalContext {
 
                         // Bind texture, Draw
                         if let textureId = pcmd.TextureId {
-                            commandEncoder.setFragmentTexture(unsafeBitCast(textureId, to: MTLTexture.self), index: 0)
+                            let texture = textureId.load(as: MTLTexture.self)
+                            commandEncoder.setFragmentTexture(texture, index: 0)
                         }
 
-                        commandEncoder.setVertexBufferOffset(vertexBufferOffset + Int(pcmd.VtxOffset) * MemoryLayout<ImDrawVert>.size,
+                        let vbOffset = vertexBufferOffset + Int(pcmd.VtxOffset) * MemoryLayout<ImDrawVert>.size
+                        commandEncoder.setVertexBufferOffset(vbOffset,
                                                              index: 0)
 
+                        let indexCount = Int(pcmd.ElemCount)
+                        let indexType: MTLIndexType = MemoryLayout<ImDrawIdx>.size == 2 ? .uint16 : .uint32
+                        let ibOffset = indexBufferOffset + Int(pcmd.IdxOffset) * MemoryLayout<ImDrawIdx>.size
                         commandEncoder.drawIndexedPrimitives(type: .triangle,
-                                                             indexCount: Int(pcmd.ElemCount),
-                                                             indexType: MemoryLayout<ImDrawIdx>.size == 2 ? .uint16 : .uint32,
+                                                             indexCount: indexCount,
+                                                             indexType: indexType,
                                                              indexBuffer: indexBuffer.buffer,
-                                                             indexBufferOffset: indexBufferOffset + Int(pcmd.IdxOffset) * MemoryLayout<ImDrawIdx>.size)
+                                                             indexBufferOffset: ibOffset)
 
                     }
                 }
@@ -443,9 +458,9 @@ class MetalContext {
         vertexDescriptor.attributes[1].bufferIndex = 0
 
         // color
-        vertexDescriptor.attributes[1].offset = IM_OFFSETOF(\ImDrawVert.col)
-        vertexDescriptor.attributes[1].format = .uchar4
-        vertexDescriptor.attributes[1].bufferIndex = 0
+        vertexDescriptor.attributes[2].offset = IM_OFFSETOF(\ImDrawVert.col)
+        vertexDescriptor.attributes[2].format = .uchar4
+        vertexDescriptor.attributes[2].bufferIndex = 0
 
         vertexDescriptor.layouts[0].stepRate = 1
         vertexDescriptor.layouts[0].stepFunction = .perVertex

@@ -34,7 +34,7 @@ let quitMenuItem = NSMenuItem(title: quitTitle,
 appMenu.addItem(quitMenuItem)
 appMenuItem.submenu = appMenu
 
-let window: NSWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
+let window: NSWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 1280, height: 720),
                                 styleMask: [.titled, .closable, .miniaturizable, .resizable],
                                 backing: .buffered,
                                 defer: false)

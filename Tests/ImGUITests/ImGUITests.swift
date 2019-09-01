@@ -11,6 +11,7 @@ final class ImGUITests: XCTestCase {
     }
 
     func testShowDemoWindow() {
-        ImGui.showDemoWindow()
+        var show = true
+        ImGui.ShowDemoWindow(&show)
     }
 }

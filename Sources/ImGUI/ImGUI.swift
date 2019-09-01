@@ -51,6 +51,56 @@ public enum ImGui {
         return igGetDrawData().pointee
     }
 
+    /// Windows
+    /// - Begin() = push window to the stack and start appending to it. End() = pop window from the stack.
+    /// - You may append multiple times to the same window during the same frame.
+    /// - Passing 'bool* p_open != NULL' shows a window-closing widget in the upper-right corner of the window,
+    ///   which clicking will set the boolean to false when clicked.
+    /// - Begin() return false to indicate the window is collapsed or fully clipped, so you may early out and omit submitting
+    ///   anything to the window. Always call a matching End() for each Begin() call, regardless of its return value!
+    ///   [this is due to legacy reason and is inconsistent with most other functions such as BeginMenu/EndMenu, BeginPopup/EndPopup, etc.
+    ///    where the EndXXX call should only be called if the corresponding BeginXXX function returned true.]
+    /// - Note that the bottom of window stack always contains a window called "Debug".
+    @discardableResult
+    public static func Begin(_ name: String, _ open: inout Bool, _ flags: ImGuiWindowFlags = 0) -> Bool {
+        igBegin(name.cStrPtr(), &open, flags)
+    }
+
+    @discardableResult
+    public static func Begin(_ name: String, _ flags: ImGuiWindowFlags = 0) -> Bool {
+        igBegin(name.cStrPtr(), nil, flags)
+    }
+
+    public static func End() {
+        igEnd()
+    }
+
+    public static func Text(_ text: String) {
+        /*withVaList(arguments) {
+            igTextV(format.cStrPtr(), $0)
+        }*/
+        igTextUnformatted(text.cStrPtr(), nil)
+    }
+
+    @discardableResult
+    public static func Checkbox(_ label: String, _ v: inout Bool) -> Bool {
+        return igCheckbox(label.cStrPtr(), &v)
+    }
+
+    @discardableResult
+    public static func SliderFloat(_ label: String, _ v:  inout Float, _ v_min: Float, _ v_max: Float, _ format: String = "%.3f", _ power: Float = 1.0) -> Bool {
+        return igSliderFloat(label.cStrPtr(), &v, v_min, v_max, format.cStrPtr(), power)
+    }
+
+    public static func Button(_ label: String, _ size: ImVec2 = ImVec2(x: 0, y: 0)) -> Bool {
+        return igButton(label.cStrPtr(), size)
+    }
+
+    /// call between widgets or groups to layout them horizontally. X position given in window coordinates.
+    public static func SameLine(_ offsetFromStart: Float = 0, _ spacing: Float = -1) {
+        // SameLine(float offset_from_start_x=0.0f, float spacing=-1.0f);
+        igSameLine(offsetFromStart, spacing)
+    }
 }
 
 extension ImFontAtlas {
@@ -71,6 +121,14 @@ extension ImFontAtlas {
 /// Offset of _MEMBER within _TYPE. Standardized as offsetof() in modern C++.
 public func IM_OFFSETOF<T>(_ member: PartialKeyPath<T>) -> Int {
     return MemoryLayout<T>.offset(of: member)!
+}
+
+/// Size of a static C-style array. Don't use on pointers!
+public func IM_ARRAYSIZE<T>(_ cTupleArray: T) -> Int {
+    //#define IM_ARRAYSIZE(_ARR)          ((int)(sizeof(_ARR)/sizeof(*_ARR)))
+    let m = Mirror(reflecting: cTupleArray)
+    precondition(m.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
+    return m.children.count
 }
 
 // Special Draw callback value to request renderer back-end to reset the graphics/render state.

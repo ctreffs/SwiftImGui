@@ -319,6 +319,54 @@ class MetalContext {
 
     func renderPipelineStateForFramebufferDescriptor(_ descriptor: FramebufferDescriptor, _ device: MTLDevice) -> MTLRenderPipelineState {
 
-        fatalError("implementation missing")
+        let shaderSource: String = Shaders.default
+
+        let library: MTLLibrary = try! device.makeLibrary(source: shaderSource, options: nil)
+
+        let vertexFunction: MTLFunction = library.makeFunction(name: "vertex_main")!
+        let fragmentFunction: MTLFunction = library.makeFunction(name: "fragment_main")!
+
+        let vertexDescriptor: MTLVertexDescriptor = MTLVertexDescriptor()
+
+        // position
+        vertexDescriptor.attributes[0].offset = IM_OFFSETOF(\ImDrawVert.pos)
+        vertexDescriptor.attributes[0].format = .float2
+        vertexDescriptor.attributes[0].bufferIndex = 0
+
+        // texCoords
+        vertexDescriptor.attributes[1].offset = IM_OFFSETOF(\ImDrawVert.uv)
+        vertexDescriptor.attributes[1].format = .float2
+        vertexDescriptor.attributes[1].bufferIndex = 0
+
+        // color
+        vertexDescriptor.attributes[1].offset = IM_OFFSETOF(\ImDrawVert.col)
+        vertexDescriptor.attributes[1].format = .uchar4
+        vertexDescriptor.attributes[1].bufferIndex = 0
+
+        vertexDescriptor.layouts[0].stepRate = 1
+        vertexDescriptor.layouts[0].stepFunction = .perVertex
+        vertexDescriptor.layouts[0].stride = MemoryLayout<ImDrawVert>.size
+
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+
+        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.vertexDescriptor = vertexDescriptor
+        pipelineDescriptor.sampleCount = framebufferDescriptor.sampleCount
+        pipelineDescriptor.colorAttachments[0].pixelFormat = framebufferDescriptor.colorPixelFormat
+        pipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
+        pipelineDescriptor.colorAttachments[0].rgbBlendOperation = .add
+        pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .add
+        pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
+        pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
+        pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
+        pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+
+        pipelineDescriptor.depthAttachmentPixelFormat = framebufferDescriptor.depthPixelFormat
+        pipelineDescriptor.stencilAttachmentPixelFormat = framebufferDescriptor.stencilPixelFormat
+
+        let renderPipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+
+        return renderPipelineState
     }
 }

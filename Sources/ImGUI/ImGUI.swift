@@ -84,3 +84,8 @@ extension ImFontAtlas {
     }
 
 }
+
+/// Offset of _MEMBER within _TYPE. Standardized as offsetof() in modern C++.
+public func IM_OFFSETOF<T>(_ member: PartialKeyPath<T>) -> Int {
+    return MemoryLayout<T>.offset(of: member)!
+}

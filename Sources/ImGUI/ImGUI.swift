@@ -89,3 +89,9 @@ extension ImFontAtlas {
 public func IM_OFFSETOF<T>(_ member: PartialKeyPath<T>) -> Int {
     return MemoryLayout<T>.offset(of: member)!
 }
+
+// Special Draw callback value to request renderer back-end to reset the graphics/render state.
+// The renderer back-end needs to handle this special value, otherwise it will crash trying to call a function at this address.
+// This is useful for example if you submitted callbacks which you know have altered the render state and you want it to be restored.
+// It is not done by default because they are many perfectly useful way of altering render state for imgui contents (e.g. changing shader/blending settings before an Image call).
+// let ImDrawCallback_ResetRenderState = ImDrawCallback()(-1)

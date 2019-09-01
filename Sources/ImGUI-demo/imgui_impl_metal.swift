@@ -314,7 +314,111 @@ class MetalContext {
     func renderDrawData(drawData: ImDrawData,
                         commandBuffer: MTLCommandBuffer,
                         commandEncoder: MTLRenderCommandEncoder) {
-        fatalError("implementation missing")
+
+        // Avoid rendering when minimized,
+        // scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
+
+        let fb_width: Int = Int(drawData.DisplaySize.x * drawData.FramebufferScale.x)
+        let fb_height: Int = Int(drawData.DisplaySize.y * drawData.FramebufferScale.y)
+
+        if fb_width <= 0 || fb_height <= 0 || drawData.CmdListsCount == 0 {
+            return
+        }
+
+        let renderPipelineState: MTLRenderPipelineState = renderPipelineStateForFrameAndDevice(commandBuffer.device)
+
+        let vertexBufferLength: Int = Int(drawData.TotalVtxCount) * MemoryLayout<ImDrawVert>.size
+        let indexBufferLength: Int = Int(drawData.TotalIdxCount) * MemoryLayout<ImDrawIdx>.size
+
+        let vertexBuffer: MetalBuffer = dequeueReusableBuffer(ofLength: vertexBufferLength,
+                                                              device: commandBuffer.device)
+
+        let indexBuffer: MetalBuffer = dequeueReusableBuffer(ofLength: indexBufferLength,
+                                                             device: commandBuffer.device)
+
+        setupRenderState(drawData: drawData,
+                         commandBuffer: commandBuffer,
+                         commandEncoder: commandEncoder,
+                         renderPipelineState: renderPipelineState,
+                         vertexBuffer: vertexBuffer,
+                         vertexBufferOffset: 0)
+
+        // Will project scissor/clipping rectangles into framebuffer space
+        let clipOff: ImVec2 = drawData.DisplayPos // (0,0) unless using multi-viewports
+        let clipScale: ImVec2 = drawData.FramebufferScale  // (1,1) unless using retina display which are often (2,2)
+
+        // // Render command lists
+
+        var vertexBufferOffset: Int = 0
+        var indexBufferOffset: Int = 0
+
+        for n in 0..<Int(drawData.CmdListsCount) {
+            var cmd_list: ImDrawList = drawData.CmdLists[n]!.pointee
+
+            memcpy(vertexBuffer.buffer.contents() + vertexBufferOffset, cmd_list.VtxBuffer.Data, Int(cmd_list.VtxBuffer.Size) * MemoryLayout<ImDrawVert>.size)
+            memcpy(indexBuffer.buffer.contents() + indexBufferOffset, cmd_list.IdxBuffer.Data, Int(cmd_list.IdxBuffer.Size) * MemoryLayout<ImDrawIdx>.size)
+
+            for cmd_i in 0..<Int(cmd_list.CmdBuffer.Size) {
+                var pcmd: ImDrawCmd = cmd_list.CmdBuffer.Data[cmd_i]
+
+                if let userCallback = pcmd.UserCallback {
+                    // User callback, registered via ImDrawList::AddCallback()
+                    // (ImDrawCallback_ResetRenderState is a special callback value used by the user to request the renderer to reset render state.)
+                    if pcmd.UserCallbackData == nil { // (pcmd->UserCallback == ImDrawCallback_ResetRenderState)
+                        setupRenderState(drawData: drawData,
+                                         commandBuffer: commandBuffer,
+                                         commandEncoder: commandEncoder,
+                                         renderPipelineState: renderPipelineState,
+                                         vertexBuffer: vertexBuffer,
+                                         vertexBufferOffset: vertexBufferOffset)
+                    } else {
+                        userCallback(&cmd_list, &pcmd)
+                    }
+                } else {
+                    // Project scissor/clipping rectangles into framebuffer space
+                    let clipRect: ImVec4 = ImVec4(x: (pcmd.ClipRect.x - clipOff.x) * clipScale.x,
+                                                  y: (pcmd.ClipRect.y - clipOff.y) * clipScale.y,
+                                                  z: (pcmd.ClipRect.z - clipOff.x) * clipScale.x,
+                                                  w: (pcmd.ClipRect.w - clipOff.y) * clipScale.y)
+
+                    if clipRect.x < Float(fb_width) && clipRect.y < Float(fb_height) && clipRect.z >= 0.0 && clipRect.w >= 0.0 {
+                        // Apply scissor/clipping rectangle
+                        let scissorsRect = MTLScissorRect(x: Int(clipRect.x),
+                                                          y: Int(clipRect.y),
+                                                          width: Int(clipRect.z - clipRect.x),
+                                                          height: Int(clipRect.w - clipRect.y))
+                        commandEncoder.setScissorRect(scissorsRect)
+
+                        // Bind texture, Draw
+                        if let textureId = pcmd.TextureId {
+                            commandEncoder.setFragmentTexture(unsafeBitCast(textureId, to: MTLTexture.self), index: 0)
+                        }
+
+                        commandEncoder.setVertexBufferOffset(vertexBufferOffset + Int(pcmd.VtxOffset) * MemoryLayout<ImDrawVert>.size,
+                                                             index: 0)
+
+                        commandEncoder.drawIndexedPrimitives(type: .triangle,
+                                                             indexCount: Int(pcmd.ElemCount),
+                                                             indexType: MemoryLayout<ImDrawIdx>.size == 2 ? .uint16 : .uint32,
+                                                             indexBuffer: indexBuffer.buffer,
+                                                             indexBufferOffset: indexBufferOffset + Int(pcmd.IdxOffset) * MemoryLayout<ImDrawIdx>.size)
+
+                    }
+                }
+            }
+
+            vertexBufferOffset += Int(cmd_list.VtxBuffer.Size) * MemoryLayout<ImDrawVert>.size
+            indexBufferOffset += Int(cmd_list.IdxBuffer.Size) * MemoryLayout<ImDrawIdx>.size
+        }
+
+        commandBuffer.addCompletedHandler { [weak self]_ in
+
+            DispatchQueue.main.async { [weak self] in
+                self?.enqueueReusableBuffer(vertexBuffer)
+                self?.enqueueReusableBuffer(indexBuffer)
+            }
+        }
+
     }
 
     func renderPipelineStateForFramebufferDescriptor(_ descriptor: FramebufferDescriptor, _ device: MTLDevice) -> MTLRenderPipelineState {

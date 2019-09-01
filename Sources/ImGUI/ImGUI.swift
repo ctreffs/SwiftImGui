@@ -101,6 +101,10 @@ public enum ImGui {
         // SameLine(float offset_from_start_x=0.0f, float spacing=-1.0f);
         igSameLine(offsetFromStart, spacing)
     }
+
+    public static func ColorEdit3(_ label: String, _ col: UnsafeMutablePointer<Float>, _ flags: ImGuiColorEditFlags = 0) {
+        igColorEdit3(label.cStrPtr(), col, flags)
+    }
 }
 
 extension ImFontAtlas {

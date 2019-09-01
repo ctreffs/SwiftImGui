@@ -10,6 +10,12 @@ import CImGUI
 import Metal
 import MetalKit
 
+var show_demo_window: Bool = true
+var show_another_window: Bool = false
+var clear_color: [Float] = [0.28, 0.36, 0.5]
+var f: Float = 0.0
+var counter: Int = 0
+
 @available(OSX 10.11, *)
 final class Renderer: NSObject {
     let device: MTLDevice
@@ -27,12 +33,6 @@ final class Renderer: NSObject {
         ImGui_ImplMetal_Init(device)
     }
 }
-
-var show_demo_window: Bool = true
-var show_another_window: Bool = false
-var clear_color: [Float] = [0.28, 0.36, 0.5, 1.0]
-var f: Float = 0.0
-var counter: Int = 0
 
 @available(OSX 10.11, *)
 extension Renderer: MTKViewDelegate {
@@ -62,7 +62,7 @@ extension Renderer: MTKViewDelegate {
             renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: Double(clear_color[0]),
                                                                                 green: Double(clear_color[1]),
                                                                                 blue: Double(clear_color[2]),
-                                                                                alpha: Double(clear_color[3]))
+                                                                                alpha: 1.0)
 
             // Here, you could do additional rendering work, including other passes as necessary.
 
@@ -94,7 +94,7 @@ extension Renderer: MTKViewDelegate {
 
             ImGui.SliderFloat("float", &f, 0.0, 1.0) // Edit 1 float using a slider from 0.0f to 1.0f
 
-            //            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+            ImGui.ColorEdit3("clear color", &clear_color); // Edit 3 floats representing a color
 
             if ImGui.Button("Button") { // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter += 1

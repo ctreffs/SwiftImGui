@@ -19,12 +19,14 @@ var g_sharedMetalContext: MetalContext = MetalContext()
 func ImGui_ImplMetal_Init(_ device: MTLDevice) -> Bool {
 
     var io: ImGuiIO = ImGui.GetIO()
+    defer { ImGui.SetIO(to: &io) }
+    
     io.BackendRendererName = "imgui_impl_metal".cStrPtr()
 
     // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
     io.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasVtxOffset.rawValue)
 
-    ImGui.SetIO(to: &io)
+    
 
     ImGui_ImplMetal_CreateDeviceObjects(device)
     return true

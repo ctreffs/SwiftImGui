@@ -14,8 +14,14 @@ var g_MouseCursors: [NSCursor?] = [NSCursor?](repeating: nil,
 var g_MouseCursorHidden: Bool = false
 
 func ImGui_ImplOSX_Init() {
-    let ioRef = igGetIO()!
-    var io: ImGuiIO = ioRef.pointee
+    var io: ImGuiIO = ImGui.GetIO()
+    defer {
+        ImGui.SetIO(to: &io)
+    }
+    
+    io.ConfigFlags |= Int32(ImGuiConfigFlags_DockingEnable.rawValue)
+    io.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleViewports.rawValue)
+    io.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleFonts.rawValue)
 
     // Setup back-end capabilities flags
     io.BackendFlags |= Int32(ImGuiBackendFlags_HasMouseCursors.rawValue)         // We can honor GetMouseCursor() values (optional)

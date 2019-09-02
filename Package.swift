@@ -10,10 +10,7 @@ var package = Package(
         .library(
             name: "ImGUI",
             type: .static,
-            targets: ["ImGUI"]),
-        .library(name: "CImGUI",
-                 type: .static,
-                 targets: ["CImGUI"])
+            targets: ["ImGUI"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.

@@ -7,7 +7,7 @@ extension ImGUITests {
     // to regenerate.
     static let __allTests__ImGUITests = [
         ("testCreateContext", testCreateContext),
-        ("testShowDemoWindow", testShowDemoWindow),
+        ("testGetIO", testGetIO),
         ("testVersion", testVersion)
     ]
 }

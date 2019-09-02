@@ -10,8 +10,7 @@ final class ImGUITests: XCTestCase {
         XCTAssertNotNil(ImGui.CreateContext())
     }
 
-    func testShowDemoWindow() {
-        var show = true
-        ImGui.ShowDemoWindow(&show)
+    func testGetIO() {
+        XCTAssertNotNil(ImGui.GetIO())
     }
 }

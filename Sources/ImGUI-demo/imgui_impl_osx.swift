@@ -121,40 +121,6 @@ func ImGui_ImplOSX_UpdateMouseCursor() {
     }
 }
 
-struct TupleArray<T> {
-    var array: [T]
-
-    init(_ tuple: (T, T)) {
-        var tmp = tuple
-        array = [T](UnsafeBufferPointer(start: &tmp.0, count: MemoryLayout.size(ofValue: tmp)))
-    }
-
-    init(_ tuple: (T, T, T)) {
-        var tmp = tuple
-        array = [T](UnsafeBufferPointer(start: &tmp.0, count: MemoryLayout.size(ofValue: tmp)))
-    }
-
-    init(_ tuple: (T, T, T, T)) {
-        var tmp = tuple
-        array = [T](UnsafeBufferPointer(start: &tmp.0, count: MemoryLayout.size(ofValue: tmp)))
-    }
-
-    init(_ tuple: (T, T, T, T, T)) {
-        var tmp = tuple
-        array = [T](UnsafeBufferPointer(start: &tmp.0, count: MemoryLayout.size(ofValue: tmp)))
-    }
-
-    init(_ tuple: (T, T, T, T, T, T)) {
-        var tmp = tuple
-        array = [T](UnsafeBufferPointer(start: &tmp.0, count: MemoryLayout.size(ofValue: tmp)))
-    }
-
-}
-
-typealias MyTuple = (Bool, Bool, Bool, Bool, Bool)
-
-let keyPath = \MyTuple.0
-
 func set<T>(_ tuple: inout (T, T, T, T, T), value: T, at index: Int) {
     UnsafeMutableBufferPointer(start: &tuple.0, count: MemoryLayout.size(ofValue: tuple))[index] = value
 }

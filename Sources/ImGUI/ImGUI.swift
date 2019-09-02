@@ -63,12 +63,12 @@ public enum ImGui {
     /// - Note that the bottom of window stack always contains a window called "Debug".
     @discardableResult
     public static func Begin(_ name: String, _ open: inout Bool, _ flags: ImGuiWindowFlags = 0) -> Bool {
-        igBegin(name.cStrPtr(), &open, flags)
+        return igBegin(name.cStrPtr(), &open, flags)
     }
 
     @discardableResult
     public static func Begin(_ name: String, _ flags: ImGuiWindowFlags = 0) -> Bool {
-        igBegin(name.cStrPtr(), nil, flags)
+        return igBegin(name.cStrPtr(), nil, flags)
     }
 
     public static func End() {

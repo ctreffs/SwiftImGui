@@ -46,7 +46,7 @@ public struct CArray<T> {
 
     public subscript<I>(index: I) -> T where I: FixedWidthInteger {
         get {
-            ptr[Int(index)]
+            return ptr[Int(index)]
         }
         set {
             ptr[Int(index)] = newValue

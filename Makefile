@@ -16,3 +16,6 @@ buildCImGUIStaticLib:
 	$(MAKE) -C "Sources/CImGUI/cimgui/"
 	cd "Sources/CImGUI/cimgui/";  ar -cvq libcimgui.a cimgui.o ./imgui/imgui.o ./imgui/imgui_draw.o ./imgui/imgui_demo.o ./imgui/imgui_widgets.o; mv -f libcimgui.a ../lib/
 	$(MAKE) -C "Sources/CImGUI/cimgui/" clean
+
+genXcode:
+	swift package generate-xcodeproj --enable-code-coverage --skip-extra-files 

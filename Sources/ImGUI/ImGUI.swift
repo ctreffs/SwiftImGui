@@ -1,13 +1,4 @@
-import CImGUI
-
-@_exported import struct CImGUI.ImGuiIO
-@_exported import struct CImGUI.ImDrawData
-@_exported import struct CImGUI.ImTextureID
-@_exported import struct CImGUI.ImDrawVert
-@_exported import struct CImGUI.ImDrawIdx
-@_exported import struct CImGUI.ImDrawList
-@_exported import struct CImGUI.ImDrawCmd
-@_exported import var CImGUI.ImGuiBackendFlags_RendererHasVtxOffset
+@_exported import CImGUI
 
 public enum ImGui {
     public typealias ImGuiContext = OpaquePointer

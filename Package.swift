@@ -3,12 +3,10 @@
 
 import PackageDescription
 
-let package = Package(
+var package = Package(
     name: "ImGUI",
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
-        .executable(name: "ImGUI-demo",
-                    targets: ["ImGUI-demo"]),
         .library(
             name: "ImGUI",
             type: .static,
@@ -24,8 +22,6 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
-        .target(name: "ImGUI-demo",
-                dependencies: ["ImGUI"]),
         .target(
             name: "ImGUI",
             dependencies: ["CImGUI"]),
@@ -45,3 +41,11 @@ let package = Package(
         )
     ]
 )
+
+#if os(macOS)
+let macOSDemo: (Product, Target) =
+    (.executable(name: "ImGUI-demo", targets: ["ImGUI-demo"]),
+     .target(name: "ImGUI-demo", dependencies: ["ImGUI"]))
+package.products.append(macOSDemo.0)
+package.targets.append(macOSDemo.1)
+#endif

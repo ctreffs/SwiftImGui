@@ -6,7 +6,6 @@
 //
 
 import ImGUI
-import CImGUI
 import Foundation
 import AppKit
 import Metal
@@ -38,7 +37,6 @@ func ImGui_ImplMetal_Shutdown() {
 
 @available(OSX 10.11, *)
 func ImGui_ImplMetal_NewFrame(_ renderPassDescriptor: MTLRenderPassDescriptor) {
-    precondition(g_sharedMetalContext != nil, "No Metal context. Did you call ImGui_ImplMetal_Init() ?")
     g_sharedMetalContext.framebufferDescriptor = FramebufferDescriptor(renderPassDescriptor)
 }
 

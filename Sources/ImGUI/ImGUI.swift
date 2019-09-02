@@ -1,5 +1,14 @@
 import CImGUI
 
+@_exported import struct CImGUI.ImGuiIO
+@_exported import struct CImGUI.ImDrawData
+@_exported import struct CImGUI.ImTextureID
+@_exported import struct CImGUI.ImDrawVert
+@_exported import struct CImGUI.ImDrawIdx
+@_exported import struct CImGUI.ImDrawList
+@_exported import struct CImGUI.ImDrawCmd
+@_exported import var CImGUI.ImGuiBackendFlags_RendererHasVtxOffset
+
 public enum ImGui {
     public typealias ImGuiContext = OpaquePointer
 
@@ -104,6 +113,10 @@ public enum ImGui {
 
     public static func ColorEdit3(_ label: String, _ col: UnsafeMutablePointer<Float>, _ flags: ImGuiColorEditFlags = 0) {
         igColorEdit3(label.cStrPtr(), col, flags)
+    }
+
+    public static func GetMouseCursor() -> ImGuiMouseCursor {
+        return igGetMouseCursor()
     }
 }
 

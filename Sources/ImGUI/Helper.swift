@@ -25,6 +25,13 @@ extension String {
     }
 }
 
+extension Array {
+    public subscript<R>(representable: R) -> Element where R: RawRepresentable, R.RawValue: FixedWidthInteger {
+        get { return self[Int(representable.rawValue)] }
+        set { self[Int(representable.rawValue)] = newValue }
+    }
+}
+
 /// https://forums.developer.apple.com/thread/72120
 public struct CArray<T> {
     @usableFromInline var ptr: UnsafeMutableBufferPointer<T>
@@ -37,12 +44,21 @@ public struct CArray<T> {
         return ptr.count
     }
 
-    public subscript(index: Int) -> T {
-        set {
-            ptr[index] = newValue
-        }
+    public subscript<I>(index: I) -> T where I: FixedWidthInteger {
         get {
-            ptr[index]
+            ptr[Int(index)]
+        }
+        set {
+            ptr[Int(index)] = newValue
+        }
+    }
+
+    public subscript<R>(representable: R) -> T where R: RawRepresentable, R.RawValue: FixedWidthInteger {
+        get {
+            return self[representable.rawValue]
+        }
+        set {
+            self[representable.rawValue] = newValue
         }
     }
 }
@@ -73,6 +89,14 @@ extension CArray {
     }
 
     public init(_ cArray: inout (T, T, T, T, T, T, T, T)) {
+        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
+    }
+
+    public init(_ cArray: inout (T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T)) {
+        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
+    }
+
+    public init(_ cArray: inout (T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T)) {
         self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
     }
 }

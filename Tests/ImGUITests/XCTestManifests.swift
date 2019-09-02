@@ -6,7 +6,7 @@ extension ImGUITests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ImGUITests = [
-        ("testHelloImGUI", testHelloImGUI)
+        ("testVersion", testVersion)
     ]
 }
 

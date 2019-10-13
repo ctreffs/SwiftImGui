@@ -1,3 +1,9 @@
+nicegraf_src := "3rdparty/nicegraf"
+nicegraf_build := "3rdparty/nicegraf-build"
+c_nicegraf_src := "Sources/CNicegraf"
+
+cimgui_src := "Sources/CImGUI/cimgui/"
+
 lint:
 	swiftlint autocorrect --format
 	swiftlint lint --quiet
@@ -9,14 +15,17 @@ genLinuxTests:
 test: genLinuxTests
 	swift test
 
-updateDependencies:
-	git submodule update --init --recursive
+submodule:
+	git submodule init
+	git submodule update --recursive
 
 buildCImGUIStaticLib:
-	$(MAKE) -C "Sources/CImGUI/cimgui/" clean
-	$(MAKE) -C "Sources/CImGUI/cimgui/"
-	cd "Sources/CImGUI/cimgui/";  ar -cvq libcimgui.a cimgui.o ./imgui/imgui.o ./imgui/imgui_draw.o ./imgui/imgui_demo.o ./imgui/imgui_widgets.o; mv -f libcimgui.a ../lib/
-	$(MAKE) -C "Sources/CImGUI/cimgui/" clean
+	$(MAKE) -C $(cimgui_src) clean
+	$(MAKE) -C $(cimgui_src)
+	cd $(cimgui_src) && 
+		ar -cvq libcimgui.a cimgui.o ./imgui/imgui.o ./imgui/imgui_draw.o ./imgui/imgui_demo.o ./imgui/imgui_widgets.o && 
+		mv -f libcimgui.a ../lib/
+	$(MAKE) -C $(cimgui_src) clean
 
 
 clean:

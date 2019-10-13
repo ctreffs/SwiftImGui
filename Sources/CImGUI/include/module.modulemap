@@ -1,5 +1,6 @@
-module CImGUI [extern_c] {
-	header "CImGUI-umbrella.h"
+module CImGUI {
+    header "defines.h" // contains the defines to config cimgui.h
+	header "cimgui.h"
 	link "cimgui"
 	export *
 }

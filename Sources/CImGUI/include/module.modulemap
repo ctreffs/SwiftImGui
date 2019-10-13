@@ -1,5 +1,5 @@
 module CImGUI [extern_c] {
-	header "cimgui.h"
+	header "CImGUI-umbrella.h"
 	link "cimgui"
 	export *
 }

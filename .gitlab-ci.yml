@@ -3,6 +3,8 @@ image: swift:5.0
 before_script:
   # use the Gitlab CI Job token to login for all git clones on the machine.
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
+  - make submodule
+  - make libImGui
 
 stages: 
   - test
@@ -24,7 +26,6 @@ test_project:
     GIT_DEPTH: "50"
   script:
     - swift package reset
-    - swift build
     - swift test
   tags:
     - docker

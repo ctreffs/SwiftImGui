@@ -1,6 +1,6 @@
 //
 //  imgui_impl_osx.swift
-//  
+//
 //
 //  Created by Christian Treffs on 31.08.19.
 //
@@ -18,7 +18,7 @@ func ImGui_ImplOSX_Init() {
     defer {
         ImGui.SetIO(to: &io)
     }
-    
+
     io.ConfigFlags |= Int32(ImGuiConfigFlags_DockingEnable.rawValue)
     io.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleViewports.rawValue)
     io.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleFonts.rawValue)

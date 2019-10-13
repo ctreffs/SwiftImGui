@@ -1,6 +1,6 @@
 //
 //  Helper.swift
-//  
+//
 //
 //  Created by Christian Treffs on 31.08.19.
 //

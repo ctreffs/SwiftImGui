@@ -77,8 +77,8 @@ public enum ImGui {
 
     public static func Text(_ text: String) {
         /*withVaList(arguments) {
-            igTextV(format.cStrPtr(), $0)
-        }*/
+         igTextV(format.cStrPtr(), $0)
+         }*/
         igTextUnformatted(text.cStrPtr(), nil)
     }
 
@@ -148,38 +148,38 @@ public func IM_ARRAYSIZE<T>(_ cTupleArray: T) -> Int {
 /*
  public static func showDemoWindow() {
 
-        let ctx = igCreateContext(nil)
-        let io = igGetIO()
+ let ctx = igCreateContext(nil)
+ let io = igGetIO()
 
-        let out_pixels: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>! = UnsafeMutablePointer.allocate(capacity: 0)
-        var out_width: Int32 = 0
-        var out_height: Int32 = 0
+ let out_pixels: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>! = UnsafeMutablePointer.allocate(capacity: 0)
+ var out_width: Int32 = 0
+ var out_height: Int32 = 0
 
-        let atlas = ImFontAtlas_ImFontAtlas()
-        ImFontAtlas_GetTexDataAsRGBA32(atlas!,
-                                       out_pixels,
-                                       &out_width,
-                                       &out_height,
-                                       nil)
-        ImFontAtlas_Build(atlas!)
+ let atlas = ImFontAtlas_ImFontAtlas()
+ ImFontAtlas_GetTexDataAsRGBA32(atlas!,
+ out_pixels,
+ &out_width,
+ &out_height,
+ nil)
+ ImFontAtlas_Build(atlas!)
 
-        io!.pointee.Fonts.pointee = atlas!.pointee
-        //ImFontAtlas_Build(&io!.pointee.Fonts.pointee)
-        //ImFontAtlas_GetTexDataAsRGBA32(&io!.pointee.Fonts.pointee, )
-        // See ImGuiFreeType::RasterizationFlags
-        //unsigned int flags = ImGuiFreeType::NoHinting;
-        //ImGuiFreeType::BuildFontAtlas(io.Fonts, flags);
-        //io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
+ io!.pointee.Fonts.pointee = atlas!.pointee
+ //ImFontAtlas_Build(&io!.pointee.Fonts.pointee)
+ //ImFontAtlas_GetTexDataAsRGBA32(&io!.pointee.Fonts.pointee, )
+ // See ImGuiFreeType::RasterizationFlags
+ //unsigned int flags = ImGuiFreeType::NoHinting;
+ //ImGuiFreeType::BuildFontAtlas(io.Fonts, flags);
+ //io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
-        //io!.pointee.Fonts.pointee.texD
-        //io!.pointee.Fonts.pointee.textDat
-        io!.pointee.DisplaySize = ImVec2(x: 1920, y: 1080)
-        io!.pointee.DeltaTime = 1.0 / 60.0
-        igNewFrame()
+ //io!.pointee.Fonts.pointee.texD
+ //io!.pointee.Fonts.pointee.textDat
+ io!.pointee.DisplaySize = ImVec2(x: 1920, y: 1080)
+ io!.pointee.DeltaTime = 1.0 / 60.0
+ igNewFrame()
 
-        igShowDemoWindow(nil)
-        igRender()
+ igShowDemoWindow(nil)
+ igRender()
 
-        igDestroyContext(ctx!)
-    }
+ igDestroyContext(ctx!)
+ }
  */

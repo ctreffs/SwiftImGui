@@ -25,17 +25,12 @@ var package = Package(
         .testTarget(
             name: "ImGUITests",
             dependencies: ["ImGUI"]),
-
         .target(name: "CImGUI",
-                exclude: ["cimgui/"],
-                cSettings: [
-                    .unsafeFlags(["-I", "Sources/CImGUI/include"])
-            ],
+                cSettings: [.unsafeFlags(["-I", "Sources/CImGUI/include"])],
                 linkerSettings: [
                     .unsafeFlags(["-L", "Sources/CImGUI/lib"]),
                     .linkedLibrary("cimgui")
-            ]
-        )
+        ])
     ]
 )
 

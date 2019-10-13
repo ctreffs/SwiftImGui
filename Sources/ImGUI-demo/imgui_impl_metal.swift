@@ -1,6 +1,6 @@
 //
 //  imgui_impl_metal.swift
-//  
+//
 //
 //  Created by Christian Treffs on 31.08.19.
 //
@@ -20,13 +20,11 @@ func ImGui_ImplMetal_Init(_ device: MTLDevice) -> Bool {
 
     var io: ImGuiIO = ImGui.GetIO()
     defer { ImGui.SetIO(to: &io) }
-    
+
     io.BackendRendererName = "imgui_impl_metal".cStrPtr()
 
     // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
     io.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasVtxOffset.rawValue)
-
-    
 
     ImGui_ImplMetal_CreateDeviceObjects(device)
     return true
@@ -302,9 +300,9 @@ class MetalContext {
         let F: Float = Float(viewport.zfar)
 
         var ortho_projection = simd_float4x4([2.0/(R-L), 0.0, 0.0, 0.0],
-        [0.0, 2.0/(T-B), 0.0, 0.0],
-        [0.0, 0.0, 1/(F-N), 0.0],
-        [(R+L)/(L-R), (T+B)/(B-T), N/(F-N), 1.0])
+                                             [0.0, 2.0/(T-B), 0.0, 0.0],
+                                             [0.0, 0.0, 1/(F-N), 0.0],
+                                             [(R+L)/(L-R), (T+B)/(B-T), N/(F-N), 1.0])
 
         commandEncoder.setVertexBytes(UnsafeRawPointer(&ortho_projection),
                                       length: MemoryLayout<simd_float4x4>.size,

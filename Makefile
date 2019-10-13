@@ -25,8 +25,8 @@ buildLibImGui:
 	$(MAKE) -C $(imgui_src) all
 	ar -cvq $(imgui_src)/libcimgui.a $(imgui_src)/cimgui.o $(imgui_src)/imgui/imgui.o $(imgui_src)/imgui/imgui_draw.o $(imgui_src)/imgui/imgui_demo.o $(imgui_src)/imgui/imgui_widgets.o
 
-buildLibImGui2:
-	cmake -S $(imgui_src) -B $(imgui_build) -DIMGUI_STATIC:STRING=yes -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS:NUMBER=1 -Wdev -Werror=dev # -G "Unix Makefiles"
+buildLibImGuiProject:
+	cmake -S $(imgui_src) -B $(imgui_build) -DIMGUI_STATIC:STRING=yes -Wdev -Werror=dev # -G "Unix Makefiles"
 	$(MAKE) -C $(imgui_build) all
 
 cleanLibImGui:

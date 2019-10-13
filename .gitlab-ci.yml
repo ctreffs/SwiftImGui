@@ -24,6 +24,7 @@ test_project:
     GIT_DEPTH: "50"
   script:
     - swift package reset
+    - swift build
     - swift test
   tags:
     - docker

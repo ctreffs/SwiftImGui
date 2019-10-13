@@ -1,5 +1,5 @@
 imgui_src := 3rdparty/cimgui
-imgui_build := 3rdparty/cimgui
+imgui_build := 3rdparty/cimgui-build
 c_imgui_src := Sources/CImGUI
  #-build
 
@@ -19,18 +19,20 @@ submodule:
 	git submodule update --recursive
 
 libImGui: cleanLibImGui buildLibImGui copyLibImGui
-	#$(MAKE) -C $(imgui_src) clean
+	$(MAKE) -C $(imgui_src) clean
+	rm -rdf $(imgui_build)
 
-buildLibImGui:
+buildLibImGuiStatic:
 	$(MAKE) -C $(imgui_src) all
 	ar -cvq $(imgui_src)/libcimgui.a $(imgui_src)/cimgui.o $(imgui_src)/imgui/imgui.o $(imgui_src)/imgui/imgui_draw.o $(imgui_src)/imgui/imgui_demo.o $(imgui_src)/imgui/imgui_widgets.o
 
-buildLibImGuiProject:
+buildLibImGui:
 	cmake -S $(imgui_src) -B $(imgui_build) -DIMGUI_STATIC:STRING=yes -Wdev -Werror=dev # -G "Unix Makefiles"
 	$(MAKE) -C $(imgui_build) all
+	mv $(imgui_build)/cimgui.a $(imgui_build)/libcimgui.a
 
 cleanLibImGui:
-	#rm -rdf $(imgui_build)
+	rm -rdf $(imgui_build)
 	$(MAKE) -C $(imgui_src) clean
 
 copyLibImGui:

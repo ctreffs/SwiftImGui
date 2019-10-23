@@ -10,7 +10,9 @@ var package = Package(
         .library(
             name: "ImGUI",
             type: .static,
-            targets: ["ImGUI"])
+            targets: ["ImGUI"]),
+        .library(name: "CImGUI",
+                 targets: ["CImGUI"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -26,12 +28,9 @@ var package = Package(
             name: "ImGUITests",
             dependencies: ["ImGUI"]),
         .target(name: "CImGUI",
-                cSettings: [.unsafeFlags(["-I", "Sources/CImGUI/include"])],
-                linkerSettings: [
-                    .unsafeFlags(["-L", "Sources/CImGUI/lib"]),
-                    .linkedLibrary("cimgui")
-        ])
-    ]
+                path: "Sources/CImGUI2")
+    ],
+    cxxLanguageStandard: .cxx11
 )
 
 #if os(macOS)

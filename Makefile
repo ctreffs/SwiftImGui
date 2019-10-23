@@ -1,6 +1,7 @@
 imgui_src := 3rdparty/cimgui
 imgui_build := 3rdparty/cimgui-build
 c_imgui_src := Sources/CImGUI
+c_imgui2_src := Sources/CImGUI2
  #-build
 
 lint:
@@ -38,6 +39,13 @@ cleanLibImGui:
 copyLibImGui:
 	cp $(imgui_src)/*.h $(c_imgui_src)/include
 	cp $(imgui_build)/*.a $(c_imgui_src)/lib
+
+copyLibImGui2:
+	cp $(imgui_src)/imgui/*.h $(c_imgui2_src)/imgui
+	cp $(imgui_src)/imgui/*.cpp $(c_imgui2_src)/imgui
+	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui2_src)/include
+	cp $(imgui_src)/generator/output/cimgui_impl.h $(c_imgui2_src)
+	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui2_src)
 	
 cleanCLibImGui:
 	rm -rdf $(c_imgui_src)/lib/*.a

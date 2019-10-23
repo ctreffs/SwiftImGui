@@ -102,7 +102,7 @@ public enum ImGui {
         igSameLine(offsetFromStart, spacing)
     }
 
-    public static func ColorEdit3(_ label: String, _ col: UnsafeMutablePointer<Float>, _ flags: ImGuiColorEditFlags = 0) {
+    public static func ColorEdit3(_ label: String, _ col: UnsafeMutablePointer<ImVec3>, _ flags: ImGuiColorEditFlags = 0) {
         igColorEdit3(label.cStrPtr(), col, flags)
     }
 

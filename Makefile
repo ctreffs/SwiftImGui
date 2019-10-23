@@ -40,12 +40,15 @@ copyLibImGui:
 	cp $(imgui_src)/*.h $(c_imgui_src)/include
 	cp $(imgui_build)/*.a $(c_imgui_src)/lib
 
-copyLibImGui2:
+copyLibImGui2: generateCInterface
 	cp $(imgui_src)/imgui/*.h $(c_imgui2_src)/imgui
 	cp $(imgui_src)/imgui/*.cpp $(c_imgui2_src)/imgui
 	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui2_src)/include
 	cp $(imgui_src)/generator/output/cimgui_impl.h $(c_imgui2_src)
 	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui2_src)
+
+generateCInterface:
+	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl
 	
 cleanCLibImGui:
 	rm -rdf $(c_imgui_src)/lib/*.a
@@ -70,6 +73,9 @@ resolve:
 genXcodeOpen: genXcode
 	open *.xcodeproj
 
+updateCLibImGUI:
+	git submodule init $(imgui_src)
+	git submodule update --recursive $(imgui_src)
 
 genXcode:
 	swift package generate-xcodeproj --enable-code-coverage --skip-extra-files 

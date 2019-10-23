@@ -28,7 +28,14 @@ var package = Package(
             name: "ImGUITests",
             dependencies: ["ImGUI"]),
         .target(name: "CImGUI",
-                path: "Sources/CImGUI2")
+                path: "Sources/CImGUI2",
+                cSettings: [
+                    //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS=1"),
+                    .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1")],
+                cxxSettings: [
+                    //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS=1"),
+                    .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1")]
+        )
     ],
     cxxLanguageStandard: .cxx11
 )

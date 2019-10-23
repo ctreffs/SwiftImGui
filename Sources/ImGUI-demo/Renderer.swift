@@ -5,13 +5,14 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
+import CImGUI
 import ImGUI
 import Metal
 import MetalKit
 
 var show_demo_window: Bool = true
 var show_another_window: Bool = false
-var clear_color: [Float] = [0.28, 0.36, 0.5]
+var clear_color: ImVec3 = [0.28, 0.36, 0.5]
 var f: Float = 0.0
 var counter: Int = 0
 

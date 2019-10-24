@@ -644,7 +644,6 @@ struct ImGuiIO
     bool ConfigInputTextCursorBlink;
     bool ConfigWindowsResizeFromEdges;
     bool ConfigWindowsMoveFromTitleBarOnly;
-    float ConfigWindowsMemoryCompactTimer;
     const char* BackendPlatformName;
     const char* BackendRendererName;
     void* BackendPlatformUserData;

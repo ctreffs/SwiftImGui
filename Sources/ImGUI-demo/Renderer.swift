@@ -12,7 +12,7 @@ import MetalKit
 
 var show_demo_window: Bool = true
 var show_another_window: Bool = false
-//var clear_color: ImVec3 = [0.28, 0.36, 0.5]
+var clear_color: ImColor = ImColor(Value: ImVec4(x: 0.28, y: 0.36, z: 0.5, w: 1.0))
 var f: Float = 0.0
 var counter: Int = 0
 
@@ -58,12 +58,12 @@ extension Renderer: MTKViewDelegate {
             guard let renderPassDescriptor = view.currentRenderPassDescriptor else {
                 return
             }
-/*
-            renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: Double(clear_color[0]),
-                                                                                green: Double(clear_color[1]),
-                                                                                blue: Double(clear_color[2]),
-                                                                                alpha: 1.0)
-*/
+
+            renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: Double(clear_color.Value.x),
+                                                                                green: Double(clear_color.Value.y),
+                                                                                blue: Double(clear_color.Value.z),
+                                                                                alpha: Double(clear_color.Value.w))
+
             // Here, you could do additional rendering work, including other passes as necessary.
 
             let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
@@ -94,7 +94,7 @@ extension Renderer: MTKViewDelegate {
 
             ImGui.SliderFloat("float", &f, 0.0, 1.0) // Edit 1 float using a slider from 0.0f to 1.0f
 
-            //FIXME: ImGui.ColorEdit3("clear color", &clear_color); // Edit 3 floats representing a color
+            ImGui.ColorEdit3("clear color", &clear_color.Value.x); // Edit 3 floats representing a color
 
             if ImGui.Button("Button") { // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter += 1

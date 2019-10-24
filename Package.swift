@@ -28,19 +28,22 @@ var package = Package(
             name: "ImGUITests",
             dependencies: ["ImGUI"]),
         .target(name: "CImGUI",
-                path: "Sources/CImGUI2",
-                cSettings: [
-                    //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS=1"),
-                    .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1"),
-                    .define("CIMGUI_NO_EXPORT")],
-                cxxSettings: [
-                    //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS=1"),
-                    .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1"),
-                    .define("CIMGUI_NO_EXPORT")]
-        )
+                path: "Sources/CImGUI2")
     ],
     cxxLanguageStandard: .cxx11
 )
+
+/*
+ cSettings: [
+     //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS=1"),
+     .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1"),
+     .define("CIMGUI_NO_EXPORT")],
+ cxxSettings: [
+     //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS=1"),
+     .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1"),
+     .define("CIMGUI_NO_EXPORT")]
+ 
+ */
 
 #if os(macOS)
 let macOSDemo: (Product, Target) =

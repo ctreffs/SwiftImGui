@@ -28,7 +28,8 @@ var package = Package(
             name: "ImGUITests",
             dependencies: ["ImGUI"]),
         .target(name: "CImGUI",
-                path: "Sources/CImGUI2")
+                path: "Sources/CImGUI2"),
+        .target(name: "Generator")
     ],
     cxxLanguageStandard: .cxx11
 )

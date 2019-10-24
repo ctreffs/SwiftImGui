@@ -49,6 +49,10 @@ copyLibImGui2:
 
 generateCInterface:
 	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl
+
+generateCInterface2:
+	cd $(imgui_src)/generator && luajit ./generator.lua nocompiler glfw opengl3 opengl2 sdl
+
 	
 cleanCLibImGui:
 	rm -rdf $(c_imgui_src)/lib/*.a

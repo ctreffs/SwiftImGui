@@ -30,13 +30,13 @@ var package = Package(
         .target(name: "CImGUI",
                 path: "Sources/CImGUI2",
                 cSettings: [
-                    //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS"),
-                    .define("CIMGUI_SKIP_DEFINE_ENUMS_AND_STRUCTS"),
+                    .define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS"),
+                    //.define("CIMGUI_SKIP_DEFINE_ENUMS_AND_STRUCTS"),
                     .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1"),
                     .define("CIMGUI_NO_EXPORT")],
                 cxxSettings: [
-                    //.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS"),
-                    .define("CIMGUI_SKIP_DEFINE_ENUMS_AND_STRUCTS"),
+                    .define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS"),
+                    //.define("CIMGUI_SKIP_DEFINE_ENUMS_AND_STRUCTS"),
                     .define("IMGUI_DISABLE_OBSOLETE_FUNCTIONS=1"),
                     .define("CIMGUI_NO_EXPORT")]),
         .target(name: "Generator")

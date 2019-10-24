@@ -40,7 +40,7 @@ copyLibImGui:
 	cp $(imgui_src)/*.h $(c_imgui_src)/include
 	cp $(imgui_build)/*.a $(c_imgui_src)/lib
 
-copyLibImGui2: generateCInterface
+copyLibImGui2:
 	cp $(imgui_src)/imgui/*.h $(c_imgui2_src)/imgui
 	cp $(imgui_src)/imgui/*.cpp $(c_imgui2_src)/imgui
 	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui2_src)/include

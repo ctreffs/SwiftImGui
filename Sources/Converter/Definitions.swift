@@ -7,54 +7,6 @@
 
 typealias Definitions = [String: [Definition]]
 
-struct ArgType: Decodable {
-
-    let isConst: Bool
-
-    let isUnsigned: Bool
-
-    let type: DataType
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        var raw: String = try container.decode(String.self)
-
-        // const
-        if let range = raw.range(of: "const ") {
-            self.isConst = true
-            raw.removeSubrange(range)
-        } else {
-            self.isConst = false
-        }
-
-        // unsigned
-        if let unsigned = raw.range(of: "unsigned ") {
-            self.isUnsigned = true
-            raw.removeSubrange(unsigned)
-        } else {
-            self.isUnsigned = false
-        }
-
-        self.type = DataType(string: raw)
-    }
-
-}
-
-struct ArgsT: Decodable {
-    let name: String
-    let type: ArgType
-    let ret: String?
-    let signature: String?
-
-    var toSwift: String {
-        return "\(self.name): \(self.type.type.toSwift)"
-    }
-
-    var toC: String {
-        return "\(self.name)"
-    }
-}
-
 struct DestructorDef: Decodable {
 
     let destructor: Bool
@@ -85,6 +37,7 @@ struct FunctionDef: Decodable {
     let signature: String
 
     let cimguiname: String
+    let ov_cimguiname: String
 
     let stname: String
     let argsT: [ArgsT]
@@ -92,6 +45,10 @@ struct FunctionDef: Decodable {
 
     let templated: Bool = false
 
+    @inlinable var isValid: Bool {
+        return argsT.allSatisfy { $0.isValid }
+    }
+    
     func encode(swift def: [ArgsT]) -> String {
         return def.map { $0.toSwift }.joined(separator: ", ")
     }
@@ -99,16 +56,29 @@ struct FunctionDef: Decodable {
     func encode(c def: [ArgsT]) -> String {
         return def.map { $0.toC }.joined(separator: ",")
     }
+    
+    var encodedFuncname: String {
+        guard let range = ov_cimguiname.range(of: funcname) else {
+            return funcname
+        }
+        
+        //let prefix: String = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
+        let postfix: String = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
+        
+        return funcname + postfix
+    }
 
     var toSwift: String {
         return """
-        @inlinable public func \(self.funcname)(\(encode(swift: self.argsT))) -> \(ret.toSwift) {
-        \t\(self.ret == .void ? "" : "return ")\(self.cimguiname)(\(encode(c: self.argsT)))
+        @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(ret.toSwift) {
+        \t\(self.ret == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
         }
         """
     }
 
 }
+extension FunctionDef: Equatable { }
+extension FunctionDef: Hashable { }
 
 struct Definition: Decodable {
     enum Keys: String, CodingKey {
@@ -117,28 +87,32 @@ struct Definition: Decodable {
         case constructor
     }
 
-    enum Def {
-        case function(FunctionDef)
-        case destructor(DestructorDef)
-        case constructor(ConstructorDef)
+    let functions: Set<FunctionDef>
+    let destructors: [DestructorDef]
+    let constructors: [ConstructorDef]
+    
+    var validFunctions: Set<FunctionDef> {
+        return functions.filter { $0.isValid }
     }
-
-    let definitions: [Def]
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
-
-        var defs: [Def] = []
+        
+        var functions: Set<FunctionDef> = []
+        var destructors: [DestructorDef] = []
+        var constructors: [ConstructorDef] = []
 
         if container.contains(.funcname) && !container.contains(.destructor) && !container.contains(.constructor) {
-            defs.append(.function(try FunctionDef(from: decoder)))
+            functions.insert(try FunctionDef(from: decoder))
         } else if container.contains(.destructor) {
-            defs.append(.destructor(try DestructorDef(from: decoder)))
+            destructors.append(try DestructorDef(from: decoder))
         } else if container.contains(.constructor) {
-            defs.append(.constructor(try ConstructorDef(from: decoder)))
+            constructors.append(try ConstructorDef(from: decoder))
         }
-
-        self.definitions = defs
+        
+        self.functions = functions
+        self.destructors = destructors
+        self.constructors = constructors
     }
 }
 

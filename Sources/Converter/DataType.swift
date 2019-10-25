@@ -18,6 +18,10 @@ indirect enum DataType: Decodable {
     case reference(DataType)
     case custom(String)
     case unknown
+    
+    @inlinable var isValid: Bool {
+        return self != .unknown
+    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -109,3 +113,4 @@ indirect enum DataType: Decodable {
 }
 
 extension DataType: Equatable { }
+extension DataType: Hashable { }

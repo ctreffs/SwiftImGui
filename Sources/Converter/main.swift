@@ -23,10 +23,16 @@ let header = """
 import CImGUI
 
 // swiftlint:disable identifier_name
+
+public enum ImGui {
+"""
+
+let footer = """
+}
 """
 
 try convert(filePath: CommandLine.arguments[1], validOnly: true) { body in
-    let out: String = [header, body].joined(separator: "\n\n")
+    let out: String = [header, body, footer].joined(separator: "\n\n")
 
     guard let data: Data = out.data(using: .utf8) else {
         throw ConversionError(localizedDescription: "Could not generate data from output string \(out)")

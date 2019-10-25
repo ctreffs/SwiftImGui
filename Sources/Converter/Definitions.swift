@@ -1,20 +1,11 @@
 //
-//  main.swift
+//  File.swift
 //
 //
-//  Created by Christian Treffs on 24.10.19.
+//  Created by Christian Treffs on 25.10.19.
 //
 
-import struct Foundation.URL
-import struct Foundation.Data
-import class Foundation.JSONDecoder
-
-let arg1 = CommandLine.arguments[1]
-
-let file: URL = URL(fileURLWithPath: arg1)
-let data: Data = try Data(contentsOf: file)
-
-let decoder = JSONDecoder()
+typealias Definitions = [String: [Definition]]
 
 struct Prototype {
     let args: String
@@ -42,16 +33,6 @@ struct Prototype {
     let retref: String?
     let namespace: Namespace?
 }
-
-/*
- case bool
- case int
- case char
- case float
- case double
- case unknown(String)
-
- */
 
 indirect enum DataType: Decodable {
     case void
@@ -270,7 +251,7 @@ struct FunctionDef: Decodable {
         let ret = self.ret ?? .void
         return """
         @inlinable public func \(self.funcname)(\(encode(swift: self.argsT))) -> \(ret.toSwift) {
-        \(self.ret == nil ? "" : "return ")\(self.cimguiname)(\(encode(c: self.argsT)))
+        \t\(self.ret == nil ? "" : "return ")\(self.cimguiname)(\(encode(c: self.argsT)))
         }
         """
     }
@@ -306,23 +287,5 @@ struct Definition: Decodable {
         }
 
         self.definitions = defs
-    }
-}
-
-typealias Definitions = [String: [Definition]]
-
-let defs = try decoder.decode(Definitions.self, from: data)
-
-let definitions: [Definition.Def] = defs.values.flatMap { $0 }.flatMap { $0.definitions }
-
-for def in definitions {
-    switch def {
-    case let .function(funcDef):
-        //print(funcDef)
-        print(funcDef.toSwift)
-        //print()
-        break
-    default:
-        break
     }
 }

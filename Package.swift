@@ -15,7 +15,7 @@ var package = Package(
     targets: [
         .target(name: "ImGUI", dependencies: ["CImGUI"]),
         .target(name: "CImGUI", cxxSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")]),
-        .target(name: "Generator"),
+        .target(name: "Converter"),
         .testTarget(name: "ImGUITests", dependencies: ["ImGUI"])
     ],
     cxxLanguageStandard: .cxx11

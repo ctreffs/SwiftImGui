@@ -74,6 +74,29 @@ enum DataType: String, Decodable {
         self = DataType.init(rawValue: string) ?? .unknown
     }
 
+    var toSwift: String {
+        switch self {
+        case .void:
+            return "Void"
+        case .bool:
+            return "Bool"
+        case .int:
+            return "Int32"
+        case .char:
+            return "CChar"
+        case .float:
+            return "Float"
+        case .double:
+            return "Double"
+        case .size_t:
+            return "Int"
+        case .va_list:
+            return "CVarArg..."
+        case .unknown:
+            return "<#TYPE#>"
+        }
+    }
+
 }
 
 struct ArgType: Decodable {
@@ -121,6 +144,14 @@ struct ArgsT: Decodable {
     let type: ArgType
     let ret: String?
     let signature: String?
+
+    var toSwift: String {
+        return "\(self.name): \(self.type.type.toSwift)"
+    }
+
+    var toC: String {
+        return "\(self.name)"
+    }
 }
 
 enum Defaults {
@@ -176,6 +207,24 @@ struct FunctionDef: Decodable {
     let stname: String
     let argsT: [ArgsT]
     let ret: DataType?
+
+    func encode(swift def: [ArgsT]) -> String {
+        return def.map { $0.toSwift }.joined(separator: ", ")
+    }
+
+    func encode(c def: [ArgsT]) -> String {
+        return def.map { $0.toC }.joined(separator: ",")
+    }
+
+    var toSwift: String {
+        let ret = self.ret ?? .void
+        return """
+        @inlinable public func \(self.funcname)(\(encode(swift: self.argsT))) -> \(ret.toSwift) {
+        \(ret == .void ? "" : "return ")\(self.cimguiname)(\(encode(c: self.argsT)))
+        }
+        """
+    }
+
 }
 
 struct Definition: Decodable {
@@ -216,59 +265,11 @@ let defs = try decoder.decode(Definitions.self, from: data)
 
 let definitions: [Definition.Def] = defs.values.flatMap { $0 }.flatMap { $0.definitions }
 
-func encode(swift def: DataType) -> String {
-    switch def {
-    case .void:
-        return "Void"
-    case .bool:
-        return "Bool"
-    case .int:
-        return "Int32"
-    case .char:
-        return "CChar"
-    case .float:
-        return "Float"
-    case .double:
-        return "Double"
-    case .size_t:
-        return "Int"
-    case .va_list:
-        return "CVarArg..."
-    case .unknown:
-        return "<#TYPE#>"
-    }
-}
-
-func encode(swift def: ArgsT) -> String {
-    return "\(def.name): \(encode(swift: def.type.type))"
-}
-
-func encode(c def: ArgsT) -> String {
-    return "\(def.name)"
-}
-
-func encode(swift def: [ArgsT]) -> String {
-    return def.map { encode(swift: $0) }.joined(separator: ", ")
-}
-
-func encode(c def: [ArgsT]) -> String {
-    return def.map { encode(c: $0) }.joined(separator: ",")
-}
-
-func encode(swift def: FunctionDef) -> String {
-    let ret = def.ret ?? .void
-    return """
-    @inlinable public func \(def.funcname)(\(encode(swift: def.argsT))) -> \(encode(swift: ret)) {
-    \(ret == .void ? "" : "return ")\(def.cimguiname)(\(encode(c: def.argsT)))
-    }
-    """
-}
-
 for def in definitions {
     switch def {
     case let .function(funcDef):
         //print(funcDef)
-        print(encode(swift: funcDef))
+        print(funcDef.toSwift)
         //print()
         break
     default:

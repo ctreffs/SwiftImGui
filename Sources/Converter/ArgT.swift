@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Christian Treffs on 25.10.19.
 //
@@ -12,7 +12,7 @@ struct ArgType: Decodable {
     let isUnsigned: Bool
 
     let type: DataType
-    
+
     @inlinable var isValid: Bool {
         return type.isValid
     }
@@ -44,20 +44,19 @@ struct ArgType: Decodable {
 extension ArgType: Equatable { }
 extension ArgType: Hashable { }
 
-
 struct ArgsT: Decodable {
     let name: String
     let type: ArgType
     let ret: String?
     let signature: String?
-    
+
     enum Keys: String, CodingKey {
         case name
         case type
         case ret
         case signature
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         self.name = try container.decode(String.self, forKey: .name).swiftEscaped
@@ -65,7 +64,7 @@ struct ArgsT: Decodable {
         self.ret = try container.decodeIfPresent(String.self, forKey: .ret)
         self.signature = try container.decodeIfPresent(String.self, forKey: .signature)
     }
-    
+
     @inlinable var isValid: Bool {
         return type.isValid
     }

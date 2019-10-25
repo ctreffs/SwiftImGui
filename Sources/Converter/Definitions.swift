@@ -48,7 +48,7 @@ struct FunctionDef: Decodable {
     @inlinable var isValid: Bool {
         return argsT.allSatisfy { $0.isValid }
     }
-    
+
     func encode(swift def: [ArgsT]) -> String {
         return def.map { $0.toSwift }.joined(separator: ", ")
     }
@@ -56,15 +56,15 @@ struct FunctionDef: Decodable {
     func encode(c def: [ArgsT]) -> String {
         return def.map { $0.toC }.joined(separator: ",")
     }
-    
+
     var encodedFuncname: String {
         guard let range = ov_cimguiname.range(of: funcname) else {
             return funcname
         }
-        
+
         //let prefix: String = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
         let postfix: String = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
-        
+
         return funcname + postfix
     }
 
@@ -95,14 +95,14 @@ struct Definition: Decodable {
     let functions: Set<FunctionDef>
     let destructors: [DestructorDef]
     let constructors: [ConstructorDef]
-    
+
     var validFunctions: Set<FunctionDef> {
         return functions.filter { $0.isValid }
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
-        
+
         var functions: Set<FunctionDef> = []
         var destructors: [DestructorDef] = []
         var constructors: [ConstructorDef] = []
@@ -114,7 +114,7 @@ struct Definition: Decodable {
         } else if container.contains(.constructor) {
             constructors.append(try ConstructorDef(from: decoder))
         }
-        
+
         self.functions = functions
         self.destructors = destructors
         self.constructors = constructors

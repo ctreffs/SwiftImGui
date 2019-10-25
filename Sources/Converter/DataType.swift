@@ -18,7 +18,7 @@ indirect enum DataType: Decodable {
     case reference(DataType)
     case custom(String)
     case unknown
-    
+
     @inlinable var isValid: Bool {
         return self != .unknown
     }

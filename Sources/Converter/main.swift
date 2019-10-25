@@ -24,7 +24,7 @@ import CImGUI
 
 // swiftlint:disable identifier_name
 
-public enum ImGui {
+public enum ImGui2 {
 """
 
 let footer = """

@@ -91,6 +91,10 @@ extension String {
         guard let swiftKeyword = SwiftKeyword(rawValue: self) else {
             return self
         }
+        if swiftKeyword == .`self` || swiftKeyword == .Self {
+            return "this"
+        }
+
         return "`\(swiftKeyword.rawValue)`"
     }
 }

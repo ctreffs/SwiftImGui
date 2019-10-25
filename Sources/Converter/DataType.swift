@@ -51,7 +51,6 @@ indirect enum DataType: Decodable {
 
             self = .arrayFixedSize(dataType, count)
         } else {
-            // TODO: parse plain types
             self = .custom(string)
         }
 

@@ -75,7 +75,12 @@ struct ArgsT: Decodable {
     }
 
     var toC: String {
-        return "\(self.name)"
+        switch type.type {
+        case .reference:
+            return "&\(self.name)"
+        default:
+            return "\(self.name)"
+        }
     }
 }
 

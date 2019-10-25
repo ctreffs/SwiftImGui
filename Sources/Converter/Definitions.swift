@@ -41,7 +41,7 @@ struct FunctionDef: Decodable {
 
     let stname: String
     let argsT: [ArgsT]
-    let ret: DataType = .void
+    let ret: DataType?
 
     let templated: Bool = false
 
@@ -68,10 +68,17 @@ struct FunctionDef: Decodable {
         return funcname + postfix
     }
 
+    var returnType: DataType {
+        guard let ret = self.ret else {
+            return .void
+        }
+        return ret
+    }
+
     var toSwift: String {
         return """
-        @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(ret.toSwift) {
-        \t\(self.ret == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
+        @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toSwift) {
+        \t\(returnType == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
         }
         """
     }

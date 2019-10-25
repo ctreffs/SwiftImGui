@@ -22,6 +22,7 @@ public func convert(filePath: String, validOnly: Bool, to convertedOutput: (Stri
         .values
         .flatMap { $0 }
         .flatMap { getFunctionDefs($0) }
+        .sorted()
         .map { $0.toSwift }
         .joined(separator: "\n\n")
     return try convertedOutput(output)

@@ -79,6 +79,11 @@ struct FunctionDef: Decodable {
 }
 extension FunctionDef: Equatable { }
 extension FunctionDef: Hashable { }
+extension FunctionDef: Comparable {
+    static func < (lhs: FunctionDef, rhs: FunctionDef) -> Bool {
+        return lhs.encodedFuncname < rhs.encodedFuncname
+    }
+}
 
 struct Definition: Decodable {
     enum Keys: String, CodingKey {

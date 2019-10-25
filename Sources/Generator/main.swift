@@ -53,7 +53,7 @@ struct Prototype {
 
  */
 
-enum DataType: String, Decodable {
+indirect enum DataType: Decodable {
     case void
     case bool
     case int
@@ -62,6 +62,8 @@ enum DataType: String, Decodable {
     case double
     case size_t
     case va_list
+    case arrayFixedSize(DataType, Int)
+    case custom(String)
     case unknown
 
     init(from decoder: Decoder) throws {
@@ -71,9 +73,56 @@ enum DataType: String, Decodable {
     }
 
     init(string: String) {
-        self = DataType.init(rawValue: string) ?? .unknown
+        if let direct = DataType(rawValue: string) {
+            self = direct
+            return
+        }
+
+        if let asterisc = string.firstIndex(of: "*") {
+            // TODO: parse complex types
+            self = .unknown
+        } else if let ref = string.firstIndex(of: "&") {
+            // TODO: parse references
+            self = .unknown
+        } else if let startFixArr = string.firstIndex(of: "["), let endFixArr = string.firstIndex(of: "]") {
+            // i.e. float[4]
+            let numRange = string.index(after: startFixArr)..<endFixArr
+            let count = Int(string[numRange])!
+
+            let dataType = DataType(string: String(string[string.startIndex..<startFixArr]))
+
+            self = .arrayFixedSize(dataType, count)
+        } else {
+            // TODO: parse plain types
+            self = .custom(string)
+        }
+
+        // FIXME: special handle 'T'
+
     }
 
+    init?(rawValue: String) {
+        switch rawValue {
+        case "void":
+            self = .void
+        case "bool":
+            self = .bool
+        case "int":
+            self = .int
+        case "char":
+            self = .char
+        case "float":
+            self = .float
+        case "double":
+            self = .double
+        case "size_t":
+            self = .size_t
+        case "va_list", "...":
+            self = .va_list
+        default:
+            return nil
+        }
+    }
     var toSwift: String {
         switch self {
         case .void:
@@ -92,6 +141,10 @@ enum DataType: String, Decodable {
             return "Int"
         case .va_list:
             return "CVarArg..."
+        case let .arrayFixedSize(dataType, count):
+            return "(\((0..<count).map { _ in dataType.toSwift }.joined(separator: ",")))"
+        case let .custom(string):
+            return string
         case .unknown:
             return "<#TYPE#>"
         }
@@ -127,14 +180,7 @@ struct ArgType: Decodable {
             self.isUnsigned = false
         }
 
-        if let asterisc = raw.firstIndex(of: "*") {
-            // TODO: parse complex types
-            self.type = DataType(string: raw)
-        } else {
-            // TODO: parse plain types
-            self.type = DataType(string: raw)
-        }
-
+        self.type = DataType(string: raw)
     }
 
 }
@@ -220,7 +266,7 @@ struct FunctionDef: Decodable {
         let ret = self.ret ?? .void
         return """
         @inlinable public func \(self.funcname)(\(encode(swift: self.argsT))) -> \(ret.toSwift) {
-        \(ret == .void ? "" : "return ")\(self.cimguiname)(\(encode(c: self.argsT)))
+        \(self.ret == nil ? "" : "return ")\(self.cimguiname)(\(encode(c: self.argsT)))
         }
         """
     }

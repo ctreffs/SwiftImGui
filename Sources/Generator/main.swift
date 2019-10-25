@@ -63,6 +63,7 @@ indirect enum DataType: Decodable {
     case size_t
     case va_list
     case arrayFixedSize(DataType, Int)
+    case reference(DataType)
     case custom(String)
     case unknown
 
@@ -82,8 +83,9 @@ indirect enum DataType: Decodable {
             // TODO: parse complex types
             self = .unknown
         } else if let ref = string.firstIndex(of: "&") {
-            // TODO: parse references
-            self = .unknown
+            // i.e. float&, ImVector&
+            let dataType = DataType(string: String(string[string.startIndex..<ref]))
+            self = .reference(dataType)
         } else if let startFixArr = string.firstIndex(of: "["), let endFixArr = string.firstIndex(of: "]") {
             // i.e. float[4]
             let numRange = string.index(after: startFixArr)..<endFixArr
@@ -143,6 +145,8 @@ indirect enum DataType: Decodable {
             return "CVarArg..."
         case let .arrayFixedSize(dataType, count):
             return "(\((0..<count).map { _ in dataType.toSwift }.joined(separator: ",")))"
+        case let .reference(dataType):
+            return "inout \(dataType.toSwift)"
         case let .custom(string):
             return string
         case .unknown:

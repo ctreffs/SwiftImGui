@@ -1,3 +1,3 @@
 [submodule "Sources/CImGUI/cimgui"]
-	path = Sources/CImGUI/cimgui
-	url = https://github.com/cimgui/cimgui.git
+	path = 3rdparty/cimgui
+	url = https://github.com/ctreffs/cimgui.git

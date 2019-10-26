@@ -74,8 +74,17 @@ struct ArgsT: Decodable {
         return type.isValid
     }
 
+    var argName: String {
+        switch name {
+        case "...":
+            return "arguments"
+        default:
+            return name
+        }
+    }
+
     var toSwift: String {
-        return "\(self.name): \(self.type.toString(.argSwift))"
+        return "_ \(argName): \(self.type.toString(.argSwift))"
     }
 
     func wrapCArg(_ arg: String) -> String {
@@ -96,7 +105,7 @@ struct ArgsT: Decodable {
     }
 
     var toC: String {
-        var out: String = self.name
+        var out: String = argName
         switch type.type {
         case .char where type.isConst == true:
             // const char*

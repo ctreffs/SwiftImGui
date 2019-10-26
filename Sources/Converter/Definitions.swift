@@ -48,7 +48,7 @@ struct FunctionDef: Decodable {
     let namespace: String?
 
     @inlinable var isValid: Bool {
-        return argsT.allSatisfy { $0.isValid } && returnType.isValid
+        return argsT.allSatisfy { $0.isValid } && returnType.isValid && !Exceptions.unresolvedIdentifier.contains(ov_cimguiname)
     }
 
     func encode(swift def: [ArgsT]) -> String {

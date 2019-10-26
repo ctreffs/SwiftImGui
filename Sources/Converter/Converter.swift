@@ -16,10 +16,12 @@ public func convert(filePath: String, validOnly: Bool, to convertedOutput: (Stri
 
     let defs = try decoder.decode(Definitions.self, from: data)
     var invalidFuncsCount: Int = 0
+    var validFuncsCount: Int = 0
 
     let getValidFunctionDefs: (Definition) -> Set<FunctionDef> = { defs in
         let valid = defs.validFunctions
         let invalidCount = defs.functions.count - valid.count
+        validFuncsCount += valid.count
         invalidFuncsCount += invalidCount
         return valid
     }
@@ -35,7 +37,7 @@ public func convert(filePath: String, validOnly: Bool, to convertedOutput: (Stri
 
     defer {
         if invalidFuncsCount > 0 {
-            print("[WARN]: \(invalidFuncsCount) 'invalid' functions that will not be wrapped.")
+            print("[WARN]: \(invalidFuncsCount) 'invalid' functions that will not be wrapped. Valid count: \(validFuncsCount)")
         }
     }
     return try convertedOutput(output)

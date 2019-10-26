@@ -104,3 +104,17 @@ extension CArray {
         self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
     }
 }
+
+
+/// Offset of _MEMBER within _TYPE. Standardized as offsetof() in modern C++.
+public func IM_OFFSETOF<T>(_ member: PartialKeyPath<T>) -> Int {
+    return MemoryLayout<T>.offset(of: member)!
+}
+
+/// Size of a static C-style array. Don't use on pointers!
+public func IM_ARRAYSIZE<T>(_ cTupleArray: T) -> Int {
+    //#define IM_ARRAYSIZE(_ARR)          ((int)(sizeof(_ARR)/sizeof(*_ARR)))
+    let m = Mirror(reflecting: cTupleArray)
+    precondition(m.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
+    return m.children.count
+}

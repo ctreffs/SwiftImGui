@@ -11,21 +11,20 @@ var package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        //.package(url: "https://github.com/realm/SwiftLint.git", from: "0.36.0")
     ],
     targets: [
         .target(name: "ImGUI", dependencies: ["CImGUI"]),
         .target(name: "CImGUI", cxxSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")]),
-        .target(name: "Converter"),
+        .target(name: "AutoWrapper"),
         .testTarget(name: "ImGUITests", dependencies: ["ImGUI"])
     ],
     cxxLanguageStandard: .cxx11
 )
 
-#if os(macOS)
-let macOSDemo: (Product, Target) =
-    (.executable(name: "ImGUI-demo", targets: ["ImGUI-demo"]),
-     .target(name: "ImGUI-demo", dependencies: ["ImGUI"]))
-package.products.append(macOSDemo.0)
-package.targets.append(macOSDemo.1)
+#if canImport(Metal)
+let metalDemo: (Product, Target) =
+    (.executable(name: "DemoMetal", targets: ["DemoMetal"]),
+     .target(name: "DemoMetal", dependencies: ["ImGUI"], path: "Sources/Demos/Metal"))
+package.products.append(metalDemo.0)
+package.targets.append(metalDemo.1)
 #endif

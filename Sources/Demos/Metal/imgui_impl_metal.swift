@@ -19,13 +19,13 @@ var g_sharedMetalContext: MetalContext = MetalContext()
 @discardableResult
 func ImGui_ImplMetal_Init(_ device: MTLDevice) -> Bool {
 
-    var io: ImGuiIO = ImGui.GetIO()
-    defer { ImGui.SetIO(to: &io) }
+    let io = ImGuiGetIO()!
+    
 
-    io.BackendRendererName = "imgui_impl_metal".cStrPtr()
+    io.pointee.BackendRendererName = "imgui_impl_metal".cStrPtr()
 
     // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
-    io.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasVtxOffset.rawValue)
+    io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasVtxOffset.rawValue)
 
     ImGui_ImplMetal_CreateDeviceObjects(device)
     return true
@@ -64,25 +64,22 @@ func ImGui_ImplMetal_CreateDeviceObjects(_ device: MTLDevice) -> Bool {
 func ImGui_ImplMetal_CreateFontsTexture(_ device: MTLDevice) -> Bool {
     g_sharedMetalContext.makeFontTexture(with: device)
 
-    var io: ImGuiIO = ImGui.GetIO()
+    let io = ImGuiGetIO()!
 
     let texId: ImTextureID = withUnsafePointer(to: &g_sharedMetalContext.fontTexture!) { ptr in
         return UnsafeMutableRawPointer(mutating: ptr)
     }
 
-    io.Fonts.pointee.TexID = texId // ImTextureID == void*
-    ImGui.SetIO(to: &io)
+    io.pointee.Fonts.pointee.TexID = texId // ImTextureID == void*
 
     return g_sharedMetalContext.fontTexture != nil
 }
 
 @available(OSX 10.11, *)
 func ImGui_ImplMetal_DestroyFontsTexture() {
-    var io: ImGuiIO = ImGui.GetIO()
+    let io = ImGuiGetIO()!
     g_sharedMetalContext.fontTexture = nil
-    io.Fonts.pointee.TexID = nil
-
-    ImGui.SetIO(to: &io)
+    io.pointee.Fonts.pointee.TexID = nil
 }
 
 @available(OSX 10.11, *)
@@ -183,15 +180,15 @@ class MetalContext {
     /// to render users own textures.
     /// You can make that change in your implementation.
     func makeFontTexture(with device: MTLDevice) {
-        var io: ImGuiIO = ImGui.GetIO()
+        let io = ImGuiGetIO()!
 
         var pixels: UnsafeMutablePointer<UInt8>?
         var width: Int32 = 0
         var height: Int32 = 0
         var bytesPerPixel: Int32 = 0
-        io.Fonts.pointee.GetTexDataAsRGBA32(&pixels, &width, &height, &bytesPerPixel)
+        ImFontAtlas_GetTexDataAsRGBA32(io.pointee.Fonts, &pixels, &width, &height, &bytesPerPixel)
 
-        ImGui.SetIO(to: &io)
+        
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
                                                                          width: Int(width),
                                                                          height: Int(height),
@@ -445,7 +442,7 @@ class MetalContext {
         let fragmentFunction: MTLFunction = library.makeFunction(name: "fragment_main")!
 
         let vertexDescriptor: MTLVertexDescriptor = MTLVertexDescriptor()
-
+        
         // position
         vertexDescriptor.attributes[0].offset = IM_OFFSETOF(\ImDrawVert.pos)
         vertexDescriptor.attributes[0].format = .float2

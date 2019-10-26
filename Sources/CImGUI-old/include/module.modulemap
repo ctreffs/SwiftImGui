@@ -1,6 +1,0 @@
-module CImGUI {
-    header "defines.h" // contains the defines to config cimgui.h
-	header "cimgui.h"
-	link "cimgui"
-	export *
-}

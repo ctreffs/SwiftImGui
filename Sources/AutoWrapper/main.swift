@@ -5,9 +5,10 @@
 //  Created by Christian Treffs on 24.10.19.
 //
 
-import Foundation
+import struct Foundation.URL
 
-// <SRC_ROOT>/3rdparty/cimgui/generator/output/definitions.json
+// Input: <SRC_ROOT>/3rdparty/cimgui/generator/output/definitions.json
+// Output <SRC_ROOT>/Source/ImGui/ImGui+Definitions.swift
 
 struct ConversionError: Swift.Error {
     let localizedDescription: String

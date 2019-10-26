@@ -116,10 +116,10 @@ struct ArgsT: Decodable {
     var toC: String {
         var out: String = argName
         switch type.type {
-        case .char where type.isConst == true:
+        case .char where type.isConst == true && type.meta == .pointer:
             // const char*
             out.append(".cStrPtr()")
-        case .char where type.isConst == false:
+        case .char where type.isConst == false && type.meta == .pointer:
         // char*
             out.append(".cMutableStrPtr()")
         case .va_list:

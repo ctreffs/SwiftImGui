@@ -164,8 +164,10 @@ struct DataType: Decodable {
             out = "Int32"
         case .uint:
             out = "UInt32"
-        case .char:
+        case .char where meta == .pointer:
             out = "String"
+        case .char:
+            out = "Int8"
         case .float:
             out = "Float"
         case .double:

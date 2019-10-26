@@ -85,7 +85,7 @@ struct ArgsT: Decodable {
 
     var toSwift: String {
         switch self.type.type {
-        case let .custom(name) where name.contains("Callback"):
+        case let .custom(name) where name.hasSuffix("Callback") && argName.contains("callback"):
             return "_ \(argName): @escaping \(self.type.toString(.argSwift))"
         default:
             return "_ \(argName): \(self.type.toString(.argSwift))"

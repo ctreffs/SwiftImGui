@@ -24,7 +24,9 @@ import CImGUI
 
 // swiftlint:disable identifier_name
 
-public enum ImGui2 {
+// public typealias ImGuiContext = OpaquePointer
+
+extension ImGui {
 """
 
 let footer = """

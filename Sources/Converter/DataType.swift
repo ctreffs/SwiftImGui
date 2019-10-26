@@ -17,7 +17,7 @@ struct DataType: Decodable {
     }
 
     @inlinable var isValid: Bool {
-        return meta != .unknown && type != .unknown
+        return meta != .unknown && type != .unknown && type != .generic
     }
 
     init(from decoder: Decoder) throws {
@@ -178,6 +178,8 @@ struct DataType: Decodable {
             out = value
         case .unknown:
             out = "<#CODE#>"
+        case .generic:
+            out = "<#T#>"
         }
 
         if wrapped {
@@ -306,6 +308,7 @@ extension DataType {
         case va_list
         case custom(String)
 
+        case generic
         case unknown
 
         init?(rawValue: String) {
@@ -328,6 +331,8 @@ extension DataType {
                 self = .size_t
             case "va_list", "...":
                 self = .va_list
+            case "T":
+                self = .generic
             default:
                 return nil
             }

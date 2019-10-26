@@ -71,7 +71,7 @@ struct ArgsT: Decodable {
     }
 
     @inlinable var isValid: Bool {
-        return type.isValid
+        return type.isValid && name != "..."
     }
 
     var argName: String {

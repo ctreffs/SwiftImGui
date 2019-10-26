@@ -76,11 +76,20 @@ struct FunctionDef: Decodable {
         return ret
     }
 
+    func wrapCCall(_ call: @autoclosure () -> String) -> String {
+        switch (returnType.meta, returnType.type) {
+        case (.pointer, .char):
+            return "String(cString: \(call()))"
+        default:
+            return call()
+        }
+    }
+
     var toSwift: String {
 
         return """
         @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
-        \t\(returnType.type == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
+        \t\(returnType.type == .void ? "" : "return ")\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
         }
         """
     }

@@ -85,8 +85,14 @@ struct DataType: Decodable {
                 // only one '*' present -> simple pointer
                 let dataType = DataType(string: String(string[string.startIndex..<firstAsterisk].trimmingCharacters(in: .whitespaces)))
 
-                self.meta = .pointer
-                self.type = dataType.type
+                switch dataType.meta {
+                case .exception:
+                    self.meta = dataType.meta
+                    self.type = dataType.type
+                default:
+                    self.meta = .pointer
+                    self.type = dataType.type
+                }
 
             } else {
                 // TODO: handle array pointer
@@ -102,6 +108,12 @@ struct DataType: Decodable {
 
         } else {
             // primitive custom types ImVec2, ImVector, T ...
+
+            if let exceptionType = Exceptions.undeclardTypes[string] {
+                self.meta = .exception(exceptionType)
+                self.type = .custom(string)
+                return
+            }
 
             self.meta = .primitive
             self.type = .custom(string)
@@ -162,6 +174,8 @@ struct DataType: Decodable {
             return "<#\(toWrap)#>"
         case .unknown:
             return "<#\(toWrap)#>"
+        case let .exception(decl):
+            return decl.name
         }
 
     }
@@ -307,6 +321,7 @@ extension DataType {
         case reference
 
         case unknown
+        case exception(Declaration)
     }
 
 }

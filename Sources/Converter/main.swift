@@ -24,7 +24,8 @@ import CImGUI
 
 // swiftlint:disable identifier_name
 
-// public typealias ImGuiContext = OpaquePointer
+// Undeclared type definitions
+\(Exceptions.undeclardTypes.values.map { "public typealias \($0.name) = \($0.typealiasType)" }.joined(separator: "\n"))
 
 extension ImGui {
 """

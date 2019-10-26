@@ -114,6 +114,8 @@ struct ArgsT: Decodable {
             return arg
         case .unknown:
             return arg
+        case .exception:
+            return arg
         }
     }
 

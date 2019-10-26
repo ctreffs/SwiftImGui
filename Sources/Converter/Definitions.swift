@@ -65,10 +65,12 @@ struct FunctionDef: Decodable {
             return funcname
         }
 
-        var name: String = funcname.replacingOccurrences(of: "_", with: "")
-
-        // uppercase first character
-        name.replaceSubrange(name.startIndex..<name.index(after: name.startIndex), with: name.prefix(1).uppercased())
+        let name: String = funcname.components(separatedBy: "_")
+            .map {
+                // uppercase first character
+                $0.replacingCharacters(in: $0.startIndex..<$0.index(after: $0.startIndex), with: $0.prefix(1).uppercased())
+            }
+            .joined()
 
         let prefix: String
         let suffix: String = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])

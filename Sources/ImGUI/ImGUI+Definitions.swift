@@ -5,8 +5,8 @@ import CImGUI
 // swiftlint:disable identifier_name
 
 // Undeclared type definitions
-public typealias ImGuiContext = OpaquePointer
 public typealias ImDrawListSharedData = OpaquePointer
+public typealias ImGuiContext = OpaquePointer
 
 
 @inlinable public func ImColorHSV(_ this: UnsafeMutablePointer<ImColor>!, _ h: Float, _ s: Float, _ v: Float, _ a: Float) -> ImColor {

@@ -84,10 +84,12 @@ struct ArgsT: Decodable {
             return arg
         case .arrayFixedSize:
             return arg
-        case .pointer:
-            return arg
         case .reference:
             return "&\(arg)"
+        case .pointer where self.type.type != .char && self.type.isConst == false:
+            return "&\(arg)"
+        case .pointer:
+            return arg
         case .unknown:
             return arg
         }

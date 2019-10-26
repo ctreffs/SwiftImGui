@@ -46,5 +46,5 @@ try convert(filePath: CommandLine.arguments[1], validOnly: true) { body in
 
     let outURL: URL = URL(fileURLWithPath: CommandLine.arguments[2])
 
-    try data.write(to: outURL, options: .atomicWrite)
+    try data.write(to: outURL)
 }

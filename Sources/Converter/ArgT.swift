@@ -95,6 +95,8 @@ struct ArgsT: Decodable {
             return arg
         case .reference:
             return "&\(arg)"
+        case .pointer where self.type.isConst == false && self.type.type == .void:
+            return arg
         case .pointer where self.type.type != .char && self.type.isConst == false:
             return "&\(arg)"
         case .pointer:
@@ -113,6 +115,8 @@ struct ArgsT: Decodable {
         case .char where type.isConst == false:
         // char*
             out.append(".cMutableStrPtr()")
+        case .va_list:
+            out = "withVaList(\(out), { $0 })"
         default:
             break
         }

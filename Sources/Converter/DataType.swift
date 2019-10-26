@@ -57,7 +57,21 @@ struct DataType: Decodable {
             return
         }
 
-        if let firstAsterisk = string.firstIndex(of: "*") {
+        if let startFixArr = string.firstIndex(of: "["), let endFixArr = string.firstIndex(of: "]") {
+            // i.e. float[4]
+            let numRange = string.index(after: startFixArr)..<endFixArr
+            let count = Int(string[numRange]) ?? -1
+            let dataType = DataType(string: String(string[string.startIndex..<startFixArr]))
+
+            if count == -1 {
+                self.meta = .array
+                self.type = dataType.type
+            } else {
+                self.meta = .arrayFixedSize(count)
+                self.type = dataType.type
+            }
+
+        } else if let firstAsterisk = string.firstIndex(of: "*") {
             // TODO: parse complex types
 
             guard let lastAsertisk = string.lastIndex(of: "*") else {
@@ -86,15 +100,6 @@ struct DataType: Decodable {
             self.meta = .reference
             self.type = dataType.type
 
-        } else if let startFixArr = string.firstIndex(of: "["), let endFixArr = string.firstIndex(of: "]") {
-            // i.e. float[4]
-            let numRange = string.index(after: startFixArr)..<endFixArr
-            let count = Int(string[numRange])!
-            let dataType = DataType(string: String(string[string.startIndex..<startFixArr]))
-
-            self.meta = .arrayFixedSize(count)
-            self.type = dataType.type
-
         } else {
             // primitive custom types ImVec2, ImVector, T ...
 
@@ -118,6 +123,16 @@ struct DataType: Decodable {
         switch meta {
         case .primitive:
             return toWrap
+        case .array where isConst == true && type == .char:
+            return "[String]"
+        case .array where isConst == true:
+            return "[\(toWrap)]"
+            //return "UnsafePointer<\(toWrap)>!"
+        case .array where type == .char:
+            return "inout [String]"
+        case .array:
+            return "inout [\(toWrap)]"
+            //return "inout UnsafePointer<\(toWrap)>!"
         case let .arrayFixedSize(size) where isConst == false:
             // tuple
             return "inout (\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
@@ -287,6 +302,7 @@ extension DataType {
     enum MetaType: Equatable, Hashable {
         case primitive
         case arrayFixedSize(Int)
+        case array
         case pointer
         case reference
 

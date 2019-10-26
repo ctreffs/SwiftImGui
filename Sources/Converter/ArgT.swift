@@ -99,6 +99,9 @@ struct ArgsT: Decodable {
         case .char where type.isConst == true:
             // const char*
             out.append(".cStrPtr()")
+        case .char where type.isConst == false:
+        // char*
+            out.append(".cMutableStrPtr()")
         default:
             break
         }

@@ -1,10 +1,66 @@
+imgui_src := 3rdparty/cimgui
+c_imgui_src := Sources/CImGui
+swift_imgui_src := Sources/ImGui
+release_dir := .build/release
+
 lint:
-	swiftlint autocorrect
-	swiftlint
+	swiftlint autocorrect --format
+	swiftlint lint --quiet
 
-genTests:
+genLinuxTests:
 	swift test --generate-linuxmain
-	swiftlint autocorrect
+	swiftlint autocorrect --format --path Tests/
 
-updateDependencies:
-	git submodule update --init --recursive
+test: genLinuxTests
+	swift test
+
+submodule:
+	git submodule init
+	git submodule update --recursive
+
+updateCLibImGui:
+	git submodule init $(imgui_src)
+	git submodule update --recursive $(imgui_src)
+
+copyLibImGui:
+	cp $(imgui_src)/imgui/*.h $(c_imgui2_src)/imgui
+	cp $(imgui_src)/imgui/*.cpp $(c_imgui2_src)/imgui
+	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui2_src)/include
+	#cp $(imgui_src)/generator/output/cimgui_impl.h $(c_imgui2_src)
+	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui2_src)
+
+generateCInterface:
+	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl
+
+buildCImGui: updateCLibImGui generateCInterface copyLibImGui
+
+buildAutoWrapper:
+	swift build -c release --product AutoWrapper
+
+wrapLibImGui: buildAutoWrapper
+	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGui+Definitions.swift
+
+clean:
+	swift package reset
+	rm -rdf .swiftpm/xcode
+	rm -rdf .build/
+	rm Package.resolved
+	rm .DS_Store
+
+cleanArtifacts:
+	swift package clean
+
+latest:
+	swift package update
+
+resolve:
+	swift package resolve
+
+genXcode:
+	swift package generate-xcodeproj --enable-code-coverage --skip-extra-files 
+
+
+genXcodeOpen: genXcode
+	open *.xcodeproj
+
+precommit: lint genLinuxTests

@@ -27,7 +27,10 @@ import CImGUI
 // swiftlint:disable identifier_name
 
 // Undeclared type definitions
-\(Exceptions.undeclardTypes.values.map { "public typealias \($0.name) = \($0.typealiasType)" }.joined(separator: "\n"))
+\(Exceptions.undeclardTypes.values
+.map { "public typealias \($0.name) = \($0.typealiasType)" }
+.sorted()
+.joined(separator: "\n"))
 
 """
 

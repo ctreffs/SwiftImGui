@@ -69,8 +69,8 @@ struct FunctionDef: Decodable {
             .map {
                 // uppercase first character
                 $0.replacingCharacters(in: $0.startIndex..<$0.index(after: $0.startIndex), with: $0.prefix(1).uppercased())
-            }
-            .joined()
+        }
+        .joined()
 
         let prefix: String
         let suffix: String = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])

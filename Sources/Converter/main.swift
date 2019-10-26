@@ -27,11 +27,9 @@ import CImGUI
 // Undeclared type definitions
 \(Exceptions.undeclardTypes.values.map { "public typealias \($0.name) = \($0.typealiasType)" }.joined(separator: "\n"))
 
-extension ImGui {
 """
 
 let footer = """
-}
 """
 
 try convert(filePath: CommandLine.arguments[1], validOnly: true) { body in

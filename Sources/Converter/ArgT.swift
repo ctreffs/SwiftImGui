@@ -102,8 +102,8 @@ struct ArgsT: Decodable {
             return "&\(arg)"
         case let .arrayFixedSize(count) where self.type.isConst == false:
             return "UnsafeMutableBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
-            case let .arrayFixedSize(count):
-                return "UnsafeBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
+        case let .arrayFixedSize(count):
+            return "UnsafeBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
         case .reference:
             return "&\(arg)"
         case .pointer where self.type.isConst == false && self.type.type == .void:
@@ -126,7 +126,7 @@ struct ArgsT: Decodable {
             // const char*
             out.append(".cStrPtr()")
         case .char where type.isConst == false && type.meta == .pointer:
-        // char*
+            // char*
             out.append(".cMutableStrPtr()")
         case .va_list:
             out = "withVaList(\(out), { $0 })"

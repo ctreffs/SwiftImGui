@@ -139,12 +139,12 @@ struct DataType: Decodable {
             return "[String]"
         case .array where isConst == true:
             return "[\(toWrap)]"
-            //return "UnsafePointer<\(toWrap)>!"
+        //return "UnsafePointer<\(toWrap)>!"
         case .array where type == .char:
             return "inout [String]"
         case .array:
             return "inout [\(toWrap)]"
-            //return "inout UnsafePointer<\(toWrap)>!"
+        //return "inout UnsafePointer<\(toWrap)>!"
         case let .arrayFixedSize(size) where isConst == false:
             // tuple
             return "inout (\((0..<size).map({_ in toWrap }).joined(separator: ",")))"

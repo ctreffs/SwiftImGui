@@ -1,6 +1,6 @@
 //
 //  Exceptions.swift
-//  
+//
 //
 //  Created by Christian Treffs on 26.10.19.
 //

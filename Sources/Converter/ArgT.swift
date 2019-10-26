@@ -75,11 +75,13 @@ struct ArgsT: Decodable {
     }
 
     var toSwift: String {
-        return "\(self.name): \(self.type.toSwift)"
+        return ""
+        // return "\(self.name): \(self.type.toSwift)"
     }
 
     var toC: String {
-        return type.fromSwift(name: name)
+        return ""
+        // return type.fromSwift(name: name)
     }
 }
 

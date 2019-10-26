@@ -46,7 +46,7 @@ struct FunctionDef: Decodable {
     let templated: Bool = false
 
     @inlinable var isValid: Bool {
-        return argsT.allSatisfy { $0.isValid } && returnType.isValid
+        return argsT.allSatisfy { $0.isValid } // FIXME: && returnType.isValid
     }
 
     func encode(swift def: [ArgsT]) -> String {
@@ -68,19 +68,20 @@ struct FunctionDef: Decodable {
         return funcname + postfix
     }
 
-    var returnType: DataType {
-        guard let ret = self.ret else {
-            return .void
-        }
-        return ret
-    }
+    //  var returnType: DataType {
+    //      guard let ret = self.ret else {
+    //          return .void
+    //      }
+    //      return ret
+    //  }
 
     var toSwift: String {
-        return """
-        @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toSwift) {
-        \t\(returnType == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
-        }
-        """
+        return ""
+        // return """
+        // @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.returnSwift) {
+        // \t\(returnType == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
+        // }
+        // """
     }
 
 }

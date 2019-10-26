@@ -6,6 +6,7 @@
 //
 
 import struct Foundation.URL
+import struct Foundation.Data
 
 // Input: <SRC_ROOT>/3rdparty/cimgui/generator/output/definitions.json
 // Output <SRC_ROOT>/Source/ImGui/ImGui+Definitions.swift

@@ -1,8 +1,7 @@
 imgui_src := 3rdparty/cimgui
-imgui_build := 3rdparty/cimgui-build
 c_imgui_src := Sources/CImGUI
-c_imgui2_src := Sources/CImGUI2
- #-build
+swift_imgui_src := Sources/ImGUI
+release_dir := .build/release
 
 lint:
 	swiftlint autocorrect --format
@@ -19,44 +18,25 @@ submodule:
 	git submodule init
 	git submodule update --recursive
 
-libImGui: cleanLibImGui buildLibImGui copyLibImGui
-	$(MAKE) -C $(imgui_src) clean
-	rm -rdf $(imgui_build)
-
-buildLibImGuiStatic:
-	$(MAKE) -C $(imgui_src) all
-	ar -cvq $(imgui_src)/libcimgui.a $(imgui_src)/cimgui.o $(imgui_src)/imgui/imgui.o $(imgui_src)/imgui/imgui_draw.o $(imgui_src)/imgui/imgui_demo.o $(imgui_src)/imgui/imgui_widgets.o
-
-buildLibImGui:
-	cmake -S $(imgui_src) -B $(imgui_build) -DIMGUI_STATIC:STRING=yes -Wdev -Werror=dev # -G "Unix Makefiles"
-	$(MAKE) -C $(imgui_build) all
-	mv $(imgui_build)/cimgui.a $(imgui_build)/libcimgui.a
-
-cleanLibImGui:
-	rm -rdf $(imgui_build)
-	$(MAKE) -C $(imgui_src) clean
+updateCLibImGUI:
+	git submodule init $(imgui_src)
+	git submodule update --recursive $(imgui_src)
 
 copyLibImGui:
-	cp $(imgui_src)/*.h $(c_imgui_src)/include
-	cp $(imgui_build)/*.a $(c_imgui_src)/lib
-
-copyLibImGui2:
 	cp $(imgui_src)/imgui/*.h $(c_imgui2_src)/imgui
 	cp $(imgui_src)/imgui/*.cpp $(c_imgui2_src)/imgui
 	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui2_src)/include
-	cp $(imgui_src)/generator/output/cimgui_impl.h $(c_imgui2_src)
+	#cp $(imgui_src)/generator/output/cimgui_impl.h $(c_imgui2_src)
 	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui2_src)
 
 generateCInterface:
 	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl
 
-generateCInterface2:
-	cd $(imgui_src)/generator && luajit ./generator.lua nocompiler glfw opengl3 opengl2 sdl
+buildAutoWrapper:
+	swift build -c release --product AutoWrapper
 
-	
-cleanCLibImGui:
-	rm -rdf $(c_imgui_src)/lib/*.a
-	rm -rdf $(c_imgui_src)/include/*.h
+wrapLibImGui: buildAutoWrapper
+	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGUI+Definitions.swift
 
 clean:
 	swift package reset
@@ -74,16 +54,12 @@ latest:
 resolve:
 	swift package resolve
 
-genXcodeOpen: genXcode
-	open *.xcodeproj
-
-updateCLibImGUI:
-	git submodule init $(imgui_src)
-	git submodule update --recursive $(imgui_src)
-
 genXcode:
 	swift package generate-xcodeproj --enable-code-coverage --skip-extra-files 
 
+
+genXcodeOpen: genXcode
+	open *.xcodeproj
 
 precommit: lint genLinuxTests
 

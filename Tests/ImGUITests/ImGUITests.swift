@@ -3,14 +3,18 @@ import ImGUI
 
 final class ImGUITests: XCTestCase {
     func testVersion() {
-        XCTAssertFalse(ImGui.GetVersion().isEmpty)
+        XCTAssertNotNil(ImGuiGetVersion())
+        XCTAssertFalse(ImGuiGetVersion().isEmpty)
+        print(ImGuiGetVersion())
+        XCTAssertEqual(ImGuiGetVersion(), "1.74 WIP")
     }
 
     func testCreateContext() {
-        XCTAssertNotNil(ImGui.CreateContext())
+        var fontAtlass = ImFontAtlas()
+        XCTAssertNotNil(ImGuiCreateContext(&fontAtlass))
     }
 
     func testGetIO() {
-        XCTAssertNotNil(ImGui.GetIO())
+        XCTAssertNotNil(ImGuiGetIO())
     }
 }

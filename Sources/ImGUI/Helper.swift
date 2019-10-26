@@ -23,6 +23,10 @@ extension String {
             return startAddress
         }
     }
+
+    public mutating func cMutableStrPtr(using encoding: String.Encoding = .utf8) -> UnsafeMutablePointer<CChar>! {
+        return UnsafeMutablePointer<CChar>(mutating: self.cStrPtr())
+    }
 }
 
 extension Array {

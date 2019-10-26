@@ -84,7 +84,12 @@ struct ArgsT: Decodable {
     }
 
     var toSwift: String {
-        return "_ \(argName): \(self.type.toString(.argSwift))"
+        switch self.type.type {
+        case let .custom(name) where name.contains("Callback"):
+            return "_ \(argName): @escaping \(self.type.toString(.argSwift))"
+        default:
+            return "_ \(argName): \(self.type.toString(.argSwift))"
+        }
     }
 
     func wrapCArg(_ arg: String) -> String {

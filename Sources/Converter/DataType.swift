@@ -118,8 +118,10 @@ struct DataType: Decodable {
         switch meta {
         case .primitive:
             return toWrap
-        case let .arrayFixedSize(size):
+        case let .arrayFixedSize(size) where isConst == false:
             // tuple
+            return "inout (\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
+        case let .arrayFixedSize(size):
             return "(\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
         case .pointer where isConst == true && type == .char:
             // const char* -> String
@@ -149,7 +151,7 @@ struct DataType: Decodable {
 
     }
 
-    func toString(_ context: Context) -> String {
+    func toString(_ context: Context, wrapped: Bool = true) -> String {
         let out: String
 
         switch type {
@@ -178,7 +180,12 @@ struct DataType: Decodable {
             out = "<#CODE#>"
         }
 
-        return wrapIn(context, out)
+        if wrapped {
+            return wrapIn(context, out)
+        } else {
+            return out
+        }
+
     }
 
     //

@@ -96,8 +96,10 @@ struct ArgsT: Decodable {
         switch self.type.meta {
         case .primitive:
             return arg
-        case .arrayFixedSize:
-            return arg
+        case let .arrayFixedSize(count) where self.type.isConst == false:
+            return "UnsafeMutableBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
+            case let .arrayFixedSize(count):
+                return "UnsafeBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
         case .reference:
             return "&\(arg)"
         case .pointer where self.type.isConst == false && self.type.type == .void:

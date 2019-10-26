@@ -101,12 +101,30 @@ struct FunctionDef: Decodable {
             return call()
         }
     }
+    
+    var innerReturn: String {
+        switch returnType.type {
+        case .void:
+            return ""
+        default:
+            return "return "
+        }
+    }
+    
+    var funcDefs: String {
+        switch returnType.type {
+        case .bool:
+            return "@inlinable @discardableResult public func"
+        default:
+            return "@inlinable public func"
+        }
+        
+    }
 
     var toSwift: String {
-
         return """
-        @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
-        \t\(returnType.type == .void ? "" : "return ")\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
+        \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
+        \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
         }
         """
     }

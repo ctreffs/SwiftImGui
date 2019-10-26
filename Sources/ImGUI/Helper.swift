@@ -8,9 +8,9 @@
 import Foundation
 
 extension String {
-    public func cStrPtr(using encoding: String.Encoding = .utf8) -> UnsafePointer<CChar>! {
-        guard let cString: [CChar] = self.cString(using: encoding) else {
-            assertionFailure("could not create cString with encoding \(encoding) from \(self)")
+    public func cStrPtr() -> UnsafePointer<CChar>! {
+        guard let cString: [CChar] = self.cString(using: .utf8) else {
+            assertionFailure("could not create cString with encoding from \(self)")
             return nil
         }
 
@@ -24,7 +24,7 @@ extension String {
         }
     }
 
-    public mutating func cMutableStrPtr(using encoding: String.Encoding = .utf8) -> UnsafeMutablePointer<CChar>! {
+    public mutating func cMutableStrPtr() -> UnsafeMutablePointer<CChar>! {
         return UnsafeMutablePointer<CChar>(mutating: self.cStrPtr())
     }
 }

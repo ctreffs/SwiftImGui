@@ -45,6 +45,8 @@ struct FunctionDef: Decodable {
 
     let templated: Bool = false
 
+    let namespace: String?
+
     @inlinable var isValid: Bool {
         return argsT.allSatisfy { $0.isValid } && returnType.isValid
     }
@@ -59,13 +61,25 @@ struct FunctionDef: Decodable {
 
     var encodedFuncname: String {
         guard let range = ov_cimguiname.range(of: funcname) else {
+            assertionFailure("Original name should contain funcname")
             return funcname
         }
 
-        //let prefix: String = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
-        let postfix: String = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
+        var name: String = funcname.replacingOccurrences(of: "_", with: "")
 
-        return funcname + postfix
+        // uppercase first character
+        name.replaceSubrange(name.startIndex..<name.index(after: name.startIndex), with: name.prefix(1).uppercased())
+
+        let prefix: String
+        let suffix: String = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
+
+        if let namespace = self.namespace, !namespace.isEmpty {
+            prefix = namespace
+        } else {
+            prefix = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
+        }
+
+        return prefix.replacingOccurrences(of: "_", with: "") + name + suffix
     }
 
     var returnType: DataType {

@@ -167,7 +167,7 @@ struct DataType: Decodable {
         case .char where meta == .pointer:
             out = "String"
         case .char:
-            out = "Int8"
+            out = "CChar"
         case .float:
             out = "Float"
         case .double:

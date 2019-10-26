@@ -79,7 +79,8 @@ struct FunctionDef: Decodable {
             prefix = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
         }
 
-        return prefix.replacingOccurrences(of: "_", with: "") + name + suffix
+        let combinedName = prefix + name + suffix
+        return combinedName.replacingOccurrences(of: "_", with: "")
     }
 
     var returnType: DataType {

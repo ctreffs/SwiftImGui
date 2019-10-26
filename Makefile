@@ -32,6 +32,8 @@ copyLibImGui:
 generateCInterface:
 	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl
 
+buildCImGui: updateCLibImGui generateCInterface copyLibImGui
+
 buildAutoWrapper:
 	swift build -c release --product AutoWrapper
 

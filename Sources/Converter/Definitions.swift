@@ -68,20 +68,21 @@ struct FunctionDef: Decodable {
         return funcname + postfix
     }
 
-    //  var returnType: DataType {
-    //      guard let ret = self.ret else {
-    //          return .void
-    //      }
-    //      return ret
-    //  }
+    var returnType: DataType {
+        guard let ret = self.ret else {
+            return DataType(meta: .primitive, type: .void, isConst: false)
+        }
+
+        return ret
+    }
 
     var toSwift: String {
-        return ""
-        // return """
-        // @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.returnSwift) {
-        // \t\(returnType == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
-        // }
-        // """
+
+        return """
+        @inlinable public func \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
+        \t\(returnType.type == .void ? "" : "return ")\(self.ov_cimguiname)(\(encode(c: self.argsT)))
+        }
+        """
     }
 
 }

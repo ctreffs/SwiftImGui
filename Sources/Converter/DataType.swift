@@ -6,58 +6,15 @@
 //
 
 struct DataType: Decodable {
-    enum MetaType: Equatable, Hashable {
-        case primitive
-        case arrayFixedSize(Int)
-        case pointer
-        case reference
-
-        case unknown
-    }
-
-    enum ValueType: Equatable, Hashable {
-        case void
-        case bool
-        case int
-        case uint
-        case char
-        case float
-        case double
-        case size_t
-        case va_list
-        case custom(String)
-
-        case unknown
-
-        init?(rawValue: String) {
-            switch rawValue {
-            case "void":
-                self = .void
-            case "bool":
-                self = .bool
-            case "int":
-                self = .int
-            case "uint":
-                self = .uint
-            case "char":
-                self = .char
-            case "float":
-                self = .float
-            case "double":
-                self = .double
-            case "size_t":
-                self = .size_t
-            case "va_list", "...":
-                self = .va_list
-            default:
-                return nil
-            }
-        }
-    }
-
     let meta: MetaType
     let isConst: Bool
     let type: ValueType
+
+    init(meta: MetaType, type: ValueType, isConst: Bool) {
+        self.meta = meta
+        self.type = type
+        self.isConst = isConst
+    }
 
     @inlinable var isValid: Bool {
         return meta != .unknown && type != .unknown
@@ -150,6 +107,68 @@ struct DataType: Decodable {
 
     }
 
+    enum Context {
+        case argSwift
+        case argC
+        case ret
+    }
+
+    func wrapIn(_ context: Context, _ toWrap: String) -> String {
+
+        switch meta {
+        case .primitive:
+            return toWrap
+        case let .arrayFixedSize(size):
+            // tuple
+            return "(\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
+        case .pointer where isConst == true:
+            return "UnsafePointer<\(toWrap)>!"
+        case .pointer:
+            return "UnsafeMutablePointer<\(toWrap)>!"
+        case .reference where context == .argC && isConst == false:
+            return "&\(toWrap)"
+        case .reference where context == .argSwift && isConst == false:
+            return "inout \(toWrap)"
+        case .reference:
+            return "<#\(toWrap)#>"
+        case .unknown:
+            return "<#\(toWrap)#>"
+        }
+
+    }
+
+    func toString(_ context: Context) -> String {
+        let out: String
+
+        switch type {
+
+        case .void:
+            out = "Void"
+        case .bool:
+            out = "Bool"
+        case .int:
+            out = "Int32"
+        case .uint:
+            out = "UInt32"
+        case .char:
+            out = "String"
+        case .float:
+            out = "Float"
+        case .double:
+            out = "Double"
+        case .size_t:
+            out = "Int"
+        case .va_list:
+            out = "CVarArg..."
+        case let .custom(value):
+            out = value
+        case .unknown:
+            out = "<#CODE#>"
+        }
+
+        return wrapIn(context, out)
+    }
+
     //
     //    var toSwift: String {
     //        switch (type, meta, isConst) {
@@ -239,3 +258,61 @@ struct DataType: Decodable {
 
 extension DataType: Equatable { }
 extension DataType: Hashable { }
+
+// MARK: - MetaType
+extension DataType {
+    enum MetaType: Equatable, Hashable {
+        case primitive
+        case arrayFixedSize(Int)
+        case pointer
+        case reference
+
+        case unknown
+    }
+
+}
+
+// MARK: - Value Type
+extension DataType {
+
+    enum ValueType: Equatable, Hashable {
+        case void
+        case bool
+        case int
+        case uint
+        case char
+        case float
+        case double
+        case size_t
+        case va_list
+        case custom(String)
+
+        case unknown
+
+        init?(rawValue: String) {
+            switch rawValue {
+            case "void":
+                self = .void
+            case "bool":
+                self = .bool
+            case "int":
+                self = .int
+            case "uint":
+                self = .uint
+            case "char":
+                self = .char
+            case "float":
+                self = .float
+            case "double":
+                self = .double
+            case "size_t":
+                self = .size_t
+            case "va_list", "...":
+                self = .va_list
+            default:
+                return nil
+            }
+        }
+
+    }
+}

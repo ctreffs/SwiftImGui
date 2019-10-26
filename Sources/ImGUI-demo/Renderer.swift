@@ -100,6 +100,8 @@ extension Renderer: MTKViewDelegate {
                 counter += 1
             }
 
+            //SameLine(offset_from_start_x: 0, spacing: 0)
+
             ImGui.SameLine()
             ImGui.Text(String(format: "counter = %d", counter))
 
@@ -108,6 +110,7 @@ extension Renderer: MTKViewDelegate {
                               ImGui.GetIO().Framerate))
 
             ImGui.End()
+            //End()
 
             // 3. Show another simple window.
             if show_another_window {

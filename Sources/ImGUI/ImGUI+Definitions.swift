@@ -4,870 +4,2358 @@ import CImGUI
 
 // swiftlint:disable identifier_name
 
-@inlinable public func AlignTextToFramePadding() {
-    igAlignTextToFramePadding()
+public enum ImGui2 {
+
+@inlinable public func AcceptDragDropPayload(type: UnsafePointer<String>!, flags: ImGuiDragDropFlags) -> UnsafePointer<ImGuiPayload>! {
+	return igAcceptDragDropPayload(UnsafePointer<String>!,ImGuiDragDropFlags)
+}
+
+@inlinable public func AddBezierCurve(this: UnsafeMutablePointer<ImDrawList>!, pos0: ImVec2, cp0: ImVec2, cp1: ImVec2, pos1: ImVec2, col: ImU32, thickness: Float, num_segments: Int32) -> Void {
+	ImDrawList_AddBezierCurve(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,ImVec2,ImU32,Float,Int32)
+}
+
+@inlinable public func AddCallback(this: UnsafeMutablePointer<ImDrawList>!, callback: ImDrawCallback, callback_data: UnsafeMutablePointer<Void>!) -> Void {
+	ImDrawList_AddCallback(UnsafeMutablePointer<ImDrawList>!,ImDrawCallback,UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func AddChar(this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!, c: ImWchar) -> Void {
+	ImFontGlyphRangesBuilder_AddChar(UnsafeMutablePointer<ImFontGlyphRangesBuilder>!,ImWchar)
+}
+
+@inlinable public func AddCircle(this: UnsafeMutablePointer<ImDrawList>!, center: ImVec2, radius: Float, col: ImU32, num_segments: Int32, thickness: Float) -> Void {
+	ImDrawList_AddCircle(UnsafeMutablePointer<ImDrawList>!,ImVec2,Float,ImU32,Int32,Float)
+}
+
+@inlinable public func AddCircleFilled(this: UnsafeMutablePointer<ImDrawList>!, center: ImVec2, radius: Float, col: ImU32, num_segments: Int32) -> Void {
+	ImDrawList_AddCircleFilled(UnsafeMutablePointer<ImDrawList>!,ImVec2,Float,ImU32,Int32)
+}
+
+@inlinable public func AddConvexPolyFilled(this: UnsafeMutablePointer<ImDrawList>!, points: UnsafePointer<ImVec2>!, num_points: Int32, col: ImU32) -> Void {
+	ImDrawList_AddConvexPolyFilled(UnsafeMutablePointer<ImDrawList>!,UnsafePointer<ImVec2>!,Int32,ImU32)
+}
+
+@inlinable public func AddCustomRectFontGlyph(this: UnsafeMutablePointer<ImFontAtlas>!, font: UnsafeMutablePointer<ImFont>!, id: ImWchar, width: Int32, height: Int32, advance_x: Float, offset: ImVec2) -> Int32 {
+	return ImFontAtlas_AddCustomRectFontGlyph(UnsafeMutablePointer<ImFontAtlas>!,UnsafeMutablePointer<ImFont>!,ImWchar,Int32,Int32,Float,ImVec2)
+}
+
+@inlinable public func AddCustomRectRegular(this: UnsafeMutablePointer<ImFontAtlas>!, id: UInt32, width: Int32, height: Int32) -> Int32 {
+	return ImFontAtlas_AddCustomRectRegular(UnsafeMutablePointer<ImFontAtlas>!,UInt32,Int32,Int32)
+}
+
+@inlinable public func AddDrawCmd(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_AddDrawCmd(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func AddFont(this: UnsafeMutablePointer<ImFontAtlas>!, font_cfg: UnsafePointer<ImFontConfig>!) -> UnsafeMutablePointer<ImFont>! {
+	return ImFontAtlas_AddFont(UnsafeMutablePointer<ImFontAtlas>!,UnsafePointer<ImFontConfig>!)
+}
+
+@inlinable public func AddFontDefault(this: UnsafeMutablePointer<ImFontAtlas>!, font_cfg: UnsafePointer<ImFontConfig>!) -> UnsafeMutablePointer<ImFont>! {
+	return ImFontAtlas_AddFontDefault(UnsafeMutablePointer<ImFontAtlas>!,UnsafePointer<ImFontConfig>!)
+}
+
+@inlinable public func AddFontFromFileTTF(this: UnsafeMutablePointer<ImFontAtlas>!, filename: UnsafePointer<String>!, size_pixels: Float, font_cfg: UnsafePointer<ImFontConfig>!, glyph_ranges: UnsafePointer<ImWchar>!) -> UnsafeMutablePointer<ImFont>! {
+	return ImFontAtlas_AddFontFromFileTTF(UnsafeMutablePointer<ImFontAtlas>!,UnsafePointer<String>!,Float,UnsafePointer<ImFontConfig>!,UnsafePointer<ImWchar>!)
+}
+
+@inlinable public func AddFontFromMemoryCompressedBase85TTF(this: UnsafeMutablePointer<ImFontAtlas>!, compressed_font_data_base85: UnsafePointer<String>!, size_pixels: Float, font_cfg: UnsafePointer<ImFontConfig>!, glyph_ranges: UnsafePointer<ImWchar>!) -> UnsafeMutablePointer<ImFont>! {
+	return ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(UnsafeMutablePointer<ImFontAtlas>!,UnsafePointer<String>!,Float,UnsafePointer<ImFontConfig>!,UnsafePointer<ImWchar>!)
+}
+
+@inlinable public func AddFontFromMemoryCompressedTTF(this: UnsafeMutablePointer<ImFontAtlas>!, compressed_font_data: UnsafePointer<Void>!, compressed_font_size: Int32, size_pixels: Float, font_cfg: UnsafePointer<ImFontConfig>!, glyph_ranges: UnsafePointer<ImWchar>!) -> UnsafeMutablePointer<ImFont>! {
+	return ImFontAtlas_AddFontFromMemoryCompressedTTF(UnsafeMutablePointer<ImFontAtlas>!,UnsafePointer<Void>!,Int32,Float,UnsafePointer<ImFontConfig>!,UnsafePointer<ImWchar>!)
+}
+
+@inlinable public func AddFontFromMemoryTTF(this: UnsafeMutablePointer<ImFontAtlas>!, font_data: UnsafeMutablePointer<Void>!, font_size: Int32, size_pixels: Float, font_cfg: UnsafePointer<ImFontConfig>!, glyph_ranges: UnsafePointer<ImWchar>!) -> UnsafeMutablePointer<ImFont>! {
+	return ImFontAtlas_AddFontFromMemoryTTF(UnsafeMutablePointer<ImFontAtlas>!,UnsafeMutablePointer<Void>!,Int32,Float,UnsafePointer<ImFontConfig>!,UnsafePointer<ImWchar>!)
+}
+
+@inlinable public func AddGlyph(this: UnsafeMutablePointer<ImFont>!, c: ImWchar, x0: Float, y0: Float, x1: Float, y1: Float, u0: Float, v0: Float, u1: Float, v1: Float, advance_x: Float) -> Void {
+	ImFont_AddGlyph(UnsafeMutablePointer<ImFont>!,ImWchar,Float,Float,Float,Float,Float,Float,Float,Float,Float)
+}
+
+@inlinable public func AddImage(this: UnsafeMutablePointer<ImDrawList>!, user_texture_id: ImTextureID, p_min: ImVec2, p_max: ImVec2, uv_min: ImVec2, uv_max: ImVec2, col: ImU32) -> Void {
+	ImDrawList_AddImage(UnsafeMutablePointer<ImDrawList>!,ImTextureID,ImVec2,ImVec2,ImVec2,ImVec2,ImU32)
+}
+
+@inlinable public func AddImageQuad(this: UnsafeMutablePointer<ImDrawList>!, user_texture_id: ImTextureID, p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, uv1: ImVec2, uv2: ImVec2, uv3: ImVec2, uv4: ImVec2, col: ImU32) -> Void {
+	ImDrawList_AddImageQuad(UnsafeMutablePointer<ImDrawList>!,ImTextureID,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImU32)
+}
+
+@inlinable public func AddImageRounded(this: UnsafeMutablePointer<ImDrawList>!, user_texture_id: ImTextureID, p_min: ImVec2, p_max: ImVec2, uv_min: ImVec2, uv_max: ImVec2, col: ImU32, rounding: Float, rounding_corners: ImDrawCornerFlags) -> Void {
+	ImDrawList_AddImageRounded(UnsafeMutablePointer<ImDrawList>!,ImTextureID,ImVec2,ImVec2,ImVec2,ImVec2,ImU32,Float,ImDrawCornerFlags)
+}
+
+@inlinable public func AddInputCharacter(this: UnsafeMutablePointer<ImGuiIO>!, c: UInt32) -> Void {
+	ImGuiIO_AddInputCharacter(UnsafeMutablePointer<ImGuiIO>!,UInt32)
+}
+
+@inlinable public func AddInputCharactersUTF8(this: UnsafeMutablePointer<ImGuiIO>!, str: UnsafePointer<String>!) -> Void {
+	ImGuiIO_AddInputCharactersUTF8(UnsafeMutablePointer<ImGuiIO>!,UnsafePointer<String>!)
+}
+
+@inlinable public func AddLine(this: UnsafeMutablePointer<ImDrawList>!, p1: ImVec2, p2: ImVec2, col: ImU32, thickness: Float) -> Void {
+	ImDrawList_AddLine(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImU32,Float)
+}
+
+@inlinable public func AddPolyline(this: UnsafeMutablePointer<ImDrawList>!, points: UnsafePointer<ImVec2>!, num_points: Int32, col: ImU32, closed: Bool, thickness: Float) -> Void {
+	ImDrawList_AddPolyline(UnsafeMutablePointer<ImDrawList>!,UnsafePointer<ImVec2>!,Int32,ImU32,Bool,Float)
+}
+
+@inlinable public func AddQuad(this: UnsafeMutablePointer<ImDrawList>!, p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, col: ImU32, thickness: Float) -> Void {
+	ImDrawList_AddQuad(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,ImVec2,ImU32,Float)
+}
+
+@inlinable public func AddQuadFilled(this: UnsafeMutablePointer<ImDrawList>!, p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, col: ImU32) -> Void {
+	ImDrawList_AddQuadFilled(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,ImVec2,ImU32)
+}
+
+@inlinable public func AddRanges(this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!, ranges: UnsafePointer<ImWchar>!) -> Void {
+	ImFontGlyphRangesBuilder_AddRanges(UnsafeMutablePointer<ImFontGlyphRangesBuilder>!,UnsafePointer<ImWchar>!)
+}
+
+@inlinable public func AddRect(this: UnsafeMutablePointer<ImDrawList>!, p_min: ImVec2, p_max: ImVec2, col: ImU32, rounding: Float, rounding_corners: ImDrawCornerFlags, thickness: Float) -> Void {
+	ImDrawList_AddRect(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImU32,Float,ImDrawCornerFlags,Float)
+}
+
+@inlinable public func AddRectFilled(this: UnsafeMutablePointer<ImDrawList>!, p_min: ImVec2, p_max: ImVec2, col: ImU32, rounding: Float, rounding_corners: ImDrawCornerFlags) -> Void {
+	ImDrawList_AddRectFilled(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImU32,Float,ImDrawCornerFlags)
+}
+
+@inlinable public func AddRectFilledMultiColor(this: UnsafeMutablePointer<ImDrawList>!, p_min: ImVec2, p_max: ImVec2, col_upr_left: ImU32, col_upr_right: ImU32, col_bot_right: ImU32, col_bot_left: ImU32) -> Void {
+	ImDrawList_AddRectFilledMultiColor(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImU32,ImU32,ImU32,ImU32)
+}
+
+@inlinable public func AddRemapChar(this: UnsafeMutablePointer<ImFont>!, dst: ImWchar, src: ImWchar, overwrite_dst: Bool) -> Void {
+	ImFont_AddRemapChar(UnsafeMutablePointer<ImFont>!,ImWchar,ImWchar,Bool)
+}
+
+@inlinable public func AddText(this: UnsafeMutablePointer<ImDrawList>!, pos: ImVec2, col: ImU32, text_begin: UnsafePointer<String>!, text_end: UnsafePointer<String>!) -> Void {
+	ImDrawList_AddText(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImU32,UnsafePointer<String>!,UnsafePointer<String>!)
+}
+
+@inlinable public func AddText(this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!, text: UnsafePointer<String>!, text_end: UnsafePointer<String>!) -> Void {
+	ImFontGlyphRangesBuilder_AddText(UnsafeMutablePointer<ImFontGlyphRangesBuilder>!,UnsafePointer<String>!,UnsafePointer<String>!)
+}
+
+@inlinable public func AddTextFontPtr(this: UnsafeMutablePointer<ImDrawList>!, font: UnsafePointer<ImFont>!, font_size: Float, pos: ImVec2, col: ImU32, text_begin: UnsafePointer<String>!, text_end: UnsafePointer<String>!, wrap_width: Float, cpu_fine_clip_rect: UnsafePointer<ImVec4>!) -> Void {
+	ImDrawList_AddTextFontPtr(UnsafeMutablePointer<ImDrawList>!,UnsafePointer<ImFont>!,Float,ImVec2,ImU32,UnsafePointer<String>!,UnsafePointer<String>!,Float,UnsafePointer<ImVec4>!)
+}
+
+@inlinable public func AddTriangle(this: UnsafeMutablePointer<ImDrawList>!, p1: ImVec2, p2: ImVec2, p3: ImVec2, col: ImU32, thickness: Float) -> Void {
+	ImDrawList_AddTriangle(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,ImU32,Float)
+}
+
+@inlinable public func AddTriangleFilled(this: UnsafeMutablePointer<ImDrawList>!, p1: ImVec2, p2: ImVec2, p3: ImVec2, col: ImU32) -> Void {
+	ImDrawList_AddTriangleFilled(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,ImU32)
+}
+
+@inlinable public func AlignTextToFramePadding() -> Void {
+	igAlignTextToFramePadding()
+}
+
+@inlinable public func ArrowButton(str_id: UnsafePointer<String>!, dir: ImGuiDir) -> Bool {
+	return igArrowButton(UnsafePointer<String>!,ImGuiDir)
+}
+
+@inlinable public func Begin(this: UnsafeMutablePointer<ImGuiListClipper>!, items_count: Int32, items_height: Float) -> Void {
+	ImGuiListClipper_Begin(UnsafeMutablePointer<ImGuiListClipper>!,Int32,Float)
+}
+
+@inlinable public func Begin(name: UnsafePointer<String>!, p_open: UnsafeMutablePointer<Bool>!, flags: ImGuiWindowFlags) -> Bool {
+	return igBegin(UnsafePointer<String>!,UnsafeMutablePointer<Bool>!,ImGuiWindowFlags)
+}
+
+@inlinable public func BeginChild(str_id: UnsafePointer<String>!, size: ImVec2, border: Bool, flags: ImGuiWindowFlags) -> Bool {
+	return igBeginChild(UnsafePointer<String>!,ImVec2,Bool,ImGuiWindowFlags)
 }
 
 @inlinable public func BeginChildFrame(id: ImGuiID, size: ImVec2, flags: ImGuiWindowFlags) -> Bool {
-    return igBeginChildFrame(id, size, flags)
+	return igBeginChildFrame(ImGuiID,ImVec2,ImGuiWindowFlags)
 }
 
 @inlinable public func BeginChildID(id: ImGuiID, size: ImVec2, border: Bool, flags: ImGuiWindowFlags) -> Bool {
-    return igBeginChildID(id, size, border, flags)
+	return igBeginChildID(ImGuiID,ImVec2,Bool,ImGuiWindowFlags)
+}
+
+@inlinable public func BeginCombo(label: UnsafePointer<String>!, preview_value: UnsafePointer<String>!, flags: ImGuiComboFlags) -> Bool {
+	return igBeginCombo(UnsafePointer<String>!,UnsafePointer<String>!,ImGuiComboFlags)
 }
 
 @inlinable public func BeginDragDropSource(flags: ImGuiDragDropFlags) -> Bool {
-    return igBeginDragDropSource(flags)
+	return igBeginDragDropSource(ImGuiDragDropFlags)
 }
 
 @inlinable public func BeginDragDropTarget() -> Bool {
-    return igBeginDragDropTarget()
+	return igBeginDragDropTarget()
 }
 
-@inlinable public func BeginGroup() {
-    igBeginGroup()
+@inlinable public func BeginGroup() -> Void {
+	igBeginGroup()
 }
 
 @inlinable public func BeginMainMenuBar() -> Bool {
-    return igBeginMainMenuBar()
+	return igBeginMainMenuBar()
+}
+
+@inlinable public func BeginMenu(label: UnsafePointer<String>!, enabled: Bool) -> Bool {
+	return igBeginMenu(UnsafePointer<String>!,Bool)
 }
 
 @inlinable public func BeginMenuBar() -> Bool {
-    return igBeginMenuBar()
+	return igBeginMenuBar()
 }
 
-@inlinable public func BeginTooltip() {
-    igBeginTooltip()
+@inlinable public func BeginPopup(str_id: UnsafePointer<String>!, flags: ImGuiWindowFlags) -> Bool {
+	return igBeginPopup(UnsafePointer<String>!,ImGuiWindowFlags)
 }
 
-@inlinable public func Bullet() {
-    igBullet()
+@inlinable public func BeginPopupContextItem(str_id: UnsafePointer<String>!, mouse_button: Int32) -> Bool {
+	return igBeginPopupContextItem(UnsafePointer<String>!,Int32)
+}
+
+@inlinable public func BeginPopupContextVoid(str_id: UnsafePointer<String>!, mouse_button: Int32) -> Bool {
+	return igBeginPopupContextVoid(UnsafePointer<String>!,Int32)
+}
+
+@inlinable public func BeginPopupContextWindow(str_id: UnsafePointer<String>!, mouse_button: Int32, also_over_items: Bool) -> Bool {
+	return igBeginPopupContextWindow(UnsafePointer<String>!,Int32,Bool)
+}
+
+@inlinable public func BeginPopupModal(name: UnsafePointer<String>!, p_open: UnsafeMutablePointer<Bool>!, flags: ImGuiWindowFlags) -> Bool {
+	return igBeginPopupModal(UnsafePointer<String>!,UnsafeMutablePointer<Bool>!,ImGuiWindowFlags)
+}
+
+@inlinable public func BeginTabBar(str_id: UnsafePointer<String>!, flags: ImGuiTabBarFlags) -> Bool {
+	return igBeginTabBar(UnsafePointer<String>!,ImGuiTabBarFlags)
+}
+
+@inlinable public func BeginTabItem(label: UnsafePointer<String>!, p_open: UnsafeMutablePointer<Bool>!, flags: ImGuiTabItemFlags) -> Bool {
+	return igBeginTabItem(UnsafePointer<String>!,UnsafeMutablePointer<Bool>!,ImGuiTabItemFlags)
+}
+
+@inlinable public func BeginTooltip() -> Void {
+	igBeginTooltip()
+}
+
+@inlinable public func Build(this: UnsafeMutablePointer<ImFontAtlas>!) -> Bool {
+	return ImFontAtlas_Build(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func Build(this: UnsafeMutablePointer<ImGuiTextFilter>!) -> Void {
+	ImGuiTextFilter_Build(UnsafeMutablePointer<ImGuiTextFilter>!)
+}
+
+@inlinable public func BuildLookupTable(this: UnsafeMutablePointer<ImFont>!) -> Void {
+	ImFont_BuildLookupTable(UnsafeMutablePointer<ImFont>!)
+}
+
+@inlinable public func BuildRanges(this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!, out_ranges: UnsafeMutablePointer<ImVector_ImWchar>!) -> Void {
+	ImFontGlyphRangesBuilder_BuildRanges(UnsafeMutablePointer<ImFontGlyphRangesBuilder>!,UnsafeMutablePointer<ImVector_ImWchar>!)
+}
+
+@inlinable public func BuildSortByKey(this: UnsafeMutablePointer<ImGuiStorage>!) -> Void {
+	ImGuiStorage_BuildSortByKey(UnsafeMutablePointer<ImGuiStorage>!)
+}
+
+@inlinable public func Bullet() -> Void {
+	igBullet()
+}
+
+@inlinable public func BulletText(fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igBulletText(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func BulletTextV(fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	igBulletTextV(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func Button(label: UnsafePointer<String>!, size: ImVec2) -> Bool {
+	return igButton(UnsafePointer<String>!,ImVec2)
+}
+
+@inlinable public func CalcCustomRectUV(this: UnsafeMutablePointer<ImFontAtlas>!, rect: UnsafePointer<ImFontAtlasCustomRect>!, out_uv_min: UnsafeMutablePointer<ImVec2>!, out_uv_max: UnsafeMutablePointer<ImVec2>!) -> Void {
+	ImFontAtlas_CalcCustomRectUV(UnsafeMutablePointer<ImFontAtlas>!,UnsafePointer<ImFontAtlasCustomRect>!,UnsafeMutablePointer<ImVec2>!,UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func CalcItemWidth() -> Float {
-    return igCalcItemWidth()
+	return igCalcItemWidth()
 }
 
-@inlinable public func CaptureKeyboardFromApp(want_capture_keyboard_value: Bool) {
-    igCaptureKeyboardFromApp(want_capture_keyboard_value)
+@inlinable public func CalcListClipping(items_count: Int32, items_height: Float, out_items_display_start: UnsafeMutablePointer<Int32>!, out_items_display_end: UnsafeMutablePointer<Int32>!) -> Void {
+	igCalcListClipping(Int32,Float,UnsafeMutablePointer<Int32>!,UnsafeMutablePointer<Int32>!)
 }
 
-@inlinable public func CaptureMouseFromApp(want_capture_mouse_value: Bool) {
-    igCaptureMouseFromApp(want_capture_mouse_value)
+@inlinable public func CalcTextSize(text: UnsafePointer<String>!, text_end: UnsafePointer<String>!, hide_text_after_double_hash: Bool, wrap_width: Float) -> ImVec2 {
+	return igCalcTextSize(UnsafePointer<String>!,UnsafePointer<String>!,Bool,Float)
 }
 
-@inlinable public func CloseCurrentPopup() {
-    igCloseCurrentPopup()
+@inlinable public func CalcTextSize_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!, text: UnsafePointer<String>!, text_end: UnsafePointer<String>!, hide_text_after_double_hash: Bool, wrap_width: Float) -> Void {
+	igCalcTextSize_nonUDT(UnsafeMutablePointer<ImVec2>!,UnsafePointer<String>!,UnsafePointer<String>!,Bool,Float)
+}
+
+@inlinable public func CalcTextSize_nonUDT2(text: UnsafePointer<String>!, text_end: UnsafePointer<String>!, hide_text_after_double_hash: Bool, wrap_width: Float) -> ImVec2_Simple {
+	return igCalcTextSize_nonUDT2(UnsafePointer<String>!,UnsafePointer<String>!,Bool,Float)
+}
+
+@inlinable public func CalcWordWrapPositionA(this: UnsafeMutablePointer<ImFont>!, scale: Float, text: UnsafePointer<String>!, text_end: UnsafePointer<String>!, wrap_width: Float) -> UnsafePointer<String>! {
+	return ImFont_CalcWordWrapPositionA(UnsafeMutablePointer<ImFont>!,Float,UnsafePointer<String>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func CaptureKeyboardFromApp(want_capture_keyboard_value: Bool) -> Void {
+	igCaptureKeyboardFromApp(Bool)
+}
+
+@inlinable public func CaptureMouseFromApp(want_capture_mouse_value: Bool) -> Void {
+	igCaptureMouseFromApp(Bool)
+}
+
+@inlinable public func ChannelsMerge(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_ChannelsMerge(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func ChannelsSetCurrent(this: UnsafeMutablePointer<ImDrawList>!, n: Int32) -> Void {
+	ImDrawList_ChannelsSetCurrent(UnsafeMutablePointer<ImDrawList>!,Int32)
+}
+
+@inlinable public func ChannelsSplit(this: UnsafeMutablePointer<ImDrawList>!, count: Int32) -> Void {
+	ImDrawList_ChannelsSplit(UnsafeMutablePointer<ImDrawList>!,Int32)
+}
+
+@inlinable public func Checkbox(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Bool>!) -> Bool {
+	return igCheckbox(UnsafePointer<String>!,UnsafeMutablePointer<Bool>!)
+}
+
+@inlinable public func CheckboxFlags(label: UnsafePointer<String>!, flags: UnsafeMutablePointer<UInt32>!, flags_value: UInt32) -> Bool {
+	return igCheckboxFlags(UnsafePointer<String>!,UnsafeMutablePointer<UInt32>!,UInt32)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_Clear(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImDrawData>!) -> Void {
+	ImDrawData_Clear(UnsafeMutablePointer<ImDrawData>!)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImGuiStorage>!) -> Void {
+	ImGuiStorage_Clear(UnsafeMutablePointer<ImGuiStorage>!)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImGuiTextFilter>!) -> Void {
+	ImGuiTextFilter_Clear(UnsafeMutablePointer<ImGuiTextFilter>!)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImFontAtlas>!) -> Void {
+	ImFontAtlas_Clear(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!) -> Void {
+	ImFontGlyphRangesBuilder_Clear(UnsafeMutablePointer<ImFontGlyphRangesBuilder>!)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImDrawListSplitter>!) -> Void {
+	ImDrawListSplitter_Clear(UnsafeMutablePointer<ImDrawListSplitter>!)
+}
+
+@inlinable public func Clear(this: UnsafeMutablePointer<ImGuiPayload>!) -> Void {
+	ImGuiPayload_Clear(UnsafeMutablePointer<ImGuiPayload>!)
+}
+
+@inlinable public func ClearFonts(this: UnsafeMutablePointer<ImFontAtlas>!) -> Void {
+	ImFontAtlas_ClearFonts(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func ClearFreeMemory(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_ClearFreeMemory(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func ClearFreeMemory(this: UnsafeMutablePointer<ImDrawListSplitter>!) -> Void {
+	ImDrawListSplitter_ClearFreeMemory(UnsafeMutablePointer<ImDrawListSplitter>!)
+}
+
+@inlinable public func ClearInputCharacters(this: UnsafeMutablePointer<ImGuiIO>!) -> Void {
+	ImGuiIO_ClearInputCharacters(UnsafeMutablePointer<ImGuiIO>!)
+}
+
+@inlinable public func ClearInputData(this: UnsafeMutablePointer<ImFontAtlas>!) -> Void {
+	ImFontAtlas_ClearInputData(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func ClearOutputData(this: UnsafeMutablePointer<ImFont>!) -> Void {
+	ImFont_ClearOutputData(UnsafeMutablePointer<ImFont>!)
+}
+
+@inlinable public func ClearTexData(this: UnsafeMutablePointer<ImFontAtlas>!) -> Void {
+	ImFontAtlas_ClearTexData(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func CloneOutput(this: UnsafeMutablePointer<ImDrawList>!) -> UnsafeMutablePointer<ImDrawList>! {
+	return ImDrawList_CloneOutput(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func CloseCurrentPopup() -> Void {
+	igCloseCurrentPopup()
+}
+
+@inlinable public func CollapsingHeader(label: UnsafePointer<String>!, flags: ImGuiTreeNodeFlags) -> Bool {
+	return igCollapsingHeader(UnsafePointer<String>!,ImGuiTreeNodeFlags)
+}
+
+@inlinable public func CollapsingHeaderBoolPtr(label: UnsafePointer<String>!, p_open: UnsafeMutablePointer<Bool>!, flags: ImGuiTreeNodeFlags) -> Bool {
+	return igCollapsingHeaderBoolPtr(UnsafePointer<String>!,UnsafeMutablePointer<Bool>!,ImGuiTreeNodeFlags)
+}
+
+@inlinable public func ColorButton(desc_id: UnsafePointer<String>!, col: ImVec4, flags: ImGuiColorEditFlags, size: ImVec2) -> Bool {
+	return igColorButton(UnsafePointer<String>!,ImVec4,ImGuiColorEditFlags,ImVec2)
 }
 
 @inlinable public func ColorConvertFloat4ToU32(`in`: ImVec4) -> ImU32 {
-    return igColorConvertFloat4ToU32(`in`)
+	return igColorConvertFloat4ToU32(ImVec4)
 }
 
-@inlinable public func ColorConvertHSVtoRGB(h: Float, s: Float, v: Float, out_r: inout Float, out_g: inout Float, out_b: inout Float) {
-    igColorConvertHSVtoRGB(h, s, v, &out_r, &out_g, &out_b)
+@inlinable public func ColorConvertHSVtoRGB(h: Float, s: Float, v: Float, out_r: inout Float, out_g: inout Float, out_b: inout Float) -> Void {
+	igColorConvertHSVtoRGB(Float,Float,Float,&Float,&Float,&Float)
 }
 
-@inlinable public func ColorConvertRGBtoHSV(r: Float, g: Float, b: Float, out_h: inout Float, out_s: inout Float, out_v: inout Float) {
-    igColorConvertRGBtoHSV(r, g, b, &out_h, &out_s, &out_v)
+@inlinable public func ColorConvertRGBtoHSV(r: Float, g: Float, b: Float, out_h: inout Float, out_s: inout Float, out_v: inout Float) -> Void {
+	igColorConvertRGBtoHSV(Float,Float,Float,&Float,&Float,&Float)
 }
 
 @inlinable public func ColorConvertU32ToFloat4(`in`: ImU32) -> ImVec4 {
-    return igColorConvertU32ToFloat4(`in`)
+	return igColorConvertU32ToFloat4(ImU32)
+}
+
+@inlinable public func ColorConvertU32ToFloat4_nonUDT(pOut: UnsafeMutablePointer<ImVec4>!, `in`: ImU32) -> Void {
+	igColorConvertU32ToFloat4_nonUDT(UnsafeMutablePointer<ImVec4>!,ImU32)
 }
 
 @inlinable public func ColorConvertU32ToFloat4_nonUDT2(`in`: ImU32) -> ImVec4_Simple {
-    return igColorConvertU32ToFloat4_nonUDT2(`in`)
+	return igColorConvertU32ToFloat4_nonUDT2(ImU32)
 }
 
-@inlinable public func DestroyPlatformWindows() {
-    igDestroyPlatformWindows()
+@inlinable public func ColorEdit3(label: UnsafePointer<String>!, col: (Float,Float,Float), flags: ImGuiColorEditFlags) -> Bool {
+	return igColorEdit3(UnsafePointer<String>!,(Float,Float,Float),ImGuiColorEditFlags)
 }
 
-@inlinable public func Dummy(size: ImVec2) {
-    igDummy(size)
+@inlinable public func ColorEdit4(label: UnsafePointer<String>!, col: (Float,Float,Float,Float), flags: ImGuiColorEditFlags) -> Bool {
+	return igColorEdit4(UnsafePointer<String>!,(Float,Float,Float,Float),ImGuiColorEditFlags)
 }
 
-@inlinable public func End() {
-    igEnd()
+@inlinable public func ColorPicker3(label: UnsafePointer<String>!, col: (Float,Float,Float), flags: ImGuiColorEditFlags) -> Bool {
+	return igColorPicker3(UnsafePointer<String>!,(Float,Float,Float),ImGuiColorEditFlags)
 }
 
-@inlinable public func EndChild() {
-    igEndChild()
+@inlinable public func ColorPicker4(label: UnsafePointer<String>!, col: (Float,Float,Float,Float), flags: ImGuiColorEditFlags, ref_col: UnsafePointer<Float>!) -> Bool {
+	return igColorPicker4(UnsafePointer<String>!,(Float,Float,Float,Float),ImGuiColorEditFlags,UnsafePointer<Float>!)
 }
 
-@inlinable public func EndChildFrame() {
-    igEndChildFrame()
+@inlinable public func Columns(count: Int32, id: UnsafePointer<String>!, border: Bool) -> Void {
+	igColumns(Int32,UnsafePointer<String>!,Bool)
 }
 
-@inlinable public func EndCombo() {
-    igEndCombo()
+@inlinable public func Combo(label: UnsafePointer<String>!, current_item: UnsafeMutablePointer<Int32>!, items: UnsafePointer<String>!, items_count: Int32, popup_max_height_in_items: Int32) -> Bool {
+	return igCombo(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,UnsafePointer<String>!,Int32,Int32)
 }
 
-@inlinable public func EndDragDropSource() {
-    igEndDragDropSource()
+@inlinable public func ComboStr(label: UnsafePointer<String>!, current_item: UnsafeMutablePointer<Int32>!, items_separated_by_zeros: UnsafePointer<String>!, popup_max_height_in_items: Int32) -> Bool {
+	return igComboStr(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,UnsafePointer<String>!,Int32)
 }
 
-@inlinable public func EndDragDropTarget() {
-    igEndDragDropTarget()
+@inlinable public func CreateContext(shared_font_atlas: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafeMutablePointer<ImGuiContext>! {
+	return igCreateContext(UnsafeMutablePointer<ImFontAtlas>!)
 }
 
-@inlinable public func EndFrame() {
-    igEndFrame()
+@inlinable public func DeIndexAllBuffers(this: UnsafeMutablePointer<ImDrawData>!) -> Void {
+	ImDrawData_DeIndexAllBuffers(UnsafeMutablePointer<ImDrawData>!)
 }
 
-@inlinable public func EndGroup() {
-    igEndGroup()
+@inlinable public func DebugCheckVersionAndDataLayout(version_str: UnsafePointer<String>!, sz_io: Int, sz_style: Int, sz_vec2: Int, sz_vec4: Int, sz_drawvert: Int, sz_drawidx: Int) -> Bool {
+	return igDebugCheckVersionAndDataLayout(UnsafePointer<String>!,Int,Int,Int,Int,Int,Int)
 }
 
-@inlinable public func EndMainMenuBar() {
-    igEndMainMenuBar()
+@inlinable public func DeleteChars(this: UnsafeMutablePointer<ImGuiInputTextCallbackData>!, pos: Int32, bytes_count: Int32) -> Void {
+	ImGuiInputTextCallbackData_DeleteChars(UnsafeMutablePointer<ImGuiInputTextCallbackData>!,Int32,Int32)
 }
 
-@inlinable public func EndMenu() {
-    igEndMenu()
+@inlinable public func DestroyContext(ctx: UnsafeMutablePointer<ImGuiContext>!) -> Void {
+	igDestroyContext(UnsafeMutablePointer<ImGuiContext>!)
 }
 
-@inlinable public func EndMenuBar() {
-    igEndMenuBar()
+@inlinable public func DestroyPlatformWindows() -> Void {
+	igDestroyPlatformWindows()
 }
 
-@inlinable public func EndPopup() {
-    igEndPopup()
+@inlinable public func DockSpace(id: ImGuiID, size: ImVec2, flags: ImGuiDockNodeFlags, window_class: UnsafePointer<ImGuiWindowClass>!) -> Void {
+	igDockSpace(ImGuiID,ImVec2,ImGuiDockNodeFlags,UnsafePointer<ImGuiWindowClass>!)
 }
 
-@inlinable public func EndTabBar() {
-    igEndTabBar()
+@inlinable public func DockSpaceOverViewport(viewport: UnsafeMutablePointer<ImGuiViewport>!, flags: ImGuiDockNodeFlags, window_class: UnsafePointer<ImGuiWindowClass>!) -> ImGuiID {
+	return igDockSpaceOverViewport(UnsafeMutablePointer<ImGuiViewport>!,ImGuiDockNodeFlags,UnsafePointer<ImGuiWindowClass>!)
 }
 
-@inlinable public func EndTabItem() {
-    igEndTabItem()
+@inlinable public func DragFloat(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Float>!, v_speed: Float, v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igDragFloat(UnsafePointer<String>!,UnsafeMutablePointer<Float>!,Float,Float,Float,UnsafePointer<String>!,Float)
 }
 
-@inlinable public func EndTooltip() {
-    igEndTooltip()
+@inlinable public func DragFloat2(label: UnsafePointer<String>!, v: (Float,Float), v_speed: Float, v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igDragFloat2(UnsafePointer<String>!,(Float,Float),Float,Float,Float,UnsafePointer<String>!,Float)
 }
 
-@inlinable public func FindViewportByID(id: ImGuiID) -> <#TYPE#> {
-    return igFindViewportByID(id)
+@inlinable public func DragFloat3(label: UnsafePointer<String>!, v: (Float,Float,Float), v_speed: Float, v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igDragFloat3(UnsafePointer<String>!,(Float,Float,Float),Float,Float,Float,UnsafePointer<String>!,Float)
 }
 
-@inlinable public func GetBackgroundDrawList() -> <#TYPE#> {
-    return igGetBackgroundDrawList()
+@inlinable public func DragFloat4(label: UnsafePointer<String>!, v: (Float,Float,Float,Float), v_speed: Float, v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igDragFloat4(UnsafePointer<String>!,(Float,Float,Float,Float),Float,Float,Float,UnsafePointer<String>!,Float)
 }
 
-@inlinable public func GetClipboardText() -> <#TYPE#> {
-    return igGetClipboardText()
+@inlinable public func DragFloatRange2(label: UnsafePointer<String>!, v_current_min: UnsafeMutablePointer<Float>!, v_current_max: UnsafeMutablePointer<Float>!, v_speed: Float, v_min: Float, v_max: Float, format: UnsafePointer<String>!, format_max: UnsafePointer<String>!, power: Float) -> Bool {
+	return igDragFloatRange2(UnsafePointer<String>!,UnsafeMutablePointer<Float>!,UnsafeMutablePointer<Float>!,Float,Float,Float,UnsafePointer<String>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func DragInt(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Int32>!, v_speed: Float, v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igDragInt(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,Float,Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func DragInt2(label: UnsafePointer<String>!, v: (Int32,Int32), v_speed: Float, v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igDragInt2(UnsafePointer<String>!,(Int32,Int32),Float,Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func DragInt3(label: UnsafePointer<String>!, v: (Int32,Int32,Int32), v_speed: Float, v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igDragInt3(UnsafePointer<String>!,(Int32,Int32,Int32),Float,Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func DragInt4(label: UnsafePointer<String>!, v: (Int32,Int32,Int32,Int32), v_speed: Float, v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igDragInt4(UnsafePointer<String>!,(Int32,Int32,Int32,Int32),Float,Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func DragIntRange2(label: UnsafePointer<String>!, v_current_min: UnsafeMutablePointer<Int32>!, v_current_max: UnsafeMutablePointer<Int32>!, v_speed: Float, v_min: Int32, v_max: Int32, format: UnsafePointer<String>!, format_max: UnsafePointer<String>!) -> Bool {
+	return igDragIntRange2(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,UnsafeMutablePointer<Int32>!,Float,Int32,Int32,UnsafePointer<String>!,UnsafePointer<String>!)
+}
+
+@inlinable public func DragScalar(label: UnsafePointer<String>!, data_type: ImGuiDataType, p_data: UnsafeMutablePointer<Void>!, v_speed: Float, p_min: UnsafePointer<Void>!, p_max: UnsafePointer<Void>!, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igDragScalar(UnsafePointer<String>!,ImGuiDataType,UnsafeMutablePointer<Void>!,Float,UnsafePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func DragScalarN(label: UnsafePointer<String>!, data_type: ImGuiDataType, p_data: UnsafeMutablePointer<Void>!, components: Int32, v_speed: Float, p_min: UnsafePointer<Void>!, p_max: UnsafePointer<Void>!, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igDragScalarN(UnsafePointer<String>!,ImGuiDataType,UnsafeMutablePointer<Void>!,Int32,Float,UnsafePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func Draw(this: UnsafeMutablePointer<ImGuiTextFilter>!, label: UnsafePointer<String>!, width: Float) -> Bool {
+	return ImGuiTextFilter_Draw(UnsafeMutablePointer<ImGuiTextFilter>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func Dummy(size: ImVec2) -> Void {
+	igDummy(ImVec2)
+}
+
+@inlinable public func End(this: UnsafeMutablePointer<ImGuiListClipper>!) -> Void {
+	ImGuiListClipper_End(UnsafeMutablePointer<ImGuiListClipper>!)
+}
+
+@inlinable public func End() -> Void {
+	igEnd()
+}
+
+@inlinable public func EndChild() -> Void {
+	igEndChild()
+}
+
+@inlinable public func EndChildFrame() -> Void {
+	igEndChildFrame()
+}
+
+@inlinable public func EndCombo() -> Void {
+	igEndCombo()
+}
+
+@inlinable public func EndDragDropSource() -> Void {
+	igEndDragDropSource()
+}
+
+@inlinable public func EndDragDropTarget() -> Void {
+	igEndDragDropTarget()
+}
+
+@inlinable public func EndFrame() -> Void {
+	igEndFrame()
+}
+
+@inlinable public func EndGroup() -> Void {
+	igEndGroup()
+}
+
+@inlinable public func EndMainMenuBar() -> Void {
+	igEndMainMenuBar()
+}
+
+@inlinable public func EndMenu() -> Void {
+	igEndMenu()
+}
+
+@inlinable public func EndMenuBar() -> Void {
+	igEndMenuBar()
+}
+
+@inlinable public func EndPopup() -> Void {
+	igEndPopup()
+}
+
+@inlinable public func EndTabBar() -> Void {
+	igEndTabBar()
+}
+
+@inlinable public func EndTabItem() -> Void {
+	igEndTabItem()
+}
+
+@inlinable public func EndTooltip() -> Void {
+	igEndTooltip()
+}
+
+@inlinable public func FindGlyph(this: UnsafeMutablePointer<ImFont>!, c: ImWchar) -> UnsafePointer<ImFontGlyph>! {
+	return ImFont_FindGlyph(UnsafeMutablePointer<ImFont>!,ImWchar)
+}
+
+@inlinable public func FindGlyphNoFallback(this: UnsafeMutablePointer<ImFont>!, c: ImWchar) -> UnsafePointer<ImFontGlyph>! {
+	return ImFont_FindGlyphNoFallback(UnsafeMutablePointer<ImFont>!,ImWchar)
+}
+
+@inlinable public func FindViewportByID(id: ImGuiID) -> UnsafeMutablePointer<ImGuiViewport>! {
+	return igFindViewportByID(ImGuiID)
+}
+
+@inlinable public func FindViewportByPlatformHandle(platform_handle: UnsafeMutablePointer<Void>!) -> UnsafeMutablePointer<ImGuiViewport>! {
+	return igFindViewportByPlatformHandle(UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func GetBackgroundDrawList() -> UnsafeMutablePointer<ImDrawList>! {
+	return igGetBackgroundDrawList()
+}
+
+@inlinable public func GetBackgroundDrawListViewportPtr(viewport: UnsafeMutablePointer<ImGuiViewport>!) -> UnsafeMutablePointer<ImDrawList>! {
+	return igGetBackgroundDrawListViewportPtr(UnsafeMutablePointer<ImGuiViewport>!)
+}
+
+@inlinable public func GetBit(this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!, n: Int32) -> Bool {
+	return ImFontGlyphRangesBuilder_GetBit(UnsafeMutablePointer<ImFontGlyphRangesBuilder>!,Int32)
+}
+
+@inlinable public func GetBool(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, default_val: Bool) -> Bool {
+	return ImGuiStorage_GetBool(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Bool)
+}
+
+@inlinable public func GetBoolRef(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, default_val: Bool) -> UnsafeMutablePointer<Bool>! {
+	return ImGuiStorage_GetBoolRef(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Bool)
+}
+
+@inlinable public func GetCharAdvance(this: UnsafeMutablePointer<ImFont>!, c: ImWchar) -> Float {
+	return ImFont_GetCharAdvance(UnsafeMutablePointer<ImFont>!,ImWchar)
+}
+
+@inlinable public func GetClipRectMax(this: UnsafeMutablePointer<ImDrawList>!) -> ImVec2 {
+	return ImDrawList_GetClipRectMax(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func GetClipRectMax_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!, this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_GetClipRectMax_nonUDT(UnsafeMutablePointer<ImVec2>!,UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func GetClipRectMax_nonUDT2(this: UnsafeMutablePointer<ImDrawList>!) -> ImVec2_Simple {
+	return ImDrawList_GetClipRectMax_nonUDT2(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func GetClipRectMin(this: UnsafeMutablePointer<ImDrawList>!) -> ImVec2 {
+	return ImDrawList_GetClipRectMin(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func GetClipRectMin_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!, this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_GetClipRectMin_nonUDT(UnsafeMutablePointer<ImVec2>!,UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func GetClipRectMin_nonUDT2(this: UnsafeMutablePointer<ImDrawList>!) -> ImVec2_Simple {
+	return ImDrawList_GetClipRectMin_nonUDT2(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func GetClipboardText() -> UnsafePointer<String>! {
+	return igGetClipboardText()
 }
 
 @inlinable public func GetColorU32(idx: ImGuiCol, alpha_mul: Float) -> ImU32 {
-    return igGetColorU32(idx, alpha_mul)
+	return igGetColorU32(ImGuiCol,Float)
 }
 
 @inlinable public func GetColorU32U32(col: ImU32) -> ImU32 {
-    return igGetColorU32U32(col)
+	return igGetColorU32U32(ImU32)
 }
 
 @inlinable public func GetColorU32Vec4(col: ImVec4) -> ImU32 {
-    return igGetColorU32Vec4(col)
+	return igGetColorU32Vec4(ImVec4)
 }
 
 @inlinable public func GetColumnIndex() -> Int32 {
-    return igGetColumnIndex()
+	return igGetColumnIndex()
 }
 
 @inlinable public func GetColumnOffset(column_index: Int32) -> Float {
-    return igGetColumnOffset(column_index)
+	return igGetColumnOffset(Int32)
 }
 
 @inlinable public func GetColumnWidth(column_index: Int32) -> Float {
-    return igGetColumnWidth(column_index)
+	return igGetColumnWidth(Int32)
 }
 
 @inlinable public func GetColumnsCount() -> Int32 {
-    return igGetColumnsCount()
+	return igGetColumnsCount()
 }
 
 @inlinable public func GetContentRegionAvail() -> ImVec2 {
-    return igGetContentRegionAvail()
+	return igGetContentRegionAvail()
+}
+
+@inlinable public func GetContentRegionAvail_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetContentRegionAvail_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetContentRegionAvail_nonUDT2() -> ImVec2_Simple {
-    return igGetContentRegionAvail_nonUDT2()
+	return igGetContentRegionAvail_nonUDT2()
 }
 
 @inlinable public func GetContentRegionMax() -> ImVec2 {
-    return igGetContentRegionMax()
+	return igGetContentRegionMax()
+}
+
+@inlinable public func GetContentRegionMax_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetContentRegionMax_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetContentRegionMax_nonUDT2() -> ImVec2_Simple {
-    return igGetContentRegionMax_nonUDT2()
+	return igGetContentRegionMax_nonUDT2()
 }
 
-@inlinable public func GetCurrentContext() -> <#TYPE#> {
-    return igGetCurrentContext()
+@inlinable public func GetCurrentContext() -> UnsafeMutablePointer<ImGuiContext>! {
+	return igGetCurrentContext()
 }
 
 @inlinable public func GetCursorPos() -> ImVec2 {
-    return igGetCursorPos()
+	return igGetCursorPos()
 }
 
 @inlinable public func GetCursorPosX() -> Float {
-    return igGetCursorPosX()
+	return igGetCursorPosX()
 }
 
 @inlinable public func GetCursorPosY() -> Float {
-    return igGetCursorPosY()
+	return igGetCursorPosY()
+}
+
+@inlinable public func GetCursorPos_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetCursorPos_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetCursorPos_nonUDT2() -> ImVec2_Simple {
-    return igGetCursorPos_nonUDT2()
+	return igGetCursorPos_nonUDT2()
 }
 
 @inlinable public func GetCursorScreenPos() -> ImVec2 {
-    return igGetCursorScreenPos()
+	return igGetCursorScreenPos()
+}
+
+@inlinable public func GetCursorScreenPos_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetCursorScreenPos_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetCursorScreenPos_nonUDT2() -> ImVec2_Simple {
-    return igGetCursorScreenPos_nonUDT2()
+	return igGetCursorScreenPos_nonUDT2()
 }
 
 @inlinable public func GetCursorStartPos() -> ImVec2 {
-    return igGetCursorStartPos()
+	return igGetCursorStartPos()
+}
+
+@inlinable public func GetCursorStartPos_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetCursorStartPos_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetCursorStartPos_nonUDT2() -> ImVec2_Simple {
-    return igGetCursorStartPos_nonUDT2()
+	return igGetCursorStartPos_nonUDT2()
 }
 
-@inlinable public func GetDragDropPayload() -> <#TYPE#> {
-    return igGetDragDropPayload()
+@inlinable public func GetCustomRectByIndex(this: UnsafeMutablePointer<ImFontAtlas>!, index: Int32) -> UnsafePointer<ImFontAtlasCustomRect>! {
+	return ImFontAtlas_GetCustomRectByIndex(UnsafeMutablePointer<ImFontAtlas>!,Int32)
 }
 
-@inlinable public func GetDrawData() -> <#TYPE#> {
-    return igGetDrawData()
+@inlinable public func GetDebugName(this: UnsafeMutablePointer<ImFont>!) -> UnsafePointer<String>! {
+	return ImFont_GetDebugName(UnsafeMutablePointer<ImFont>!)
 }
 
-@inlinable public func GetDrawListSharedData() -> <#TYPE#> {
-    return igGetDrawListSharedData()
+@inlinable public func GetDragDropPayload() -> UnsafePointer<ImGuiPayload>! {
+	return igGetDragDropPayload()
 }
 
-@inlinable public func GetFont() -> <#TYPE#> {
-    return igGetFont()
+@inlinable public func GetDrawData() -> UnsafeMutablePointer<ImDrawData>! {
+	return igGetDrawData()
+}
+
+@inlinable public func GetDrawListSharedData() -> UnsafeMutablePointer<ImDrawListSharedData>! {
+	return igGetDrawListSharedData()
+}
+
+@inlinable public func GetFloat(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, default_val: Float) -> Float {
+	return ImGuiStorage_GetFloat(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Float)
+}
+
+@inlinable public func GetFloatRef(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, default_val: Float) -> UnsafeMutablePointer<Float>! {
+	return ImGuiStorage_GetFloatRef(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Float)
+}
+
+@inlinable public func GetFont() -> UnsafeMutablePointer<ImFont>! {
+	return igGetFont()
 }
 
 @inlinable public func GetFontSize() -> Float {
-    return igGetFontSize()
+	return igGetFontSize()
 }
 
 @inlinable public func GetFontTexUvWhitePixel() -> ImVec2 {
-    return igGetFontTexUvWhitePixel()
+	return igGetFontTexUvWhitePixel()
+}
+
+@inlinable public func GetFontTexUvWhitePixel_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetFontTexUvWhitePixel_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetFontTexUvWhitePixel_nonUDT2() -> ImVec2_Simple {
-    return igGetFontTexUvWhitePixel_nonUDT2()
+	return igGetFontTexUvWhitePixel_nonUDT2()
 }
 
-@inlinable public func GetForegroundDrawList() -> <#TYPE#> {
-    return igGetForegroundDrawList()
+@inlinable public func GetForegroundDrawList() -> UnsafeMutablePointer<ImDrawList>! {
+	return igGetForegroundDrawList()
+}
+
+@inlinable public func GetForegroundDrawListViewportPtr(viewport: UnsafeMutablePointer<ImGuiViewport>!) -> UnsafeMutablePointer<ImDrawList>! {
+	return igGetForegroundDrawListViewportPtr(UnsafeMutablePointer<ImGuiViewport>!)
 }
 
 @inlinable public func GetFrameCount() -> Int32 {
-    return igGetFrameCount()
+	return igGetFrameCount()
 }
 
 @inlinable public func GetFrameHeight() -> Float {
-    return igGetFrameHeight()
+	return igGetFrameHeight()
 }
 
 @inlinable public func GetFrameHeightWithSpacing() -> Float {
-    return igGetFrameHeightWithSpacing()
+	return igGetFrameHeightWithSpacing()
 }
 
-@inlinable public func GetIO() -> <#TYPE#> {
-    return igGetIO()
+@inlinable public func GetGlyphRangesChineseFull(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesChineseFull(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetGlyphRangesChineseSimplifiedCommon(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetGlyphRangesCyrillic(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesCyrillic(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetGlyphRangesDefault(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesDefault(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetGlyphRangesJapanese(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesJapanese(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetGlyphRangesKorean(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesKorean(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetGlyphRangesThai(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesThai(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetGlyphRangesVietnamese(this: UnsafeMutablePointer<ImFontAtlas>!) -> UnsafePointer<ImWchar>! {
+	return ImFontAtlas_GetGlyphRangesVietnamese(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func GetIDPtr(ptr_id: UnsafePointer<Void>!) -> ImGuiID {
+	return igGetIDPtr(UnsafePointer<Void>!)
+}
+
+@inlinable public func GetIDRange(str_id_begin: UnsafePointer<String>!, str_id_end: UnsafePointer<String>!) -> ImGuiID {
+	return igGetIDRange(UnsafePointer<String>!,UnsafePointer<String>!)
+}
+
+@inlinable public func GetIDStr(str_id: UnsafePointer<String>!) -> ImGuiID {
+	return igGetIDStr(UnsafePointer<String>!)
+}
+
+@inlinable public func GetIO() -> UnsafeMutablePointer<ImGuiIO>! {
+	return igGetIO()
+}
+
+@inlinable public func GetInt(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, default_val: Int32) -> Int32 {
+	return ImGuiStorage_GetInt(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Int32)
+}
+
+@inlinable public func GetIntRef(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, default_val: Int32) -> UnsafeMutablePointer<Int32>! {
+	return ImGuiStorage_GetIntRef(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Int32)
 }
 
 @inlinable public func GetItemRectMax() -> ImVec2 {
-    return igGetItemRectMax()
+	return igGetItemRectMax()
+}
+
+@inlinable public func GetItemRectMax_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetItemRectMax_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetItemRectMax_nonUDT2() -> ImVec2_Simple {
-    return igGetItemRectMax_nonUDT2()
+	return igGetItemRectMax_nonUDT2()
 }
 
 @inlinable public func GetItemRectMin() -> ImVec2 {
-    return igGetItemRectMin()
+	return igGetItemRectMin()
+}
+
+@inlinable public func GetItemRectMin_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetItemRectMin_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetItemRectMin_nonUDT2() -> ImVec2_Simple {
-    return igGetItemRectMin_nonUDT2()
+	return igGetItemRectMin_nonUDT2()
 }
 
 @inlinable public func GetItemRectSize() -> ImVec2 {
-    return igGetItemRectSize()
+	return igGetItemRectSize()
+}
+
+@inlinable public func GetItemRectSize_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetItemRectSize_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetItemRectSize_nonUDT2() -> ImVec2_Simple {
-    return igGetItemRectSize_nonUDT2()
+	return igGetItemRectSize_nonUDT2()
 }
 
 @inlinable public func GetKeyIndex(imgui_key: ImGuiKey) -> Int32 {
-    return igGetKeyIndex(imgui_key)
+	return igGetKeyIndex(ImGuiKey)
 }
 
 @inlinable public func GetKeyPressedAmount(key_index: Int32, repeat_delay: Float, rate: Float) -> Int32 {
-    return igGetKeyPressedAmount(key_index, repeat_delay, rate)
+	return igGetKeyPressedAmount(Int32,Float,Float)
 }
 
-@inlinable public func GetMainViewport() -> <#TYPE#> {
-    return igGetMainViewport()
+@inlinable public func GetMainViewport() -> UnsafeMutablePointer<ImGuiViewport>! {
+	return igGetMainViewport()
 }
 
 @inlinable public func GetMouseCursor() -> ImGuiMouseCursor {
-    return igGetMouseCursor()
+	return igGetMouseCursor()
+}
+
+@inlinable public func GetMouseCursorTexData(this: UnsafeMutablePointer<ImFontAtlas>!, cursor: ImGuiMouseCursor, out_offset: UnsafeMutablePointer<ImVec2>!, out_size: UnsafeMutablePointer<ImVec2>!, out_uv_border: (ImVec2,ImVec2), out_uv_fill: (ImVec2,ImVec2)) -> Bool {
+	return ImFontAtlas_GetMouseCursorTexData(UnsafeMutablePointer<ImFontAtlas>!,ImGuiMouseCursor,UnsafeMutablePointer<ImVec2>!,UnsafeMutablePointer<ImVec2>!,(ImVec2,ImVec2),(ImVec2,ImVec2))
 }
 
 @inlinable public func GetMouseDragDelta(button: Int32, lock_threshold: Float) -> ImVec2 {
-    return igGetMouseDragDelta(button, lock_threshold)
+	return igGetMouseDragDelta(Int32,Float)
+}
+
+@inlinable public func GetMouseDragDelta_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!, button: Int32, lock_threshold: Float) -> Void {
+	igGetMouseDragDelta_nonUDT(UnsafeMutablePointer<ImVec2>!,Int32,Float)
 }
 
 @inlinable public func GetMouseDragDelta_nonUDT2(button: Int32, lock_threshold: Float) -> ImVec2_Simple {
-    return igGetMouseDragDelta_nonUDT2(button, lock_threshold)
+	return igGetMouseDragDelta_nonUDT2(Int32,Float)
 }
 
 @inlinable public func GetMousePos() -> ImVec2 {
-    return igGetMousePos()
+	return igGetMousePos()
 }
 
 @inlinable public func GetMousePosOnOpeningCurrentPopup() -> ImVec2 {
-    return igGetMousePosOnOpeningCurrentPopup()
+	return igGetMousePosOnOpeningCurrentPopup()
+}
+
+@inlinable public func GetMousePosOnOpeningCurrentPopup_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetMousePosOnOpeningCurrentPopup_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetMousePosOnOpeningCurrentPopup_nonUDT2() -> ImVec2_Simple {
-    return igGetMousePosOnOpeningCurrentPopup_nonUDT2()
+	return igGetMousePosOnOpeningCurrentPopup_nonUDT2()
+}
+
+@inlinable public func GetMousePos_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetMousePos_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetMousePos_nonUDT2() -> ImVec2_Simple {
-    return igGetMousePos_nonUDT2()
+	return igGetMousePos_nonUDT2()
 }
 
-@inlinable public func GetPlatformIO() -> <#TYPE#> {
-    return igGetPlatformIO()
+@inlinable public func GetPlatformIO() -> UnsafeMutablePointer<ImGuiPlatformIO>! {
+	return igGetPlatformIO()
 }
 
 @inlinable public func GetScrollMaxX() -> Float {
-    return igGetScrollMaxX()
+	return igGetScrollMaxX()
 }
 
 @inlinable public func GetScrollMaxY() -> Float {
-    return igGetScrollMaxY()
+	return igGetScrollMaxY()
 }
 
 @inlinable public func GetScrollX() -> Float {
-    return igGetScrollX()
+	return igGetScrollX()
 }
 
 @inlinable public func GetScrollY() -> Float {
-    return igGetScrollY()
+	return igGetScrollY()
 }
 
-@inlinable public func GetStateStorage() -> <#TYPE#> {
-    return igGetStateStorage()
+@inlinable public func GetStateStorage() -> UnsafeMutablePointer<ImGuiStorage>! {
+	return igGetStateStorage()
 }
 
-@inlinable public func GetStyle() -> <#TYPE#> {
-    return igGetStyle()
+@inlinable public func GetStyle() -> UnsafeMutablePointer<ImGuiStyle>! {
+	return igGetStyle()
 }
 
-@inlinable public func GetStyleColorName(idx: ImGuiCol) -> <#TYPE#> {
-    return igGetStyleColorName(idx)
+@inlinable public func GetStyleColorName(idx: ImGuiCol) -> UnsafePointer<String>! {
+	return igGetStyleColorName(ImGuiCol)
 }
 
-@inlinable public func GetStyleColorVec4(idx: ImGuiCol) -> <#TYPE#> {
-    return igGetStyleColorVec4(idx)
+@inlinable public func GetStyleColorVec4(idx: ImGuiCol) -> UnsafePointer<ImVec4>! {
+	return igGetStyleColorVec4(ImGuiCol)
 }
 
 @inlinable public func GetTextLineHeight() -> Float {
-    return igGetTextLineHeight()
+	return igGetTextLineHeight()
 }
 
 @inlinable public func GetTextLineHeightWithSpacing() -> Float {
-    return igGetTextLineHeightWithSpacing()
+	return igGetTextLineHeightWithSpacing()
 }
 
 @inlinable public func GetTime() -> Double {
-    return igGetTime()
+	return igGetTime()
 }
 
 @inlinable public func GetTreeNodeToLabelSpacing() -> Float {
-    return igGetTreeNodeToLabelSpacing()
+	return igGetTreeNodeToLabelSpacing()
 }
 
-@inlinable public func GetVersion() -> <#TYPE#> {
-    return igGetVersion()
+@inlinable public func GetVersion() -> UnsafePointer<String>! {
+	return igGetVersion()
+}
+
+@inlinable public func GetVoidPtr(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID) -> UnsafeMutablePointer<Void>! {
+	ImGuiStorage_GetVoidPtr(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID)
+}
+
+@inlinable public func GetVoidPtrRef(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, default_val: UnsafeMutablePointer<Void>!) -> <#<#CODE#>#> {
+	return ImGuiStorage_GetVoidPtrRef(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,UnsafeMutablePointer<Void>!)
 }
 
 @inlinable public func GetWindowContentRegionMax() -> ImVec2 {
-    return igGetWindowContentRegionMax()
+	return igGetWindowContentRegionMax()
+}
+
+@inlinable public func GetWindowContentRegionMax_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetWindowContentRegionMax_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetWindowContentRegionMax_nonUDT2() -> ImVec2_Simple {
-    return igGetWindowContentRegionMax_nonUDT2()
+	return igGetWindowContentRegionMax_nonUDT2()
 }
 
 @inlinable public func GetWindowContentRegionMin() -> ImVec2 {
-    return igGetWindowContentRegionMin()
+	return igGetWindowContentRegionMin()
+}
+
+@inlinable public func GetWindowContentRegionMin_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetWindowContentRegionMin_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetWindowContentRegionMin_nonUDT2() -> ImVec2_Simple {
-    return igGetWindowContentRegionMin_nonUDT2()
+	return igGetWindowContentRegionMin_nonUDT2()
 }
 
 @inlinable public func GetWindowContentRegionWidth() -> Float {
-    return igGetWindowContentRegionWidth()
+	return igGetWindowContentRegionWidth()
 }
 
 @inlinable public func GetWindowDockID() -> ImGuiID {
-    return igGetWindowDockID()
+	return igGetWindowDockID()
 }
 
 @inlinable public func GetWindowDpiScale() -> Float {
-    return igGetWindowDpiScale()
+	return igGetWindowDpiScale()
 }
 
-@inlinable public func GetWindowDrawList() -> <#TYPE#> {
-    return igGetWindowDrawList()
+@inlinable public func GetWindowDrawList() -> UnsafeMutablePointer<ImDrawList>! {
+	return igGetWindowDrawList()
 }
 
 @inlinable public func GetWindowHeight() -> Float {
-    return igGetWindowHeight()
+	return igGetWindowHeight()
 }
 
 @inlinable public func GetWindowPos() -> ImVec2 {
-    return igGetWindowPos()
+	return igGetWindowPos()
+}
+
+@inlinable public func GetWindowPos_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetWindowPos_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetWindowPos_nonUDT2() -> ImVec2_Simple {
-    return igGetWindowPos_nonUDT2()
+	return igGetWindowPos_nonUDT2()
 }
 
 @inlinable public func GetWindowSize() -> ImVec2 {
-    return igGetWindowSize()
+	return igGetWindowSize()
+}
+
+@inlinable public func GetWindowSize_nonUDT(pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
+	igGetWindowSize_nonUDT(UnsafeMutablePointer<ImVec2>!)
 }
 
 @inlinable public func GetWindowSize_nonUDT2() -> ImVec2_Simple {
-    return igGetWindowSize_nonUDT2()
+	return igGetWindowSize_nonUDT2()
 }
 
-@inlinable public func GetWindowViewport() -> <#TYPE#> {
-    return igGetWindowViewport()
+@inlinable public func GetWindowViewport() -> UnsafeMutablePointer<ImGuiViewport>! {
+	return igGetWindowViewport()
 }
 
 @inlinable public func GetWindowWidth() -> Float {
-    return igGetWindowWidth()
+	return igGetWindowWidth()
 }
 
-@inlinable public func Image(user_texture_id: ImTextureID, size: ImVec2, uv0: ImVec2, uv1: ImVec2, tint_col: ImVec4, border_col: ImVec4) {
-    igImage(user_texture_id, size, uv0, uv1, tint_col, border_col)
+@inlinable public func GrowIndex(this: UnsafeMutablePointer<ImFont>!, new_size: Int32) -> Void {
+	ImFont_GrowIndex(UnsafeMutablePointer<ImFont>!,Int32)
+}
+
+@inlinable public func HSV(this: UnsafeMutablePointer<ImColor>!, h: Float, s: Float, v: Float, a: Float) -> ImColor {
+	return ImColor_HSV(UnsafeMutablePointer<ImColor>!,Float,Float,Float,Float)
+}
+
+@inlinable public func HSV_nonUDT(pOut: UnsafeMutablePointer<ImColor>!, this: UnsafeMutablePointer<ImColor>!, h: Float, s: Float, v: Float, a: Float) -> Void {
+	ImColor_HSV_nonUDT(UnsafeMutablePointer<ImColor>!,UnsafeMutablePointer<ImColor>!,Float,Float,Float,Float)
+}
+
+@inlinable public func HSV_nonUDT2(this: UnsafeMutablePointer<ImColor>!, h: Float, s: Float, v: Float, a: Float) -> ImColor_Simple {
+	return ImColor_HSV_nonUDT2(UnsafeMutablePointer<ImColor>!,Float,Float,Float,Float)
+}
+
+@inlinable public func HasSelection(this: UnsafeMutablePointer<ImGuiInputTextCallbackData>!) -> Bool {
+	return ImGuiInputTextCallbackData_HasSelection(UnsafeMutablePointer<ImGuiInputTextCallbackData>!)
+}
+
+@inlinable public func Image(user_texture_id: ImTextureID, size: ImVec2, uv0: ImVec2, uv1: ImVec2, tint_col: ImVec4, border_col: ImVec4) -> Void {
+	igImage(ImTextureID,ImVec2,ImVec2,ImVec2,ImVec4,ImVec4)
 }
 
 @inlinable public func ImageButton(user_texture_id: ImTextureID, size: ImVec2, uv0: ImVec2, uv1: ImVec2, frame_padding: Int32, bg_col: ImVec4, tint_col: ImVec4) -> Bool {
-    return igImageButton(user_texture_id, size, uv0, uv1, frame_padding, bg_col, tint_col)
+	return igImageButton(ImTextureID,ImVec2,ImVec2,ImVec2,Int32,ImVec4,ImVec4)
 }
 
-@inlinable public func Indent(indent_w: Float) {
-    igIndent(indent_w)
+@inlinable public func Indent(indent_w: Float) -> Void {
+	igIndent(Float)
+}
+
+@inlinable public func InputDouble(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Double>!, step: Double, step_fast: Double, format: UnsafePointer<String>!, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputDouble(UnsafePointer<String>!,UnsafeMutablePointer<Double>!,Double,Double,UnsafePointer<String>!,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputFloat(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Float>!, step: Float, step_fast: Float, format: UnsafePointer<String>!, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputFloat(UnsafePointer<String>!,UnsafeMutablePointer<Float>!,Float,Float,UnsafePointer<String>!,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputFloat2(label: UnsafePointer<String>!, v: (Float,Float), format: UnsafePointer<String>!, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputFloat2(UnsafePointer<String>!,(Float,Float),UnsafePointer<String>!,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputFloat3(label: UnsafePointer<String>!, v: (Float,Float,Float), format: UnsafePointer<String>!, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputFloat3(UnsafePointer<String>!,(Float,Float,Float),UnsafePointer<String>!,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputFloat4(label: UnsafePointer<String>!, v: (Float,Float,Float,Float), format: UnsafePointer<String>!, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputFloat4(UnsafePointer<String>!,(Float,Float,Float,Float),UnsafePointer<String>!,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputInt(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Int32>!, step: Int32, step_fast: Int32, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputInt(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,Int32,Int32,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputInt2(label: UnsafePointer<String>!, v: (Int32,Int32), flags: ImGuiInputTextFlags) -> Bool {
+	return igInputInt2(UnsafePointer<String>!,(Int32,Int32),ImGuiInputTextFlags)
+}
+
+@inlinable public func InputInt3(label: UnsafePointer<String>!, v: (Int32,Int32,Int32), flags: ImGuiInputTextFlags) -> Bool {
+	return igInputInt3(UnsafePointer<String>!,(Int32,Int32,Int32),ImGuiInputTextFlags)
+}
+
+@inlinable public func InputInt4(label: UnsafePointer<String>!, v: (Int32,Int32,Int32,Int32), flags: ImGuiInputTextFlags) -> Bool {
+	return igInputInt4(UnsafePointer<String>!,(Int32,Int32,Int32,Int32),ImGuiInputTextFlags)
+}
+
+@inlinable public func InputScalar(label: UnsafePointer<String>!, data_type: ImGuiDataType, p_data: UnsafeMutablePointer<Void>!, p_step: UnsafePointer<Void>!, p_step_fast: UnsafePointer<Void>!, format: UnsafePointer<String>!, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputScalar(UnsafePointer<String>!,ImGuiDataType,UnsafeMutablePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<String>!,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputScalarN(label: UnsafePointer<String>!, data_type: ImGuiDataType, p_data: UnsafeMutablePointer<Void>!, components: Int32, p_step: UnsafePointer<Void>!, p_step_fast: UnsafePointer<Void>!, format: UnsafePointer<String>!, flags: ImGuiInputTextFlags) -> Bool {
+	return igInputScalarN(UnsafePointer<String>!,ImGuiDataType,UnsafeMutablePointer<Void>!,Int32,UnsafePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<String>!,ImGuiInputTextFlags)
+}
+
+@inlinable public func InputText(label: UnsafePointer<String>!, buf: UnsafeMutablePointer<String>!, buf_size: Int, flags: ImGuiInputTextFlags, callback: ImGuiInputTextCallback, user_data: UnsafeMutablePointer<Void>!) -> Bool {
+	return igInputText(UnsafePointer<String>!,UnsafeMutablePointer<String>!,Int,ImGuiInputTextFlags,ImGuiInputTextCallback,UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func InputTextMultiline(label: UnsafePointer<String>!, buf: UnsafeMutablePointer<String>!, buf_size: Int, size: ImVec2, flags: ImGuiInputTextFlags, callback: ImGuiInputTextCallback, user_data: UnsafeMutablePointer<Void>!) -> Bool {
+	return igInputTextMultiline(UnsafePointer<String>!,UnsafeMutablePointer<String>!,Int,ImVec2,ImGuiInputTextFlags,ImGuiInputTextCallback,UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func InputTextWithHint(label: UnsafePointer<String>!, hint: UnsafePointer<String>!, buf: UnsafeMutablePointer<String>!, buf_size: Int, flags: ImGuiInputTextFlags, callback: ImGuiInputTextCallback, user_data: UnsafeMutablePointer<Void>!) -> Bool {
+	return igInputTextWithHint(UnsafePointer<String>!,UnsafePointer<String>!,UnsafeMutablePointer<String>!,Int,ImGuiInputTextFlags,ImGuiInputTextCallback,UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func InsertChars(this: UnsafeMutablePointer<ImGuiInputTextCallbackData>!, pos: Int32, text: UnsafePointer<String>!, text_end: UnsafePointer<String>!) -> Void {
+	ImGuiInputTextCallbackData_InsertChars(UnsafeMutablePointer<ImGuiInputTextCallbackData>!,Int32,UnsafePointer<String>!,UnsafePointer<String>!)
+}
+
+@inlinable public func InvisibleButton(str_id: UnsafePointer<String>!, size: ImVec2) -> Bool {
+	return igInvisibleButton(UnsafePointer<String>!,ImVec2)
+}
+
+@inlinable public func IsActive(this: UnsafeMutablePointer<ImGuiTextFilter>!) -> Bool {
+	return ImGuiTextFilter_IsActive(UnsafeMutablePointer<ImGuiTextFilter>!)
 }
 
 @inlinable public func IsAnyItemActive() -> Bool {
-    return igIsAnyItemActive()
+	return igIsAnyItemActive()
 }
 
 @inlinable public func IsAnyItemFocused() -> Bool {
-    return igIsAnyItemFocused()
+	return igIsAnyItemFocused()
 }
 
 @inlinable public func IsAnyItemHovered() -> Bool {
-    return igIsAnyItemHovered()
+	return igIsAnyItemHovered()
 }
 
 @inlinable public func IsAnyMouseDown() -> Bool {
-    return igIsAnyMouseDown()
+	return igIsAnyMouseDown()
+}
+
+@inlinable public func IsBuilt(this: UnsafeMutablePointer<ImFontAtlas>!) -> Bool {
+	return ImFontAtlas_IsBuilt(UnsafeMutablePointer<ImFontAtlas>!)
+}
+
+@inlinable public func IsDataType(this: UnsafeMutablePointer<ImGuiPayload>!, type: UnsafePointer<String>!) -> Bool {
+	return ImGuiPayload_IsDataType(UnsafeMutablePointer<ImGuiPayload>!,UnsafePointer<String>!)
+}
+
+@inlinable public func IsDelivery(this: UnsafeMutablePointer<ImGuiPayload>!) -> Bool {
+	return ImGuiPayload_IsDelivery(UnsafeMutablePointer<ImGuiPayload>!)
 }
 
 @inlinable public func IsItemActivated() -> Bool {
-    return igIsItemActivated()
+	return igIsItemActivated()
 }
 
 @inlinable public func IsItemActive() -> Bool {
-    return igIsItemActive()
+	return igIsItemActive()
 }
 
 @inlinable public func IsItemClicked(mouse_button: Int32) -> Bool {
-    return igIsItemClicked(mouse_button)
+	return igIsItemClicked(Int32)
 }
 
 @inlinable public func IsItemDeactivated() -> Bool {
-    return igIsItemDeactivated()
+	return igIsItemDeactivated()
 }
 
 @inlinable public func IsItemDeactivatedAfterEdit() -> Bool {
-    return igIsItemDeactivatedAfterEdit()
+	return igIsItemDeactivatedAfterEdit()
 }
 
 @inlinable public func IsItemEdited() -> Bool {
-    return igIsItemEdited()
+	return igIsItemEdited()
 }
 
 @inlinable public func IsItemFocused() -> Bool {
-    return igIsItemFocused()
+	return igIsItemFocused()
 }
 
 @inlinable public func IsItemHovered(flags: ImGuiHoveredFlags) -> Bool {
-    return igIsItemHovered(flags)
+	return igIsItemHovered(ImGuiHoveredFlags)
 }
 
 @inlinable public func IsItemVisible() -> Bool {
-    return igIsItemVisible()
+	return igIsItemVisible()
 }
 
 @inlinable public func IsKeyDown(user_key_index: Int32) -> Bool {
-    return igIsKeyDown(user_key_index)
+	return igIsKeyDown(Int32)
 }
 
 @inlinable public func IsKeyPressed(user_key_index: Int32, `repeat`: Bool) -> Bool {
-    return igIsKeyPressed(user_key_index, `repeat`)
+	return igIsKeyPressed(Int32,Bool)
 }
 
 @inlinable public func IsKeyReleased(user_key_index: Int32) -> Bool {
-    return igIsKeyReleased(user_key_index)
+	return igIsKeyReleased(Int32)
+}
+
+@inlinable public func IsLoaded(this: UnsafeMutablePointer<ImFont>!) -> Bool {
+	return ImFont_IsLoaded(UnsafeMutablePointer<ImFont>!)
 }
 
 @inlinable public func IsMouseClicked(button: Int32, `repeat`: Bool) -> Bool {
-    return igIsMouseClicked(button, `repeat`)
+	return igIsMouseClicked(Int32,Bool)
 }
 
 @inlinable public func IsMouseDoubleClicked(button: Int32) -> Bool {
-    return igIsMouseDoubleClicked(button)
+	return igIsMouseDoubleClicked(Int32)
 }
 
 @inlinable public func IsMouseDown(button: Int32) -> Bool {
-    return igIsMouseDown(button)
+	return igIsMouseDown(Int32)
 }
 
 @inlinable public func IsMouseDragging(button: Int32, lock_threshold: Float) -> Bool {
-    return igIsMouseDragging(button, lock_threshold)
+	return igIsMouseDragging(Int32,Float)
 }
 
 @inlinable public func IsMouseHoveringRect(r_min: ImVec2, r_max: ImVec2, clip: Bool) -> Bool {
-    return igIsMouseHoveringRect(r_min, r_max, clip)
+	return igIsMouseHoveringRect(ImVec2,ImVec2,Bool)
+}
+
+@inlinable public func IsMousePosValid(mouse_pos: UnsafePointer<ImVec2>!) -> Bool {
+	return igIsMousePosValid(UnsafePointer<ImVec2>!)
 }
 
 @inlinable public func IsMouseReleased(button: Int32) -> Bool {
-    return igIsMouseReleased(button)
+	return igIsMouseReleased(Int32)
+}
+
+@inlinable public func IsPacked(this: UnsafeMutablePointer<ImFontAtlasCustomRect>!) -> Bool {
+	return ImFontAtlasCustomRect_IsPacked(UnsafeMutablePointer<ImFontAtlasCustomRect>!)
+}
+
+@inlinable public func IsPopupOpen(str_id: UnsafePointer<String>!) -> Bool {
+	return igIsPopupOpen(UnsafePointer<String>!)
+}
+
+@inlinable public func IsPreview(this: UnsafeMutablePointer<ImGuiPayload>!) -> Bool {
+	return ImGuiPayload_IsPreview(UnsafeMutablePointer<ImGuiPayload>!)
 }
 
 @inlinable public func IsRectVisible(size: ImVec2) -> Bool {
-    return igIsRectVisible(size)
+	return igIsRectVisible(ImVec2)
 }
 
 @inlinable public func IsRectVisibleVec2(rect_min: ImVec2, rect_max: ImVec2) -> Bool {
-    return igIsRectVisibleVec2(rect_min, rect_max)
+	return igIsRectVisibleVec2(ImVec2,ImVec2)
 }
 
 @inlinable public func IsWindowAppearing() -> Bool {
-    return igIsWindowAppearing()
+	return igIsWindowAppearing()
 }
 
 @inlinable public func IsWindowCollapsed() -> Bool {
-    return igIsWindowCollapsed()
+	return igIsWindowCollapsed()
 }
 
 @inlinable public func IsWindowDocked() -> Bool {
-    return igIsWindowDocked()
+	return igIsWindowDocked()
 }
 
 @inlinable public func IsWindowFocused(flags: ImGuiFocusedFlags) -> Bool {
-    return igIsWindowFocused(flags)
+	return igIsWindowFocused(ImGuiFocusedFlags)
 }
 
 @inlinable public func IsWindowHovered(flags: ImGuiHoveredFlags) -> Bool {
-    return igIsWindowHovered(flags)
+	return igIsWindowHovered(ImGuiHoveredFlags)
 }
 
-@inlinable public func ListBoxFooter() {
-    igListBoxFooter()
+@inlinable public func LabelText(label: UnsafePointer<String>!, fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igLabelText(UnsafePointer<String>!,UnsafePointer<String>!,CVarArg...)
 }
 
-@inlinable public func LogButtons() {
-    igLogButtons()
+@inlinable public func LabelTextV(label: UnsafePointer<String>!, fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	igLabelTextV(UnsafePointer<String>!,UnsafePointer<String>!,CVarArg...)
 }
 
-@inlinable public func LogFinish() {
-    igLogFinish()
+@inlinable public func ListBoxFooter() -> Void {
+	igListBoxFooter()
 }
 
-@inlinable public func LogToClipboard(auto_open_depth: Int32) {
-    igLogToClipboard(auto_open_depth)
+@inlinable public func ListBoxHeaderInt(label: UnsafePointer<String>!, items_count: Int32, height_in_items: Int32) -> Bool {
+	return igListBoxHeaderInt(UnsafePointer<String>!,Int32,Int32)
 }
 
-@inlinable public func LogToTTY(auto_open_depth: Int32) {
-    igLogToTTY(auto_open_depth)
+@inlinable public func ListBoxHeaderVec2(label: UnsafePointer<String>!, size: ImVec2) -> Bool {
+	return igListBoxHeaderVec2(UnsafePointer<String>!,ImVec2)
 }
 
-@inlinable public func MemAlloc(size: Int) -> <#TYPE#> {
-    return igMemAlloc(size)
+@inlinable public func ListBoxStr_arr(label: UnsafePointer<String>!, current_item: UnsafeMutablePointer<Int32>!, items: UnsafePointer<String>!, items_count: Int32, height_in_items: Int32) -> Bool {
+	return igListBoxStr_arr(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,UnsafePointer<String>!,Int32,Int32)
 }
 
-@inlinable public func NewFrame() {
-    igNewFrame()
+@inlinable public func LoadIniSettingsFromDisk(ini_filename: UnsafePointer<String>!) -> Void {
+	igLoadIniSettingsFromDisk(UnsafePointer<String>!)
 }
 
-@inlinable public func NewLine() {
-    igNewLine()
+@inlinable public func LoadIniSettingsFromMemory(ini_data: UnsafePointer<String>!, ini_size: Int) -> Void {
+	igLoadIniSettingsFromMemory(UnsafePointer<String>!,Int)
 }
 
-@inlinable public func NextColumn() {
-    igNextColumn()
+@inlinable public func LogButtons() -> Void {
+	igLogButtons()
 }
 
-@inlinable public func PopAllowKeyboardFocus() {
-    igPopAllowKeyboardFocus()
+@inlinable public func LogFinish() -> Void {
+	igLogFinish()
 }
 
-@inlinable public func PopButtonRepeat() {
-    igPopButtonRepeat()
+@inlinable public func LogText(fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igLogText(UnsafePointer<String>!,CVarArg...)
 }
 
-@inlinable public func PopClipRect() {
-    igPopClipRect()
+@inlinable public func LogToClipboard(auto_open_depth: Int32) -> Void {
+	igLogToClipboard(Int32)
 }
 
-@inlinable public func PopFont() {
-    igPopFont()
+@inlinable public func LogToFile(auto_open_depth: Int32, filename: UnsafePointer<String>!) -> Void {
+	igLogToFile(Int32,UnsafePointer<String>!)
 }
 
-@inlinable public func PopID() {
-    igPopID()
+@inlinable public func LogToTTY(auto_open_depth: Int32) -> Void {
+	igLogToTTY(Int32)
 }
 
-@inlinable public func PopItemWidth() {
-    igPopItemWidth()
+@inlinable public func MemAlloc(size: Int) -> UnsafeMutablePointer<Void>! {
+	igMemAlloc(Int)
 }
 
-@inlinable public func PopStyleColor(count: Int32) {
-    igPopStyleColor(count)
+@inlinable public func MemFree(ptr: UnsafeMutablePointer<Void>!) -> Void {
+	igMemFree(UnsafeMutablePointer<Void>!)
 }
 
-@inlinable public func PopStyleVar(count: Int32) {
-    igPopStyleVar(count)
+@inlinable public func MenuItemBool(label: UnsafePointer<String>!, shortcut: UnsafePointer<String>!, selected: Bool, enabled: Bool) -> Bool {
+	return igMenuItemBool(UnsafePointer<String>!,UnsafePointer<String>!,Bool,Bool)
 }
 
-@inlinable public func PopTextWrapPos() {
-    igPopTextWrapPos()
+@inlinable public func MenuItemBoolPtr(label: UnsafePointer<String>!, shortcut: UnsafePointer<String>!, p_selected: UnsafeMutablePointer<Bool>!, enabled: Bool) -> Bool {
+	return igMenuItemBoolPtr(UnsafePointer<String>!,UnsafePointer<String>!,UnsafeMutablePointer<Bool>!,Bool)
 }
 
-@inlinable public func PushAllowKeyboardFocus(allow_keyboard_focus: Bool) {
-    igPushAllowKeyboardFocus(allow_keyboard_focus)
+@inlinable public func Merge(this: UnsafeMutablePointer<ImDrawListSplitter>!, draw_list: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawListSplitter_Merge(UnsafeMutablePointer<ImDrawListSplitter>!,UnsafeMutablePointer<ImDrawList>!)
 }
 
-@inlinable public func PushButtonRepeat(`repeat`: Bool) {
-    igPushButtonRepeat(`repeat`)
+@inlinable public func NewFrame() -> Void {
+	igNewFrame()
 }
 
-@inlinable public func PushClipRect(clip_rect_min: ImVec2, clip_rect_max: ImVec2, intersect_with_current_clip_rect: Bool) {
-    igPushClipRect(clip_rect_min, clip_rect_max, intersect_with_current_clip_rect)
+@inlinable public func NewLine() -> Void {
+	igNewLine()
 }
 
-@inlinable public func PushIDInt(int_id: Int32) {
-    igPushIDInt(int_id)
+@inlinable public func NextColumn() -> Void {
+	igNextColumn()
 }
 
-@inlinable public func PushItemWidth(item_width: Float) {
-    igPushItemWidth(item_width)
+@inlinable public func OpenPopup(str_id: UnsafePointer<String>!) -> Void {
+	igOpenPopup(UnsafePointer<String>!)
 }
 
-@inlinable public func PushStyleColor(idx: ImGuiCol, col: ImVec4) {
-    igPushStyleColor(idx, col)
+@inlinable public func OpenPopupOnItemClick(str_id: UnsafePointer<String>!, mouse_button: Int32) -> Bool {
+	return igOpenPopupOnItemClick(UnsafePointer<String>!,Int32)
 }
 
-@inlinable public func PushStyleColorU32(idx: ImGuiCol, col: ImU32) {
-    igPushStyleColorU32(idx, col)
+@inlinable public func PassFilter(this: UnsafeMutablePointer<ImGuiTextFilter>!, text: UnsafePointer<String>!, text_end: UnsafePointer<String>!) -> Bool {
+	return ImGuiTextFilter_PassFilter(UnsafeMutablePointer<ImGuiTextFilter>!,UnsafePointer<String>!,UnsafePointer<String>!)
 }
 
-@inlinable public func PushStyleVarFloat(idx: ImGuiStyleVar, val: Float) {
-    igPushStyleVarFloat(idx, val)
+@inlinable public func PathArcTo(this: UnsafeMutablePointer<ImDrawList>!, center: ImVec2, radius: Float, a_min: Float, a_max: Float, num_segments: Int32) -> Void {
+	ImDrawList_PathArcTo(UnsafeMutablePointer<ImDrawList>!,ImVec2,Float,Float,Float,Int32)
 }
 
-@inlinable public func PushStyleVarVec2(idx: ImGuiStyleVar, val: ImVec2) {
-    igPushStyleVarVec2(idx, val)
+@inlinable public func PathArcToFast(this: UnsafeMutablePointer<ImDrawList>!, center: ImVec2, radius: Float, a_min_of_12: Int32, a_max_of_12: Int32) -> Void {
+	ImDrawList_PathArcToFast(UnsafeMutablePointer<ImDrawList>!,ImVec2,Float,Int32,Int32)
 }
 
-@inlinable public func PushTextWrapPos(wrap_local_pos_x: Float) {
-    igPushTextWrapPos(wrap_local_pos_x)
+@inlinable public func PathBezierCurveTo(this: UnsafeMutablePointer<ImDrawList>!, p1: ImVec2, p2: ImVec2, p3: ImVec2, num_segments: Int32) -> Void {
+	ImDrawList_PathBezierCurveTo(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,Int32)
 }
 
-@inlinable public func Render() {
-    igRender()
+@inlinable public func PathClear(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_PathClear(UnsafeMutablePointer<ImDrawList>!)
 }
 
-@inlinable public func ResetMouseDragDelta(button: Int32) {
-    igResetMouseDragDelta(button)
+@inlinable public func PathFillConvex(this: UnsafeMutablePointer<ImDrawList>!, col: ImU32) -> Void {
+	ImDrawList_PathFillConvex(UnsafeMutablePointer<ImDrawList>!,ImU32)
 }
 
-@inlinable public func SameLine(offset_from_start_x: Float, spacing: Float) {
-    igSameLine(offset_from_start_x, spacing)
+@inlinable public func PathLineTo(this: UnsafeMutablePointer<ImDrawList>!, pos: ImVec2) -> Void {
+	ImDrawList_PathLineTo(UnsafeMutablePointer<ImDrawList>!,ImVec2)
 }
 
-@inlinable public func Separator() {
-    igSeparator()
+@inlinable public func PathLineToMergeDuplicate(this: UnsafeMutablePointer<ImDrawList>!, pos: ImVec2) -> Void {
+	ImDrawList_PathLineToMergeDuplicate(UnsafeMutablePointer<ImDrawList>!,ImVec2)
 }
 
-@inlinable public func SetColorEditOptions(flags: ImGuiColorEditFlags) {
-    igSetColorEditOptions(flags)
+@inlinable public func PathRect(this: UnsafeMutablePointer<ImDrawList>!, rect_min: ImVec2, rect_max: ImVec2, rounding: Float, rounding_corners: ImDrawCornerFlags) -> Void {
+	ImDrawList_PathRect(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,Float,ImDrawCornerFlags)
 }
 
-@inlinable public func SetColumnOffset(column_index: Int32, offset_x: Float) {
-    igSetColumnOffset(column_index, offset_x)
+@inlinable public func PathStroke(this: UnsafeMutablePointer<ImDrawList>!, col: ImU32, closed: Bool, thickness: Float) -> Void {
+	ImDrawList_PathStroke(UnsafeMutablePointer<ImDrawList>!,ImU32,Bool,Float)
 }
 
-@inlinable public func SetColumnWidth(column_index: Int32, width: Float) {
-    igSetColumnWidth(column_index, width)
+@inlinable public func PlotHistogramFloatPtr(label: UnsafePointer<String>!, values: UnsafePointer<Float>!, values_count: Int32, values_offset: Int32, overlay_text: UnsafePointer<String>!, scale_min: Float, scale_max: Float, graph_size: ImVec2, stride: Int32) -> Void {
+	igPlotHistogramFloatPtr(UnsafePointer<String>!,UnsafePointer<Float>!,Int32,Int32,UnsafePointer<String>!,Float,Float,ImVec2,Int32)
 }
 
-@inlinable public func SetCursorPos(local_pos: ImVec2) {
-    igSetCursorPos(local_pos)
+@inlinable public func PlotLines(label: UnsafePointer<String>!, values: UnsafePointer<Float>!, values_count: Int32, values_offset: Int32, overlay_text: UnsafePointer<String>!, scale_min: Float, scale_max: Float, graph_size: ImVec2, stride: Int32) -> Void {
+	igPlotLines(UnsafePointer<String>!,UnsafePointer<Float>!,Int32,Int32,UnsafePointer<String>!,Float,Float,ImVec2,Int32)
 }
 
-@inlinable public func SetCursorPosX(local_x: Float) {
-    igSetCursorPosX(local_x)
+@inlinable public func PopAllowKeyboardFocus() -> Void {
+	igPopAllowKeyboardFocus()
 }
 
-@inlinable public func SetCursorPosY(local_y: Float) {
-    igSetCursorPosY(local_y)
+@inlinable public func PopButtonRepeat() -> Void {
+	igPopButtonRepeat()
 }
 
-@inlinable public func SetCursorScreenPos(pos: ImVec2) {
-    igSetCursorScreenPos(pos)
+@inlinable public func PopClipRect() -> Void {
+	igPopClipRect()
 }
 
-@inlinable public func SetItemAllowOverlap() {
-    igSetItemAllowOverlap()
+@inlinable public func PopClipRect(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_PopClipRect(UnsafeMutablePointer<ImDrawList>!)
 }
 
-@inlinable public func SetItemDefaultFocus() {
-    igSetItemDefaultFocus()
+@inlinable public func PopFont() -> Void {
+	igPopFont()
 }
 
-@inlinable public func SetKeyboardFocusHere(offset: Int32) {
-    igSetKeyboardFocusHere(offset)
+@inlinable public func PopID() -> Void {
+	igPopID()
 }
 
-@inlinable public func SetMouseCursor(type: ImGuiMouseCursor) {
-    igSetMouseCursor(type)
+@inlinable public func PopItemWidth() -> Void {
+	igPopItemWidth()
 }
 
-@inlinable public func SetNextItemOpen(is_open: Bool, cond: ImGuiCond) {
-    igSetNextItemOpen(is_open, cond)
+@inlinable public func PopStyleColor(count: Int32) -> Void {
+	igPopStyleColor(Int32)
 }
 
-@inlinable public func SetNextItemWidth(item_width: Float) {
-    igSetNextItemWidth(item_width)
+@inlinable public func PopStyleVar(count: Int32) -> Void {
+	igPopStyleVar(Int32)
 }
 
-@inlinable public func SetNextWindowBgAlpha(alpha: Float) {
-    igSetNextWindowBgAlpha(alpha)
+@inlinable public func PopTextWrapPos() -> Void {
+	igPopTextWrapPos()
 }
 
-@inlinable public func SetNextWindowCollapsed(collapsed: Bool, cond: ImGuiCond) {
-    igSetNextWindowCollapsed(collapsed, cond)
+@inlinable public func PopTextureID(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_PopTextureID(UnsafeMutablePointer<ImDrawList>!)
 }
 
-@inlinable public func SetNextWindowContentSize(size: ImVec2) {
-    igSetNextWindowContentSize(size)
+@inlinable public func PrimQuadUV(this: UnsafeMutablePointer<ImDrawList>!, a: ImVec2, b: ImVec2, c: ImVec2, d: ImVec2, uv_a: ImVec2, uv_b: ImVec2, uv_c: ImVec2, uv_d: ImVec2, col: ImU32) -> Void {
+	ImDrawList_PrimQuadUV(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImVec2,ImU32)
 }
 
-@inlinable public func SetNextWindowDockID(dock_id: ImGuiID, cond: ImGuiCond) {
-    igSetNextWindowDockID(dock_id, cond)
+@inlinable public func PrimRect(this: UnsafeMutablePointer<ImDrawList>!, a: ImVec2, b: ImVec2, col: ImU32) -> Void {
+	ImDrawList_PrimRect(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImU32)
 }
 
-@inlinable public func SetNextWindowFocus() {
-    igSetNextWindowFocus()
+@inlinable public func PrimRectUV(this: UnsafeMutablePointer<ImDrawList>!, a: ImVec2, b: ImVec2, uv_a: ImVec2, uv_b: ImVec2, col: ImU32) -> Void {
+	ImDrawList_PrimRectUV(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImVec2,ImVec2,ImU32)
 }
 
-@inlinable public func SetNextWindowPos(pos: ImVec2, cond: ImGuiCond, pivot: ImVec2) {
-    igSetNextWindowPos(pos, cond, pivot)
+@inlinable public func PrimReserve(this: UnsafeMutablePointer<ImDrawList>!, idx_count: Int32, vtx_count: Int32) -> Void {
+	ImDrawList_PrimReserve(UnsafeMutablePointer<ImDrawList>!,Int32,Int32)
 }
 
-@inlinable public func SetNextWindowSize(size: ImVec2, cond: ImGuiCond) {
-    igSetNextWindowSize(size, cond)
+@inlinable public func PrimVtx(this: UnsafeMutablePointer<ImDrawList>!, pos: ImVec2, uv: ImVec2, col: ImU32) -> Void {
+	ImDrawList_PrimVtx(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImU32)
 }
 
-@inlinable public func SetNextWindowViewport(viewport_id: ImGuiID) {
-    igSetNextWindowViewport(viewport_id)
+@inlinable public func PrimWriteIdx(this: UnsafeMutablePointer<ImDrawList>!, idx: ImDrawIdx) -> Void {
+	ImDrawList_PrimWriteIdx(UnsafeMutablePointer<ImDrawList>!,ImDrawIdx)
 }
 
-@inlinable public func SetScrollFromPosX(local_x: Float, center_x_ratio: Float) {
-    igSetScrollFromPosX(local_x, center_x_ratio)
+@inlinable public func PrimWriteVtx(this: UnsafeMutablePointer<ImDrawList>!, pos: ImVec2, uv: ImVec2, col: ImU32) -> Void {
+	ImDrawList_PrimWriteVtx(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,ImU32)
 }
 
-@inlinable public func SetScrollFromPosY(local_y: Float, center_y_ratio: Float) {
-    igSetScrollFromPosY(local_y, center_y_ratio)
+@inlinable public func ProgressBar(fraction: Float, size_arg: ImVec2, overlay: UnsafePointer<String>!) -> Void {
+	igProgressBar(Float,ImVec2,UnsafePointer<String>!)
 }
 
-@inlinable public func SetScrollHereX(center_x_ratio: Float) {
-    igSetScrollHereX(center_x_ratio)
+@inlinable public func PushAllowKeyboardFocus(allow_keyboard_focus: Bool) -> Void {
+	igPushAllowKeyboardFocus(Bool)
 }
 
-@inlinable public func SetScrollHereY(center_y_ratio: Float) {
-    igSetScrollHereY(center_y_ratio)
+@inlinable public func PushButtonRepeat(`repeat`: Bool) -> Void {
+	igPushButtonRepeat(Bool)
 }
 
-@inlinable public func SetScrollX(scroll_x: Float) {
-    igSetScrollX(scroll_x)
+@inlinable public func PushClipRect(this: UnsafeMutablePointer<ImDrawList>!, clip_rect_min: ImVec2, clip_rect_max: ImVec2, intersect_with_current_clip_rect: Bool) -> Void {
+	ImDrawList_PushClipRect(UnsafeMutablePointer<ImDrawList>!,ImVec2,ImVec2,Bool)
 }
 
-@inlinable public func SetScrollY(scroll_y: Float) {
-    igSetScrollY(scroll_y)
+@inlinable public func PushClipRect(clip_rect_min: ImVec2, clip_rect_max: ImVec2, intersect_with_current_clip_rect: Bool) -> Void {
+	igPushClipRect(ImVec2,ImVec2,Bool)
 }
 
-@inlinable public func SetWindowCollapsedBool(collapsed: Bool, cond: ImGuiCond) {
-    igSetWindowCollapsedBool(collapsed, cond)
+@inlinable public func PushClipRectFullScreen(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_PushClipRectFullScreen(UnsafeMutablePointer<ImDrawList>!)
 }
 
-@inlinable public func SetWindowFocus() {
-    igSetWindowFocus()
+@inlinable public func PushFont(font: UnsafeMutablePointer<ImFont>!) -> Void {
+	igPushFont(UnsafeMutablePointer<ImFont>!)
 }
 
-@inlinable public func SetWindowFontScale(scale: Float) {
-    igSetWindowFontScale(scale)
+@inlinable public func PushIDInt(int_id: Int32) -> Void {
+	igPushIDInt(Int32)
 }
 
-@inlinable public func SetWindowPosVec2(pos: ImVec2, cond: ImGuiCond) {
-    igSetWindowPosVec2(pos, cond)
+@inlinable public func PushIDPtr(ptr_id: UnsafePointer<Void>!) -> Void {
+	igPushIDPtr(UnsafePointer<Void>!)
 }
 
-@inlinable public func SetWindowSizeVec2(size: ImVec2, cond: ImGuiCond) {
-    igSetWindowSizeVec2(size, cond)
+@inlinable public func PushIDRange(str_id_begin: UnsafePointer<String>!, str_id_end: UnsafePointer<String>!) -> Void {
+	igPushIDRange(UnsafePointer<String>!,UnsafePointer<String>!)
 }
 
-@inlinable public func ShowUserGuide() {
-    igShowUserGuide()
+@inlinable public func PushIDStr(str_id: UnsafePointer<String>!) -> Void {
+	igPushIDStr(UnsafePointer<String>!)
 }
 
-@inlinable public func Spacing() {
-    igSpacing()
+@inlinable public func PushItemWidth(item_width: Float) -> Void {
+	igPushItemWidth(Float)
 }
 
-@inlinable public func TreePop() {
-    igTreePop()
+@inlinable public func PushStyleColor(idx: ImGuiCol, col: ImVec4) -> Void {
+	igPushStyleColor(ImGuiCol,ImVec4)
 }
 
-@inlinable public func Unindent(indent_w: Float) {
-    igUnindent(indent_w)
+@inlinable public func PushStyleColorU32(idx: ImGuiCol, col: ImU32) -> Void {
+	igPushStyleColorU32(ImGuiCol,ImU32)
 }
 
-@inlinable public func UpdatePlatformWindows() {
-    igUpdatePlatformWindows()
+@inlinable public func PushStyleVarFloat(idx: ImGuiStyleVar, val: Float) -> Void {
+	igPushStyleVarFloat(ImGuiStyleVar,Float)
+}
+
+@inlinable public func PushStyleVarVec2(idx: ImGuiStyleVar, val: ImVec2) -> Void {
+	igPushStyleVarVec2(ImGuiStyleVar,ImVec2)
+}
+
+@inlinable public func PushTextWrapPos(wrap_local_pos_x: Float) -> Void {
+	igPushTextWrapPos(Float)
+}
+
+@inlinable public func PushTextureID(this: UnsafeMutablePointer<ImDrawList>!, texture_id: ImTextureID) -> Void {
+	ImDrawList_PushTextureID(UnsafeMutablePointer<ImDrawList>!,ImTextureID)
+}
+
+@inlinable public func RadioButtonBool(label: UnsafePointer<String>!, active: Bool) -> Bool {
+	return igRadioButtonBool(UnsafePointer<String>!,Bool)
+}
+
+@inlinable public func RadioButtonIntPtr(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Int32>!, v_button: Int32) -> Bool {
+	return igRadioButtonIntPtr(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,Int32)
+}
+
+@inlinable public func Render() -> Void {
+	igRender()
+}
+
+@inlinable public func RenderChar(this: UnsafeMutablePointer<ImFont>!, draw_list: UnsafeMutablePointer<ImDrawList>!, size: Float, pos: ImVec2, col: ImU32, c: ImWchar) -> Void {
+	ImFont_RenderChar(UnsafeMutablePointer<ImFont>!,UnsafeMutablePointer<ImDrawList>!,Float,ImVec2,ImU32,ImWchar)
+}
+
+@inlinable public func RenderPlatformWindowsDefault(platform_arg: UnsafeMutablePointer<Void>!, renderer_arg: UnsafeMutablePointer<Void>!) -> Void {
+	igRenderPlatformWindowsDefault(UnsafeMutablePointer<Void>!,UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func RenderText(this: UnsafeMutablePointer<ImFont>!, draw_list: UnsafeMutablePointer<ImDrawList>!, size: Float, pos: ImVec2, col: ImU32, clip_rect: ImVec4, text_begin: UnsafePointer<String>!, text_end: UnsafePointer<String>!, wrap_width: Float, cpu_fine_clip: Bool) -> Void {
+	ImFont_RenderText(UnsafeMutablePointer<ImFont>!,UnsafeMutablePointer<ImDrawList>!,Float,ImVec2,ImU32,ImVec4,UnsafePointer<String>!,UnsafePointer<String>!,Float,Bool)
+}
+
+@inlinable public func ResetMouseDragDelta(button: Int32) -> Void {
+	igResetMouseDragDelta(Int32)
+}
+
+@inlinable public func SameLine(offset_from_start_x: Float, spacing: Float) -> Void {
+	igSameLine(Float,Float)
+}
+
+@inlinable public func SaveIniSettingsToDisk(ini_filename: UnsafePointer<String>!) -> Void {
+	igSaveIniSettingsToDisk(UnsafePointer<String>!)
+}
+
+@inlinable public func SaveIniSettingsToMemory(out_ini_size: UnsafeMutablePointer<Int>!) -> UnsafePointer<String>! {
+	return igSaveIniSettingsToMemory(UnsafeMutablePointer<Int>!)
+}
+
+@inlinable public func ScaleAllSizes(this: UnsafeMutablePointer<ImGuiStyle>!, scale_factor: Float) -> Void {
+	ImGuiStyle_ScaleAllSizes(UnsafeMutablePointer<ImGuiStyle>!,Float)
+}
+
+@inlinable public func ScaleClipRects(this: UnsafeMutablePointer<ImDrawData>!, fb_scale: ImVec2) -> Void {
+	ImDrawData_ScaleClipRects(UnsafeMutablePointer<ImDrawData>!,ImVec2)
+}
+
+@inlinable public func Selectable(label: UnsafePointer<String>!, selected: Bool, flags: ImGuiSelectableFlags, size: ImVec2) -> Bool {
+	return igSelectable(UnsafePointer<String>!,Bool,ImGuiSelectableFlags,ImVec2)
+}
+
+@inlinable public func SelectableBoolPtr(label: UnsafePointer<String>!, p_selected: UnsafeMutablePointer<Bool>!, flags: ImGuiSelectableFlags, size: ImVec2) -> Bool {
+	return igSelectableBoolPtr(UnsafePointer<String>!,UnsafeMutablePointer<Bool>!,ImGuiSelectableFlags,ImVec2)
+}
+
+@inlinable public func Separator() -> Void {
+	igSeparator()
+}
+
+@inlinable public func SetAllInt(this: UnsafeMutablePointer<ImGuiStorage>!, val: Int32) -> Void {
+	ImGuiStorage_SetAllInt(UnsafeMutablePointer<ImGuiStorage>!,Int32)
+}
+
+@inlinable public func SetBit(this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!, n: Int32) -> Void {
+	ImFontGlyphRangesBuilder_SetBit(UnsafeMutablePointer<ImFontGlyphRangesBuilder>!,Int32)
+}
+
+@inlinable public func SetBool(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, val: Bool) -> Void {
+	ImGuiStorage_SetBool(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Bool)
+}
+
+@inlinable public func SetClipboardText(text: UnsafePointer<String>!) -> Void {
+	igSetClipboardText(UnsafePointer<String>!)
+}
+
+@inlinable public func SetColorEditOptions(flags: ImGuiColorEditFlags) -> Void {
+	igSetColorEditOptions(ImGuiColorEditFlags)
+}
+
+@inlinable public func SetColumnOffset(column_index: Int32, offset_x: Float) -> Void {
+	igSetColumnOffset(Int32,Float)
+}
+
+@inlinable public func SetColumnWidth(column_index: Int32, width: Float) -> Void {
+	igSetColumnWidth(Int32,Float)
+}
+
+@inlinable public func SetCurrentChannel(this: UnsafeMutablePointer<ImDrawListSplitter>!, draw_list: UnsafeMutablePointer<ImDrawList>!, channel_idx: Int32) -> Void {
+	ImDrawListSplitter_SetCurrentChannel(UnsafeMutablePointer<ImDrawListSplitter>!,UnsafeMutablePointer<ImDrawList>!,Int32)
+}
+
+@inlinable public func SetCurrentContext(ctx: UnsafeMutablePointer<ImGuiContext>!) -> Void {
+	igSetCurrentContext(UnsafeMutablePointer<ImGuiContext>!)
+}
+
+@inlinable public func SetCursorPos(local_pos: ImVec2) -> Void {
+	igSetCursorPos(ImVec2)
+}
+
+@inlinable public func SetCursorPosX(local_x: Float) -> Void {
+	igSetCursorPosX(Float)
+}
+
+@inlinable public func SetCursorPosY(local_y: Float) -> Void {
+	igSetCursorPosY(Float)
+}
+
+@inlinable public func SetCursorScreenPos(pos: ImVec2) -> Void {
+	igSetCursorScreenPos(ImVec2)
+}
+
+@inlinable public func SetDragDropPayload(type: UnsafePointer<String>!, data: UnsafePointer<Void>!, sz: Int, cond: ImGuiCond) -> Bool {
+	return igSetDragDropPayload(UnsafePointer<String>!,UnsafePointer<Void>!,Int,ImGuiCond)
+}
+
+@inlinable public func SetFallbackChar(this: UnsafeMutablePointer<ImFont>!, c: ImWchar) -> Void {
+	ImFont_SetFallbackChar(UnsafeMutablePointer<ImFont>!,ImWchar)
+}
+
+@inlinable public func SetFloat(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, val: Float) -> Void {
+	ImGuiStorage_SetFloat(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Float)
+}
+
+@inlinable public func SetHSV(this: UnsafeMutablePointer<ImColor>!, h: Float, s: Float, v: Float, a: Float) -> Void {
+	ImColor_SetHSV(UnsafeMutablePointer<ImColor>!,Float,Float,Float,Float)
+}
+
+@inlinable public func SetInt(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, val: Int32) -> Void {
+	ImGuiStorage_SetInt(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,Int32)
+}
+
+@inlinable public func SetItemAllowOverlap() -> Void {
+	igSetItemAllowOverlap()
+}
+
+@inlinable public func SetItemDefaultFocus() -> Void {
+	igSetItemDefaultFocus()
+}
+
+@inlinable public func SetKeyboardFocusHere(offset: Int32) -> Void {
+	igSetKeyboardFocusHere(Int32)
+}
+
+@inlinable public func SetMouseCursor(type: ImGuiMouseCursor) -> Void {
+	igSetMouseCursor(ImGuiMouseCursor)
+}
+
+@inlinable public func SetNextItemOpen(is_open: Bool, cond: ImGuiCond) -> Void {
+	igSetNextItemOpen(Bool,ImGuiCond)
+}
+
+@inlinable public func SetNextItemWidth(item_width: Float) -> Void {
+	igSetNextItemWidth(Float)
+}
+
+@inlinable public func SetNextWindowBgAlpha(alpha: Float) -> Void {
+	igSetNextWindowBgAlpha(Float)
+}
+
+@inlinable public func SetNextWindowClass(window_class: UnsafePointer<ImGuiWindowClass>!) -> Void {
+	igSetNextWindowClass(UnsafePointer<ImGuiWindowClass>!)
+}
+
+@inlinable public func SetNextWindowCollapsed(collapsed: Bool, cond: ImGuiCond) -> Void {
+	igSetNextWindowCollapsed(Bool,ImGuiCond)
+}
+
+@inlinable public func SetNextWindowContentSize(size: ImVec2) -> Void {
+	igSetNextWindowContentSize(ImVec2)
+}
+
+@inlinable public func SetNextWindowDockID(dock_id: ImGuiID, cond: ImGuiCond) -> Void {
+	igSetNextWindowDockID(ImGuiID,ImGuiCond)
+}
+
+@inlinable public func SetNextWindowFocus() -> Void {
+	igSetNextWindowFocus()
+}
+
+@inlinable public func SetNextWindowPos(pos: ImVec2, cond: ImGuiCond, pivot: ImVec2) -> Void {
+	igSetNextWindowPos(ImVec2,ImGuiCond,ImVec2)
+}
+
+@inlinable public func SetNextWindowSize(size: ImVec2, cond: ImGuiCond) -> Void {
+	igSetNextWindowSize(ImVec2,ImGuiCond)
+}
+
+@inlinable public func SetNextWindowSizeConstraints(size_min: ImVec2, size_max: ImVec2, custom_callback: ImGuiSizeCallback, custom_callback_data: UnsafeMutablePointer<Void>!) -> Void {
+	igSetNextWindowSizeConstraints(ImVec2,ImVec2,ImGuiSizeCallback,UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func SetNextWindowViewport(viewport_id: ImGuiID) -> Void {
+	igSetNextWindowViewport(ImGuiID)
+}
+
+@inlinable public func SetScrollFromPosX(local_x: Float, center_x_ratio: Float) -> Void {
+	igSetScrollFromPosX(Float,Float)
+}
+
+@inlinable public func SetScrollFromPosY(local_y: Float, center_y_ratio: Float) -> Void {
+	igSetScrollFromPosY(Float,Float)
+}
+
+@inlinable public func SetScrollHereX(center_x_ratio: Float) -> Void {
+	igSetScrollHereX(Float)
+}
+
+@inlinable public func SetScrollHereY(center_y_ratio: Float) -> Void {
+	igSetScrollHereY(Float)
+}
+
+@inlinable public func SetScrollX(scroll_x: Float) -> Void {
+	igSetScrollX(Float)
+}
+
+@inlinable public func SetScrollY(scroll_y: Float) -> Void {
+	igSetScrollY(Float)
+}
+
+@inlinable public func SetStateStorage(storage: UnsafeMutablePointer<ImGuiStorage>!) -> Void {
+	igSetStateStorage(UnsafeMutablePointer<ImGuiStorage>!)
+}
+
+@inlinable public func SetTabItemClosed(tab_or_docked_window_label: UnsafePointer<String>!) -> Void {
+	igSetTabItemClosed(UnsafePointer<String>!)
+}
+
+@inlinable public func SetTexID(this: UnsafeMutablePointer<ImFontAtlas>!, id: ImTextureID) -> Void {
+	ImFontAtlas_SetTexID(UnsafeMutablePointer<ImFontAtlas>!,ImTextureID)
+}
+
+@inlinable public func SetTooltip(fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igSetTooltip(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func SetTooltipV(fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	igSetTooltipV(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func SetVoidPtr(this: UnsafeMutablePointer<ImGuiStorage>!, key: ImGuiID, val: UnsafeMutablePointer<Void>!) -> Void {
+	ImGuiStorage_SetVoidPtr(UnsafeMutablePointer<ImGuiStorage>!,ImGuiID,UnsafeMutablePointer<Void>!)
+}
+
+@inlinable public func SetWindowCollapsedBool(collapsed: Bool, cond: ImGuiCond) -> Void {
+	igSetWindowCollapsedBool(Bool,ImGuiCond)
+}
+
+@inlinable public func SetWindowCollapsedStr(name: UnsafePointer<String>!, collapsed: Bool, cond: ImGuiCond) -> Void {
+	igSetWindowCollapsedStr(UnsafePointer<String>!,Bool,ImGuiCond)
+}
+
+@inlinable public func SetWindowFocus() -> Void {
+	igSetWindowFocus()
+}
+
+@inlinable public func SetWindowFocusStr(name: UnsafePointer<String>!) -> Void {
+	igSetWindowFocusStr(UnsafePointer<String>!)
+}
+
+@inlinable public func SetWindowFontScale(scale: Float) -> Void {
+	igSetWindowFontScale(Float)
+}
+
+@inlinable public func SetWindowPosStr(name: UnsafePointer<String>!, pos: ImVec2, cond: ImGuiCond) -> Void {
+	igSetWindowPosStr(UnsafePointer<String>!,ImVec2,ImGuiCond)
+}
+
+@inlinable public func SetWindowPosVec2(pos: ImVec2, cond: ImGuiCond) -> Void {
+	igSetWindowPosVec2(ImVec2,ImGuiCond)
+}
+
+@inlinable public func SetWindowSizeStr(name: UnsafePointer<String>!, size: ImVec2, cond: ImGuiCond) -> Void {
+	igSetWindowSizeStr(UnsafePointer<String>!,ImVec2,ImGuiCond)
+}
+
+@inlinable public func SetWindowSizeVec2(size: ImVec2, cond: ImGuiCond) -> Void {
+	igSetWindowSizeVec2(ImVec2,ImGuiCond)
+}
+
+@inlinable public func ShowAboutWindow(p_open: UnsafeMutablePointer<Bool>!) -> Void {
+	igShowAboutWindow(UnsafeMutablePointer<Bool>!)
+}
+
+@inlinable public func ShowDemoWindow(p_open: UnsafeMutablePointer<Bool>!) -> Void {
+	igShowDemoWindow(UnsafeMutablePointer<Bool>!)
+}
+
+@inlinable public func ShowFontSelector(label: UnsafePointer<String>!) -> Void {
+	igShowFontSelector(UnsafePointer<String>!)
+}
+
+@inlinable public func ShowMetricsWindow(p_open: UnsafeMutablePointer<Bool>!) -> Void {
+	igShowMetricsWindow(UnsafeMutablePointer<Bool>!)
+}
+
+@inlinable public func ShowStyleEditor(ref: UnsafeMutablePointer<ImGuiStyle>!) -> Void {
+	igShowStyleEditor(UnsafeMutablePointer<ImGuiStyle>!)
+}
+
+@inlinable public func ShowStyleSelector(label: UnsafePointer<String>!) -> Bool {
+	return igShowStyleSelector(UnsafePointer<String>!)
+}
+
+@inlinable public func ShowUserGuide() -> Void {
+	igShowUserGuide()
+}
+
+@inlinable public func SliderAngle(label: UnsafePointer<String>!, v_rad: UnsafeMutablePointer<Float>!, v_degrees_min: Float, v_degrees_max: Float, format: UnsafePointer<String>!) -> Bool {
+	return igSliderAngle(UnsafePointer<String>!,UnsafeMutablePointer<Float>!,Float,Float,UnsafePointer<String>!)
+}
+
+@inlinable public func SliderFloat(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Float>!, v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igSliderFloat(UnsafePointer<String>!,UnsafeMutablePointer<Float>!,Float,Float,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func SliderFloat2(label: UnsafePointer<String>!, v: (Float,Float), v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igSliderFloat2(UnsafePointer<String>!,(Float,Float),Float,Float,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func SliderFloat3(label: UnsafePointer<String>!, v: (Float,Float,Float), v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igSliderFloat3(UnsafePointer<String>!,(Float,Float,Float),Float,Float,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func SliderFloat4(label: UnsafePointer<String>!, v: (Float,Float,Float,Float), v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igSliderFloat4(UnsafePointer<String>!,(Float,Float,Float,Float),Float,Float,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func SliderInt(label: UnsafePointer<String>!, v: UnsafeMutablePointer<Int32>!, v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igSliderInt(UnsafePointer<String>!,UnsafeMutablePointer<Int32>!,Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func SliderInt2(label: UnsafePointer<String>!, v: (Int32,Int32), v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igSliderInt2(UnsafePointer<String>!,(Int32,Int32),Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func SliderInt3(label: UnsafePointer<String>!, v: (Int32,Int32,Int32), v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igSliderInt3(UnsafePointer<String>!,(Int32,Int32,Int32),Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func SliderInt4(label: UnsafePointer<String>!, v: (Int32,Int32,Int32,Int32), v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igSliderInt4(UnsafePointer<String>!,(Int32,Int32,Int32,Int32),Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func SliderScalar(label: UnsafePointer<String>!, data_type: ImGuiDataType, p_data: UnsafeMutablePointer<Void>!, p_min: UnsafePointer<Void>!, p_max: UnsafePointer<Void>!, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igSliderScalar(UnsafePointer<String>!,ImGuiDataType,UnsafeMutablePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func SliderScalarN(label: UnsafePointer<String>!, data_type: ImGuiDataType, p_data: UnsafeMutablePointer<Void>!, components: Int32, p_min: UnsafePointer<Void>!, p_max: UnsafePointer<Void>!, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igSliderScalarN(UnsafePointer<String>!,ImGuiDataType,UnsafeMutablePointer<Void>!,Int32,UnsafePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func SmallButton(label: UnsafePointer<String>!) -> Bool {
+	return igSmallButton(UnsafePointer<String>!)
+}
+
+@inlinable public func Spacing() -> Void {
+	igSpacing()
+}
+
+@inlinable public func Splitter_Split(this: UnsafeMutablePointer<ImDrawListSplitter>!, draw_list: UnsafeMutablePointer<ImDrawList>!, count: Int32) -> Void {
+	ImDrawListSplitter_Split(UnsafeMutablePointer<ImDrawListSplitter>!,UnsafeMutablePointer<ImDrawList>!,Int32)
+}
+
+@inlinable public func Step(this: UnsafeMutablePointer<ImGuiListClipper>!) -> Bool {
+	return ImGuiListClipper_Step(UnsafeMutablePointer<ImGuiListClipper>!)
+}
+
+@inlinable public func StyleColorsClassic(dst: UnsafeMutablePointer<ImGuiStyle>!) -> Void {
+	igStyleColorsClassic(UnsafeMutablePointer<ImGuiStyle>!)
+}
+
+@inlinable public func StyleColorsDark(dst: UnsafeMutablePointer<ImGuiStyle>!) -> Void {
+	igStyleColorsDark(UnsafeMutablePointer<ImGuiStyle>!)
+}
+
+@inlinable public func StyleColorsLight(dst: UnsafeMutablePointer<ImGuiStyle>!) -> Void {
+	igStyleColorsLight(UnsafeMutablePointer<ImGuiStyle>!)
+}
+
+@inlinable public func Text(fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igText(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TextColored(col: ImVec4, fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igTextColored(ImVec4,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TextColoredV(col: ImVec4, fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	igTextColoredV(ImVec4,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TextDisabled(fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igTextDisabled(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TextDisabledV(fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	igTextDisabledV(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TextUnformatted(text: UnsafePointer<String>!, text_end: UnsafePointer<String>!) -> Void {
+	igTextUnformatted(UnsafePointer<String>!,UnsafePointer<String>!)
+}
+
+@inlinable public func TextV(fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	igTextV(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TextWrapped(fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	igTextWrapped(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TextWrappedV(fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	igTextWrappedV(UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodeExPtr(ptr_id: UnsafePointer<Void>!, flags: ImGuiTreeNodeFlags, fmt: UnsafePointer<String>!, ...: CVarArg...) -> Bool {
+	return igTreeNodeExPtr(UnsafePointer<Void>!,ImGuiTreeNodeFlags,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodeExStr(label: UnsafePointer<String>!, flags: ImGuiTreeNodeFlags) -> Bool {
+	return igTreeNodeExStr(UnsafePointer<String>!,ImGuiTreeNodeFlags)
+}
+
+@inlinable public func TreeNodeExStrStr(str_id: UnsafePointer<String>!, flags: ImGuiTreeNodeFlags, fmt: UnsafePointer<String>!, ...: CVarArg...) -> Bool {
+	return igTreeNodeExStrStr(UnsafePointer<String>!,ImGuiTreeNodeFlags,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodeExVPtr(ptr_id: UnsafePointer<Void>!, flags: ImGuiTreeNodeFlags, fmt: UnsafePointer<String>!, args: CVarArg...) -> Bool {
+	return igTreeNodeExVPtr(UnsafePointer<Void>!,ImGuiTreeNodeFlags,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodeExVStr(str_id: UnsafePointer<String>!, flags: ImGuiTreeNodeFlags, fmt: UnsafePointer<String>!, args: CVarArg...) -> Bool {
+	return igTreeNodeExVStr(UnsafePointer<String>!,ImGuiTreeNodeFlags,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodePtr(ptr_id: UnsafePointer<Void>!, fmt: UnsafePointer<String>!, ...: CVarArg...) -> Bool {
+	return igTreeNodePtr(UnsafePointer<Void>!,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodeStr(label: UnsafePointer<String>!) -> Bool {
+	return igTreeNodeStr(UnsafePointer<String>!)
+}
+
+@inlinable public func TreeNodeStrStr(str_id: UnsafePointer<String>!, fmt: UnsafePointer<String>!, ...: CVarArg...) -> Bool {
+	return igTreeNodeStrStr(UnsafePointer<String>!,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodeVPtr(ptr_id: UnsafePointer<Void>!, fmt: UnsafePointer<String>!, args: CVarArg...) -> Bool {
+	return igTreeNodeVPtr(UnsafePointer<Void>!,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreeNodeVStr(str_id: UnsafePointer<String>!, fmt: UnsafePointer<String>!, args: CVarArg...) -> Bool {
+	return igTreeNodeVStr(UnsafePointer<String>!,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func TreePop() -> Void {
+	igTreePop()
+}
+
+@inlinable public func TreePushPtr(ptr_id: UnsafePointer<Void>!) -> Void {
+	igTreePushPtr(UnsafePointer<Void>!)
+}
+
+@inlinable public func TreePushStr(str_id: UnsafePointer<String>!) -> Void {
+	igTreePushStr(UnsafePointer<String>!)
+}
+
+@inlinable public func Unindent(indent_w: Float) -> Void {
+	igUnindent(Float)
+}
+
+@inlinable public func UpdateClipRect(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_UpdateClipRect(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func UpdatePlatformWindows() -> Void {
+	igUpdatePlatformWindows()
+}
+
+@inlinable public func UpdateTextureID(this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	ImDrawList_UpdateTextureID(UnsafeMutablePointer<ImDrawList>!)
+}
+
+@inlinable public func VSliderFloat(label: UnsafePointer<String>!, size: ImVec2, v: UnsafeMutablePointer<Float>!, v_min: Float, v_max: Float, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igVSliderFloat(UnsafePointer<String>!,ImVec2,UnsafeMutablePointer<Float>!,Float,Float,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func VSliderInt(label: UnsafePointer<String>!, size: ImVec2, v: UnsafeMutablePointer<Int32>!, v_min: Int32, v_max: Int32, format: UnsafePointer<String>!) -> Bool {
+	return igVSliderInt(UnsafePointer<String>!,ImVec2,UnsafeMutablePointer<Int32>!,Int32,Int32,UnsafePointer<String>!)
+}
+
+@inlinable public func VSliderScalar(label: UnsafePointer<String>!, size: ImVec2, data_type: ImGuiDataType, p_data: UnsafeMutablePointer<Void>!, p_min: UnsafePointer<Void>!, p_max: UnsafePointer<Void>!, format: UnsafePointer<String>!, power: Float) -> Bool {
+	return igVSliderScalar(UnsafePointer<String>!,ImVec2,ImGuiDataType,UnsafeMutablePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<Void>!,UnsafePointer<String>!,Float)
+}
+
+@inlinable public func ValueBool(`prefix`: UnsafePointer<String>!, b: Bool) -> Void {
+	igValueBool(UnsafePointer<String>!,Bool)
+}
+
+@inlinable public func ValueFloat(`prefix`: UnsafePointer<String>!, v: Float, float_format: UnsafePointer<String>!) -> Void {
+	igValueFloat(UnsafePointer<String>!,Float,UnsafePointer<String>!)
+}
+
+@inlinable public func ValueInt(`prefix`: UnsafePointer<String>!, v: Int32) -> Void {
+	igValueInt(UnsafePointer<String>!,Int32)
+}
+
+@inlinable public func ValueUint(`prefix`: UnsafePointer<String>!, v: UInt32) -> Void {
+	igValueUint(UnsafePointer<String>!,UInt32)
+}
+
+@inlinable public func _grow_capacity(this: UnsafeMutablePointer<ImVector>!, sz: Int32) -> Int32 {
+	return ImVector__grow_capacity(UnsafeMutablePointer<ImVector>!,Int32)
+}
+
+@inlinable public func append(this: UnsafeMutablePointer<ImGuiTextBuffer>!, str: UnsafePointer<String>!, str_end: UnsafePointer<String>!) -> Void {
+	ImGuiTextBuffer_append(UnsafeMutablePointer<ImGuiTextBuffer>!,UnsafePointer<String>!,UnsafePointer<String>!)
+}
+
+@inlinable public func appendf(this: UnsafeMutablePointer<ImGuiTextBuffer>!, fmt: UnsafePointer<String>!, ...: CVarArg...) -> Void {
+	ImGuiTextBuffer_appendf(UnsafeMutablePointer<ImGuiTextBuffer>!,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func appendfv(this: UnsafeMutablePointer<ImGuiTextBuffer>!, fmt: UnsafePointer<String>!, args: CVarArg...) -> Void {
+	ImGuiTextBuffer_appendfv(UnsafeMutablePointer<ImGuiTextBuffer>!,UnsafePointer<String>!,CVarArg...)
+}
+
+@inlinable public func back(this: UnsafeMutablePointer<ImVector>!) -> UnsafeMutablePointer<T>! {
+	return ImVector_back(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func back_const(this: UnsafeMutablePointer<ImVector>!) -> UnsafePointer<T>! {
+	return ImVector_back_const(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func begin(this: UnsafeMutablePointer<ImVector>!) -> UnsafeMutablePointer<T>! {
+	return ImVector_begin(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func begin(this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> UnsafePointer<String>! {
+	return ImGuiTextBuffer_begin(UnsafeMutablePointer<ImGuiTextBuffer>!)
+}
+
+@inlinable public func begin_const(this: UnsafeMutablePointer<ImVector>!) -> UnsafePointer<T>! {
+	return ImVector_begin_const(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func c_str(this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> UnsafePointer<String>! {
+	return ImGuiTextBuffer_c_str(UnsafeMutablePointer<ImGuiTextBuffer>!)
+}
+
+@inlinable public func capacity(this: UnsafeMutablePointer<ImVector>!) -> Int32 {
+	return ImVector_capacity(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func clear(this: UnsafeMutablePointer<ImVector>!) -> Void {
+	ImVector_clear(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func clear(this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> Void {
+	ImGuiTextBuffer_clear(UnsafeMutablePointer<ImGuiTextBuffer>!)
+}
+
+@inlinable public func contains(this: UnsafeMutablePointer<ImVector>!, v: T) -> Bool {
+	return ImVector_contains(UnsafeMutablePointer<ImVector>!,T)
+}
+
+@inlinable public func empty(this: UnsafeMutablePointer<ImVector>!) -> Bool {
+	return ImVector_empty(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func empty(this: UnsafeMutablePointer<ImGuiTextRange>!) -> Bool {
+	return ImGuiTextRange_empty(UnsafeMutablePointer<ImGuiTextRange>!)
+}
+
+@inlinable public func empty(this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> Bool {
+	return ImGuiTextBuffer_empty(UnsafeMutablePointer<ImGuiTextBuffer>!)
+}
+
+@inlinable public func end(this: UnsafeMutablePointer<ImVector>!) -> UnsafeMutablePointer<T>! {
+	return ImVector_end(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func end(this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> UnsafePointer<String>! {
+	return ImGuiTextBuffer_end(UnsafeMutablePointer<ImGuiTextBuffer>!)
+}
+
+@inlinable public func end_const(this: UnsafeMutablePointer<ImVector>!) -> UnsafePointer<T>! {
+	return ImVector_end_const(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func erase(this: UnsafeMutablePointer<ImVector>!, it: UnsafePointer<T>!) -> UnsafeMutablePointer<T>! {
+	return ImVector_erase(UnsafeMutablePointer<ImVector>!,UnsafePointer<T>!)
+}
+
+@inlinable public func eraseTPtr(this: UnsafeMutablePointer<ImVector>!, it: UnsafePointer<T>!, it_last: UnsafePointer<T>!) -> UnsafeMutablePointer<T>! {
+	return ImVector_eraseTPtr(UnsafeMutablePointer<ImVector>!,UnsafePointer<T>!,UnsafePointer<T>!)
+}
+
+@inlinable public func erase_unsorted(this: UnsafeMutablePointer<ImVector>!, it: UnsafePointer<T>!) -> UnsafeMutablePointer<T>! {
+	return ImVector_erase_unsorted(UnsafeMutablePointer<ImVector>!,UnsafePointer<T>!)
+}
+
+@inlinable public func find(this: UnsafeMutablePointer<ImVector>!, v: T) -> UnsafeMutablePointer<T>! {
+	return ImVector_find(UnsafeMutablePointer<ImVector>!,T)
+}
+
+@inlinable public func find_const(this: UnsafeMutablePointer<ImVector>!, v: T) -> UnsafePointer<T>! {
+	return ImVector_find_const(UnsafeMutablePointer<ImVector>!,T)
+}
+
+@inlinable public func find_erase(this: UnsafeMutablePointer<ImVector>!, v: T) -> Bool {
+	return ImVector_find_erase(UnsafeMutablePointer<ImVector>!,T)
+}
+
+@inlinable public func find_erase_unsorted(this: UnsafeMutablePointer<ImVector>!, v: T) -> Bool {
+	return ImVector_find_erase_unsorted(UnsafeMutablePointer<ImVector>!,T)
+}
+
+@inlinable public func front(this: UnsafeMutablePointer<ImVector>!) -> UnsafeMutablePointer<T>! {
+	return ImVector_front(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func front_const(this: UnsafeMutablePointer<ImVector>!) -> UnsafePointer<T>! {
+	return ImVector_front_const(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func index_from_ptr(this: UnsafeMutablePointer<ImVector>!, it: UnsafePointer<T>!) -> Int32 {
+	return ImVector_index_from_ptr(UnsafeMutablePointer<ImVector>!,UnsafePointer<T>!)
+}
+
+@inlinable public func insert(this: UnsafeMutablePointer<ImVector>!, it: UnsafePointer<T>!, v: T) -> UnsafeMutablePointer<T>! {
+	return ImVector_insert(UnsafeMutablePointer<ImVector>!,UnsafePointer<T>!,T)
+}
+
+@inlinable public func pop_back(this: UnsafeMutablePointer<ImVector>!) -> Void {
+	ImVector_pop_back(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func push_back(this: UnsafeMutablePointer<ImVector>!, v: T) -> Void {
+	ImVector_push_back(UnsafeMutablePointer<ImVector>!,T)
+}
+
+@inlinable public func push_front(this: UnsafeMutablePointer<ImVector>!, v: T) -> Void {
+	ImVector_push_front(UnsafeMutablePointer<ImVector>!,T)
+}
+
+@inlinable public func reserve(this: UnsafeMutablePointer<ImGuiTextBuffer>!, capacity: Int32) -> Void {
+	ImGuiTextBuffer_reserve(UnsafeMutablePointer<ImGuiTextBuffer>!,Int32)
+}
+
+@inlinable public func reserve(this: UnsafeMutablePointer<ImVector>!, new_capacity: Int32) -> Void {
+	ImVector_reserve(UnsafeMutablePointer<ImVector>!,Int32)
+}
+
+@inlinable public func resize(this: UnsafeMutablePointer<ImVector>!, new_size: Int32) -> Void {
+	ImVector_resize(UnsafeMutablePointer<ImVector>!,Int32)
+}
+
+@inlinable public func resizeT(this: UnsafeMutablePointer<ImVector>!, new_size: Int32, v: T) -> Void {
+	ImVector_resizeT(UnsafeMutablePointer<ImVector>!,Int32,T)
+}
+
+@inlinable public func size(this: UnsafeMutablePointer<ImVector>!) -> Int32 {
+	return ImVector_size(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func size(this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> Int32 {
+	return ImGuiTextBuffer_size(UnsafeMutablePointer<ImGuiTextBuffer>!)
+}
+
+@inlinable public func size_in_bytes(this: UnsafeMutablePointer<ImVector>!) -> Int32 {
+	return ImVector_size_in_bytes(UnsafeMutablePointer<ImVector>!)
+}
+
+@inlinable public func split(this: UnsafeMutablePointer<ImGuiTextRange>!, separator: String, out: UnsafeMutablePointer<ImVector_ImGuiTextRange>!) -> Void {
+	ImGuiTextRange_split(UnsafeMutablePointer<ImGuiTextRange>!,String,UnsafeMutablePointer<ImVector_ImGuiTextRange>!)
+}
+
+@inlinable public func swap(this: UnsafeMutablePointer<ImVector>!, rhs: inout ImVector) -> Void {
+	ImVector_swap(UnsafeMutablePointer<ImVector>!,&ImVector)
+}
+
 }

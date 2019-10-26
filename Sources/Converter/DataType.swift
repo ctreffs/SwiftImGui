@@ -121,6 +121,11 @@ struct DataType: Decodable {
         case let .arrayFixedSize(size):
             // tuple
             return "(\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
+        case .pointer where isConst == true && type == .char:
+            // const char* -> String
+            return toWrap
+        case .pointer where isConst == true && type == .void:
+            return "UnsafeRawPointer!"
         case .pointer where isConst == true:
             return "UnsafePointer<\(toWrap)>!"
         case .pointer:

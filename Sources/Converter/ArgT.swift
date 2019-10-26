@@ -78,8 +78,31 @@ struct ArgsT: Decodable {
         return "\(self.name): \(self.type.toString(.argSwift))"
     }
 
+    func wrapCArg(_ arg: String) -> String {
+        switch self.type.meta {
+        case .primitive:
+            return arg
+        case .arrayFixedSize:
+            return arg
+        case .pointer:
+            return arg
+        case .reference:
+            return "&\(arg)"
+        case .unknown:
+            return arg
+        }
+    }
+
     var toC: String {
-        return type.toString(.argC)
+        var out: String = self.name
+        switch type.type {
+        case .char where type.isConst == true:
+            // const char*
+            out.append(".cStrPtr()")
+        default:
+            break
+        }
+        return wrapCArg(out)
     }
 }
 

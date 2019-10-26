@@ -5,8 +5,7 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
-
-import ImGUI
+import ImGui
 import Metal
 import MetalKit
 
@@ -28,7 +27,7 @@ final class Renderer: NSObject {
         //        precondition(!ImGuiDebugCheckVersionAndDataLayout())
 
         
-        ImGuiCreateContext(nil)
+        _ = ImGuiCreateContext(nil)
         ImGuiStyleColorsDark(nil)
 
         ImGui_ImplMetal_Init(device)

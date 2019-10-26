@@ -1,6 +1,6 @@
 imgui_src := 3rdparty/cimgui
-c_imgui_src := Sources/CImGUI
-swift_imgui_src := Sources/ImGUI
+c_imgui_src := Sources/CImGui
+swift_imgui_src := Sources/ImGui
 release_dir := .build/release
 
 lint:
@@ -18,7 +18,7 @@ submodule:
 	git submodule init
 	git submodule update --recursive
 
-updateCLibImGUI:
+updateCLibImGui:
 	git submodule init $(imgui_src)
 	git submodule update --recursive $(imgui_src)
 
@@ -36,7 +36,7 @@ buildAutoWrapper:
 	swift build -c release --product AutoWrapper
 
 wrapLibImGui: buildAutoWrapper
-	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGUI+Definitions.swift
+	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGui+Definitions.swift
 
 clean:
 	swift package reset
@@ -62,11 +62,3 @@ genXcodeOpen: genXcode
 	open *.xcodeproj
 
 precommit: lint genLinuxTests
-
-
-	#$(MAKE) -C $(imgui_src) clean
-	#$(MAKE) -C $(imgui_src)
-	#cd $(imgui_src) && 
-	#	ar -cvq libcimgui.a cimgui.o ./imgui/imgui.o ./imgui/imgui_draw.o ./imgui/imgui_demo.o ./imgui/imgui_widgets.o && 
-	#	mv -f libcimgui.a $(c_imgui_src)/lib &&
-	#$(MAKE) -C $(imgui_src) clean

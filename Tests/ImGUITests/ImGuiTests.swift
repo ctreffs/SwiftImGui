@@ -1,7 +1,7 @@
 import XCTest
-import ImGUI
+import ImGui
 
-final class ImGUITests: XCTestCase {
+final class ImGuiTests: XCTestCase {
     func testVersion() {
         XCTAssertNotNil(ImGuiGetVersion())
         XCTAssertEqual(ImGuiGetVersion(), "1.74 WIP")

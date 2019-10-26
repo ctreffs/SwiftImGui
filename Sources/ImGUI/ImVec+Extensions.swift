@@ -5,7 +5,7 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
-import CImGUI
+import CImGui
 
 extension ImVec2: Equatable {
     public static func == (lhs: ImVec2, rhs: ImVec2) -> Bool {

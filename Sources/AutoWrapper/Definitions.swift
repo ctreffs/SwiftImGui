@@ -104,7 +104,7 @@ struct FunctionDef: Decodable {
     
     var innerReturn: String {
         switch returnType.type {
-        case .void:
+        case .void where returnType.isConst == true:
             return ""
         default:
             return "return "

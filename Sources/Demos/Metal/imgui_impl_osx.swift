@@ -5,7 +5,7 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
-import ImGUI
+import ImGui
 import AppKit
 
 var g_Time: CFAbsoluteTime = 0.0

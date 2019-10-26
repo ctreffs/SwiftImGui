@@ -1,8 +1,8 @@
 import XCTest
 
-import ImGUITests
+import ImGuiTests
 
 var tests = [XCTestCaseEntry]()
-tests += ImGUITests.__allTests()
+tests += ImGuiTests.__allTests()
 
 XCTMain(tests)

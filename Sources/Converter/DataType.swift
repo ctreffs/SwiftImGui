@@ -163,7 +163,7 @@ struct DataType: Decodable {
         case .pointer where isConst == true:
             return "UnsafePointer<\(toWrap)>!"
         case .pointer where context == .argSwift:
-            return "inout \(toWrap)"
+            return "UnsafeMutablePointer<\(toWrap)>!"
         case .pointer:
             return "UnsafeMutablePointer<\(toWrap)>!"
         case .reference where context == .argC && isConst == false:
@@ -194,7 +194,7 @@ struct DataType: Decodable {
         case .uint:
             out = "UInt32"
         case .char where meta == .pointer:
-            out = "String"
+            out = "String?"
         case .char:
             out = "CChar"
         case .float:

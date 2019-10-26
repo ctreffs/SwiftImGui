@@ -109,7 +109,7 @@ struct ArgsT: Decodable {
         case .pointer where self.type.isConst == false && self.type.type == .void:
             return arg
         case .pointer where self.type.type != .char && self.type.isConst == false:
-            return "&\(arg)"
+            return "\(arg)"
         case .pointer:
             return arg
         case .unknown:
@@ -124,10 +124,10 @@ struct ArgsT: Decodable {
         switch type.type {
         case .char where type.isConst == true && type.meta == .pointer:
             // const char*
-            out.append(".cStrPtr()")
+            out.append("?.cStrPtr()")
         case .char where type.isConst == false && type.meta == .pointer:
             // char*
-            out.append(".cMutableStrPtr()")
+            out.append("?.cMutableStrPtr()")
         case .va_list:
             out = "withVaList(\(out), { $0 })"
         default:

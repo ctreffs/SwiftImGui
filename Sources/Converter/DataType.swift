@@ -126,6 +126,8 @@ struct DataType: Decodable {
             return toWrap
         case .pointer where isConst == true && type == .void:
             return "UnsafeRawPointer!"
+        case .pointer where isConst == false && type == .void:
+            return "UnsafeMutableRawPointer!"
         case .pointer where isConst == true:
             return "UnsafePointer<\(toWrap)>!"
         case .pointer:

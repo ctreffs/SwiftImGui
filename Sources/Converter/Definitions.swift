@@ -46,7 +46,7 @@ struct FunctionDef: Decodable {
     let templated: Bool = false
 
     @inlinable var isValid: Bool {
-        return argsT.allSatisfy { $0.isValid } // FIXME: && returnType.isValid
+        return argsT.allSatisfy { $0.isValid } && returnType.isValid
     }
 
     func encode(swift def: [ArgsT]) -> String {

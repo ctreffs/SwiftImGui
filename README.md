@@ -1,5 +1,5 @@
 # Swift ImGui
-[![Build Status](https://travis-ci.com/ctreffs/swift-imgui.svg?branch=master)](https://travis-ci.com/ctreffs/SwiftImGui)
+[![Build Status](https://travis-ci.com/ctreffs/SwiftImGui.svg?branch=master)](https://travis-ci.com/ctreffs/SwiftImGui)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![swift version](https://img.shields.io/badge/swift-5.0+-brightgreen.svg)](https://swift.org/download)
 [![platforms](https://img.shields.io/badge/platforms-%20macOS%20|%20iOS%20|%20tvOS%20|%20watchOS-brightgreen.svg)](#)
@@ -9,7 +9,7 @@
 
 
 This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  
-It provides a **swiftly** and **typesafe** API and is easily maintainable and updatable, since it relies heavily on auto-generation.
+It provides a **swifty** and **typesafe** API and is easily maintainable and updatable, since it relies heavily on auto-generation.
 
 There are a working [demo examples](Sources/Demos/) provided as part of the library.
 
@@ -83,7 +83,7 @@ ImGuiDestroyContext(ctx)
 
 ## 🆕 Update SwiftImGui
 
-SwiftImGui uses a mutli stage process to update to the latest imgui version.   
+SwiftImGui uses a multi-stage process to update to the latest imgui version.   
 All necessary steps are available and automated via [`Makefile`](Makefile).   
 In repository root run:
 
@@ -93,7 +93,7 @@ In repository root run:
 
 ## 💁 Help needed
 
-This project is in an early stage an needs a lot of love.
+This project is in an early stage and needs a lot of love.
 If you are interested in contributing please feel free to do so!
 
 Things that need to be done among others are:

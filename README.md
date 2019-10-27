@@ -2,16 +2,17 @@
 [![Build Status](https://travis-ci.com/ctreffs/SwiftImGui.svg?branch=master)](https://travis-ci.com/ctreffs/SwiftImGui)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![swift version](https://img.shields.io/badge/swift-5.0+-brightgreen.svg)](https://swift.org/download)
-[![platforms](https://img.shields.io/badge/platforms-%20macOS%20|%20iOS%20|%20tvOS%20|%20watchOS-brightgreen.svg)](#)
+[![platforms](https://img.shields.io/badge/platforms-%20macOS%20|%20iOS%20|%20tvOS-brightgreen.svg)](#)
 [![platforms](https://img.shields.io/badge/platforms-linux-brightgreen.svg)](#)
 
-<div style="margin: auto 0; text-align: center;"><img src="docs/swiftimgui.gif" height="300" align="middle"/></div>
-
+<p align="center">
+	<img src="docs/swiftimgui.gif" height="300" alt="swiftimgui-gif"/>
+</p>   
 
 This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  
 It provides a **swifty** and **typesafe** API and is easily maintainable and updatable, since it relies heavily on auto-generation.
 
-There are a working [demo examples](Sources/Demos/) provided as part of the library.
+There are working [demo examples](Sources/Demos/) provided as part of the library.
 
 ## 🚀 Getting Started
 
@@ -101,6 +102,8 @@ Things that need to be done among others are:
 - [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped. 543 will be wrapped properly.)
 - [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
 - [ ] Find a solution for manual adjustments in cimgui generator template
+- [ ] [Cocoapods](https://cocoapods.org)
+- [ ] [Carthage](https://github.com/Carthage/Carthage)
 - [ ] Write some more tests
 
 ## 🏷️ Versioning
@@ -111,7 +114,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * [Christian Treffs](https://github.com/ctreffs)
 
-See also the list of [contributors](https://github.com/ctreffs/SwiftImGui/blob/master/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/ctreffs/SwiftImGui/contributors) who participated in this project.
 
 ## 🔏 Licenses
 

@@ -28,3 +28,9 @@ let metalDemo: (Product, Target) =
 package.products.append(metalDemo.0)
 package.targets.append(metalDemo.1)
 #endif
+
+let minimumDemo: (Product, Target) =
+(.executable(name: "DemoMinimal", targets: ["DemoMinimal"]),
+ .target(name: "DemoMinimal", dependencies: ["ImGui"], path: "Sources/Demos/Minimal"))
+package.products.append(minimumDemo.0)
+package.targets.append(minimumDemo.1)

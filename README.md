@@ -5,14 +5,13 @@
 [![platforms](https://img.shields.io/badge/platforms-%20macOS%20|%20iOS%20|%20tvOS%20|%20watchOS-brightgreen.svg)](#)
 [![platforms](https://img.shields.io/badge/platforms-linux-brightgreen.svg)](#)
 
-
-<img src="docs/swiftimgui.gif" height="300" align="middle"/>
+<div style="margin: auto 0; text-align: center;"><img src="docs/swiftimgui.gif" height="300" align="middle"/></div>
 
 
 This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  
-It provides a swiftly and typesafe API and is easily maintainable and updatable, since it relies heavily on auto-generation.
+It provides a **swiftly** and **typesafe** API and is easily maintainable and updatable, since it relies heavily on auto-generation.
 
-There is a working [demo example](Sources/Demos/Metal) provided as part of the library.
+There are a working [demo examples](Sources/Demos/) provided as part of the library.
 
 ## 🚀 Getting Started
 
@@ -82,6 +81,16 @@ for n in 0..<20 {
 ImGuiDestroyContext(ctx)
 ```
 
+## 🆕 Update SwiftImGui
+
+SwiftImGui uses a mutli stage process to update to the latest imgui version.   
+All necessary steps are available and automated via [`Makefile`](Makefile).   
+In repository root run:
+
+1. `make buildCImGui` - Update cimgui submodule && generate C interface
+2. `make wrapLibImGui` - Update SwiftImGui && auto-wrap C interface
+
+
 ## 💁 Help needed
 
 This project is in an early stage an needs a lot of love.
@@ -94,7 +103,7 @@ Things that need to be done among others are:
 - [ ] Find a solution for manual adjustments in cimgui generator template
 - [ ] Write some more tests
 
-## Versioning
+## 🏷️ Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](tags). 
 
@@ -113,8 +122,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Original code
 
-Since SwiftImGui is merely a wrapper around **imgui** it obviously depends on it.    
-It also makes use of the excellent c-api wrapper **cimgui**.   
+Since SwiftImGui is merely a wrapper around [**imgui**](https://github.com/ocornut/imgui) it obviously depends on it.    
+It also makes use of the excellent c-api wrapper [**cimgui**](https://github.com/cimgui/cimgui).   
 Support them if you can!
 
 ### imgui
@@ -148,7 +157,7 @@ Dear ImGui is particularly suited to integration in games engine (for tooling), 
 CImGui is a thin c-api wrapper programmatically generated for the excellent C++ immediate mode gui Dear ImGui. All imgui.h functions are programmatically wrapped. Generated files are: cimgui.cpp, cimgui.h for C compilation. Also for helping in bindings creation, definitions.lua with function definition information and structs_and_enums.lua. This library is intended as a intermediate layer to be able to use Dear ImGui from other languages that can interface with C (like D - see D-binding)
 
 
-## Alternatives
+## ☮️ Alternatives
 
 * [mnmly/Swift-imgui](https://github.com/mnmly/Swift-imgui)
 * [troughton/SwiftImGui](https://github.com/troughton/SwiftImGui)

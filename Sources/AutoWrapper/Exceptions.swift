@@ -7,7 +7,6 @@
 
 // Conversion process is not perfect yet so we have a small list of exceptions
 enum Exceptions {
-
     /// Set of missing functions that are not exposed to Swift automatically,
     /// but are present in definitions.json
     ///

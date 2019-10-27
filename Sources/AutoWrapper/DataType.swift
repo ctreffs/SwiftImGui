@@ -27,7 +27,6 @@ struct DataType: Decodable {
     }
 
     init(string: String) {
-
         var string = string
 
         // const
@@ -70,7 +69,6 @@ struct DataType: Decodable {
                 self.meta = .arrayFixedSize(count)
                 self.type = dataType.type
             }
-
         } else if let firstAsterisk = string.firstIndex(of: "*") {
             // TODO: parse complex types
 
@@ -89,23 +87,21 @@ struct DataType: Decodable {
                 case .exception:
                     self.meta = dataType.meta
                     self.type = dataType.type
+
                 default:
                     self.meta = .pointer
                     self.type = dataType.type
                 }
-
             } else {
                 // TODO: handle array pointer
                 self.type = .unknown
                 self.meta = .unknown
             }
-
         } else if let ref = string.firstIndex(of: "&") {
             // i.e. float&, ImVector&
             let dataType = DataType(string: String(string[string.startIndex..<ref]))
             self.meta = .reference
             self.type = dataType.type
-
         } else {
             // primitive custom types ImVec2, ImVector, T ...
 
@@ -117,7 +113,6 @@ struct DataType: Decodable {
 
             self.meta = .primitive
             self.type = .custom(string)
-
         }
 
         // FIXME: special handle 'T'
@@ -131,10 +126,10 @@ struct DataType: Decodable {
     }
 
     func wrapIn(_ context: Context, _ toWrap: String) -> String {
-
         switch meta {
         case .primitive:
             return toWrap
+
         case .array where isConst == true && type == .char:
             return "[String]"
         case .array where isConst == true:
@@ -147,12 +142,13 @@ struct DataType: Decodable {
         //return "inout UnsafePointer<\(toWrap)>!"
         case let .arrayFixedSize(size) where isConst == false:
             // tuple
-            return "inout (\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
+            return "inout (\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
         case let .arrayFixedSize(size):
-            return "(\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
+            return "(\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
         case .pointer where isConst == true && type == .char:
             // const char* -> String
             return toWrap
+
         case .pointer where isConst == false && type == .char:
             // char* -> String
             return "inout \(toWrap)"
@@ -177,14 +173,12 @@ struct DataType: Decodable {
         case let .exception(decl):
             return decl.name
         }
-
     }
 
     func toString(_ context: Context, wrapped: Bool = true) -> String {
         let out: String
 
         switch type {
-
         case .void:
             out = "Void"
         case .bool:
@@ -207,6 +201,7 @@ struct DataType: Decodable {
             out = "CVarArg..."
         case let .custom(value):
             out = value
+
         case .unknown:
             out = "<#CODE#>"
         case .generic:
@@ -218,7 +213,6 @@ struct DataType: Decodable {
         } else {
             return out
         }
-
     }
 
     //
@@ -323,12 +317,10 @@ extension DataType {
         case unknown
         case exception(Declaration)
     }
-
 }
 
 // MARK: - Value Type
 extension DataType {
-
     enum ValueType: Equatable, Hashable {
         case void
         case bool
@@ -366,10 +358,10 @@ extension DataType {
                 self = .va_list
             case "T":
                 self = .generic
+
             default:
                 return nil
             }
         }
-
     }
 }

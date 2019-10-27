@@ -44,7 +44,7 @@ try convert(filePath: CommandLine.arguments[1], validOnly: true) { body in
         throw ConversionError(localizedDescription: "Could not generate data from output string \(out)")
     }
 
-    let outURL: URL = URL(fileURLWithPath: CommandLine.arguments[2])
+    let outURL = URL(fileURLWithPath: CommandLine.arguments[2])
 
     try data.write(to: outURL)
 }

@@ -8,7 +8,6 @@
 typealias Definitions = [String: [Definition]]
 
 struct DestructorDef: Decodable {
-
     let destructor: Bool
     let args: String
     let signature: String
@@ -69,11 +68,11 @@ struct FunctionDef: Decodable {
             .map {
                 // uppercase first character
                 $0.replacingCharacters(in: $0.startIndex..<$0.index(after: $0.startIndex), with: $0.prefix(1).uppercased())
-        }
+            }
         .joined()
 
         let prefix: String
-        let suffix: String = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
+        let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
 
         if let namespace = self.namespace, !namespace.isEmpty {
             prefix = namespace
@@ -101,7 +100,7 @@ struct FunctionDef: Decodable {
             return call()
         }
     }
-    
+
     var innerReturn: String {
         switch returnType.type {
         case .void where returnType.isConst == true:
@@ -110,7 +109,7 @@ struct FunctionDef: Decodable {
             return "return "
         }
     }
-    
+
     var funcDefs: String {
         switch returnType.type {
         case .bool:
@@ -118,7 +117,6 @@ struct FunctionDef: Decodable {
         default:
             return "@inlinable public func"
         }
-        
     }
 
     var toSwift: String {
@@ -128,7 +126,6 @@ struct FunctionDef: Decodable {
         }
         """
     }
-
 }
 extension FunctionDef: Equatable { }
 extension FunctionDef: Hashable { }

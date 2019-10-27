@@ -43,7 +43,6 @@ struct ArgType: Decodable {
         precondition(!raw.contains("unsigned"))
         self.type = DataType(string: raw)
     }
-
 }
 extension ArgType: Equatable { }
 extension ArgType: Hashable { }
@@ -95,6 +94,7 @@ struct ArgsT: Decodable {
         switch self.type.meta {
         case .primitive:
             return arg
+
         case .array where self.type.type == .char:
             return "\(arg).map { $0.cStrPtr() }"
         case .array:
@@ -107,12 +107,15 @@ struct ArgsT: Decodable {
             return "&\(arg)"
         case .pointer where self.type.isConst == false && self.type.type == .void:
             return arg
+
         case .pointer where self.type.type != .char && self.type.isConst == false:
             return "\(arg)"
         case .pointer:
             return arg
+
         case .unknown:
             return arg
+
         case .exception:
             return arg
         }
@@ -124,9 +127,11 @@ struct ArgsT: Decodable {
         case .char where type.isConst == true && type.meta == .pointer:
             // const char*
             out.append("?.cStrPtr()")
+
         case .char where type.isConst == false && type.meta == .pointer:
             // char*
             out.append("?.cMutableStrPtr()")
+
         case .va_list:
             out = "withVaList(\(out), { $0 })"
         default:

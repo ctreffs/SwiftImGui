@@ -1,12 +1,11 @@
 //
-//  File.swift
+//  ArgT.swift
 //
 //
 //  Created by Christian Treffs on 25.10.19.
 //
 
 struct ArgType: Decodable {
-
     let isConst: Bool
 
     let isUnsigned: Bool

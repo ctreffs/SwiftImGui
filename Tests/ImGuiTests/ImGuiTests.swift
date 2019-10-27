@@ -5,6 +5,7 @@ final class ImGuiTests: XCTestCase {
     func testVersion() {
         XCTAssertNotNil(ImGuiGetVersion())
         XCTAssertEqual(ImGuiGetVersion(), "1.74 WIP")
+        IMGUI_CHECKVERSION()
     }
 
     func testCreateContext() {

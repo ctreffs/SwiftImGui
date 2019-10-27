@@ -118,3 +118,16 @@ public func IM_ARRAYSIZE<T>(_ cTupleArray: T) -> Int {
     precondition(m.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
     return m.children.count
 }
+
+/// Debug Check Version
+///
+/// ImGui::DebugCheckVersionAndDataLayout(IMGUI_VERSION, sizeof(ImGuiIO), sizeof(ImGuiStyle), sizeof(ImVec2), sizeof(ImVec4), sizeof(ImDrawVert), sizeof(ImDrawIdx))
+public func IMGUI_CHECKVERSION() {
+    ImGuiDebugCheckVersionAndDataLayout(ImGuiGetVersion(),
+                                        MemoryLayout<ImGuiIO>.size,
+                                        MemoryLayout<ImGuiStyle>.size,
+                                        MemoryLayout<ImVec2>.size,
+                                        MemoryLayout<ImVec4>.size,
+                                        MemoryLayout<ImDrawVert>.size,
+                                        MemoryLayout<ImDrawIdx>.size)
+}

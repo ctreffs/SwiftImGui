@@ -1,6 +1,7 @@
 import ImGui
 
 //IMGUI_CHECKVERSION();
+IMGUI_CHECKVERSION()
 
 //ImGui::CreateContext();
 let ctx = ImGuiCreateContext(nil)

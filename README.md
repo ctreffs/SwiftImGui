@@ -7,9 +7,9 @@
 
 <p align="center">
 	<img src="docs/swiftimgui.gif" height="300" alt="swiftimgui-gif"/>
-</p>   
+</p>
 
-This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  
+This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.
 It provides a **swifty** and -especially - **typesafe** API. It is easily maintainable and updatable, as well, since it relies heavily on automated code generation.
 
 There are working [demo examples](Sources/Demos/), too, provided as part of the library.
@@ -52,7 +52,7 @@ let package = Package(
 
 ## 📝 Code Example
 
-A minimal example is located at [Sources/Demos/Minimal/main.swift](Sources/Demos/Minimal/main.swift).   
+A minimal example is located at [Sources/Demos/Minimal/main.swift](Sources/Demos/Minimal/main.swift).
 This is an excerpt:
 
 ```swift
@@ -84,8 +84,8 @@ ImGuiDestroyContext(ctx)
 
 ## 🆕 Update SwiftImGui
 
-SwiftImGui uses a multi-stage process to update to the latest imgui version.   
-All necessary steps are provided in an automated fashion via a [`Makefile`](Makefile).   
+SwiftImGui uses a multi-stage process to update to the latest imgui version.
+All necessary steps are provided in an automated fashion via a [`Makefile`](Makefile).
 Run the following commands in the repository's root directory:
 
 1. `make buildCImGui` - Update cimgui submodule && generate C interface
@@ -102,13 +102,13 @@ Things that need to be done are, among others:
 - [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped; 543 will be wrapped properly)
 - [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
 - [ ] Find a way to automate the remaining necessary manual adjustments in the cimgui generator template
-- [ ] Support for [Cocoapods](https://cocoapods.org) packaging
+- [x] Support for [Cocoapods](https://cocoapods.org) packaging
 - [ ] Support for [Carthage](https://github.com/Carthage/Carthage) packaging
 - [ ] Write some additional tests to improve coverage
 
 ## 🏷️ Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](tags).
 
 ## ✍️ Authors
 
@@ -125,8 +125,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Original code
 
-Since SwiftImGui is merely a wrapper around [**imgui**](https://github.com/ocornut/imgui) it obviously depends on it.    
-It also makes use of the excellent c-api wrapper [**cimgui**](https://github.com/cimgui/cimgui).   
+Since SwiftImGui is merely a wrapper around [**imgui**](https://github.com/ocornut/imgui) it obviously depends on it.
+It also makes use of the excellent c-api wrapper [**cimgui**](https://github.com/cimgui/cimgui).
 Support them if you can!
 
 ### imgui

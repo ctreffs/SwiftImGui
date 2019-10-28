@@ -10,13 +10,13 @@
 </p>   
 
 This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  
-It provides a **swifty** and **typesafe** API and is easily maintainable and updatable, since it relies heavily on auto-generation.
+It provides a **swifty** and -especially - **typesafe** API. It is easily maintainable and updatable, as well, since it relies heavily on automated code generation.
 
-There are working [demo examples](Sources/Demos/) provided as part of the library.
+There are working [demo examples](Sources/Demos/), too, provided as part of the library.
 
 ## 🚀 Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine and provide a code example.
+These instructions will get your copy of the project up and running on your local machine and provide a code example.
 
 ### 📋 Prerequisites
 
@@ -85,8 +85,8 @@ ImGuiDestroyContext(ctx)
 ## 🆕 Update SwiftImGui
 
 SwiftImGui uses a multi-stage process to update to the latest imgui version.   
-All necessary steps are available and automated via [`Makefile`](Makefile).   
-In repository root run:
+All necessary steps are provided in an automated fashion via a [`Makefile`](Makefile).   
+Run the following commands in the repository's root directory:
 
 1. `make buildCImGui` - Update cimgui submodule && generate C interface
 2. `make wrapLibImGui` - Update SwiftImGui && auto-wrap C interface
@@ -95,16 +95,16 @@ In repository root run:
 ## 💁 Help needed
 
 This project is in an early stage and needs a lot of love.
-If you are interested in contributing please feel free to do so!
+If you are interested in contributing, please feel free to do so!
 
-Things that need to be done among others are:
+Things that need to be done are, among others:
 
-- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped. 543 will be wrapped properly.)
+- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped; 543 will be wrapped properly)
 - [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
-- [ ] Find a solution for manual adjustments in cimgui generator template
-- [ ] [Cocoapods](https://cocoapods.org)
-- [ ] [Carthage](https://github.com/Carthage/Carthage)
-- [ ] Write some more tests
+- [ ] Find a way to automate the remaining necessary manual adjustments in the cimgui generator template
+- [ ] Support for [Cocoapods](https://cocoapods.org) packaging
+- [ ] Support for [Carthage](https://github.com/Carthage/Carthage) packaging
+- [ ] Write some additional tests to improve coverage
 
 ## 🏷️ Versioning
 

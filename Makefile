@@ -15,19 +15,15 @@ test: genLinuxTests
 	swift test
 
 submodule:
-	git submodule init
-	git submodule update --recursive
+	git submodule update --init --recursive
 
-updateCLibImGui:
-	git submodule init $(imgui_src)
-	git submodule update --recursive $(imgui_src)
+updateCLibImGui: submodule
 
 copyLibImGui:
-	cp $(imgui_src)/imgui/*.h $(c_imgui2_src)/imgui
-	cp $(imgui_src)/imgui/*.cpp $(c_imgui2_src)/imgui
-	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui2_src)/include
-	#cp $(imgui_src)/generator/output/cimgui_impl.h $(c_imgui2_src)
-	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui2_src)
+	cp $(imgui_src)/imgui/*.h $(c_imgui_src)/imgui
+	cp $(imgui_src)/imgui/*.cpp $(c_imgui_src)/imgui
+	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui_src)/include
+	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui_src)
 
 generateCInterface:
 	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl

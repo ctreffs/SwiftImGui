@@ -60,3 +60,6 @@ genXcodeOpen: genXcode
 	open *.xcodeproj
 
 precommit: lint genLinuxTests
+
+testReadme:
+	markdown-link-check -p -v ./README.md

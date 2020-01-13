@@ -3,8 +3,8 @@ os:
   - osx
 language: generic
 sudo: required
-dist: trusty
-osx_image: xcode11
+dist: bionic
+osx_image: xcode11.3
 install:
   - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
 script:

@@ -150,11 +150,23 @@ public struct Definition: Decodable {
         var constructors: [ConstructorDef] = []
 
         if container.contains(.funcname) && !container.contains(.destructor) && !container.contains(.constructor) {
-            functions.insert(try FunctionDef(from: decoder))
+            do {
+                functions.insert(try FunctionDef(from: decoder))
+            } catch {
+                print("DECODING ERROR FunctionDef", decoder.codingPath, error.localizedDescription)
+            }
         } else if container.contains(.destructor) {
-            destructors.append(try DestructorDef(from: decoder))
+            do {
+                destructors.append(try DestructorDef(from: decoder))
+            } catch {
+                print("DECODING ERROR DestructorDef", decoder.codingPath, error.localizedDescription)
+            }
         } else if container.contains(.constructor) {
-            constructors.append(try ConstructorDef(from: decoder))
+            do {
+                constructors.append(try ConstructorDef(from: decoder))
+            } catch {
+                print("DECODING ERROR ConstructorDef", decoder.codingPath, error.localizedDescription)
+            }
         }
 
         self.functions = functions

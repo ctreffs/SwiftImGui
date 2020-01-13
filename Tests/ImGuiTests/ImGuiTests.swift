@@ -1,5 +1,5 @@
-import XCTest
 import ImGui
+import XCTest
 
 final class ImGuiTests: XCTestCase {
     func testVersion() {

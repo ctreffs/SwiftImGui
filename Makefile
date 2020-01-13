@@ -7,6 +7,10 @@ lint:
 	swiftlint autocorrect --format
 	swiftlint lint --quiet
 
+lintErrorOnly:
+	@swiftlint autocorrect --format --quiet
+	@swiftlint lint --quiet | grep error
+
 genLinuxTests:
 	swift test --generate-linuxmain
 	swiftlint autocorrect --format --path Tests/
@@ -60,3 +64,6 @@ genXcodeOpen: genXcode
 	open *.xcodeproj
 
 precommit: lint genLinuxTests
+
+testReadme:
+	markdown-link-check -p -v ./README.md

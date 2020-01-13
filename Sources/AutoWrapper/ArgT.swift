@@ -5,18 +5,16 @@
 //  Created by Christian Treffs on 25.10.19.
 //
 
-struct ArgType: Decodable {
-    let isConst: Bool
+public struct ArgType: Decodable {
+    public let isConst: Bool
+    public let isUnsigned: Bool
+    public let type: DataType
 
-    let isUnsigned: Bool
-
-    let type: DataType
-
-    @inlinable var isValid: Bool {
+    @inlinable public var isValid: Bool {
         type.isValid
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         var raw: String = try container.decode(String.self)
 
@@ -47,20 +45,20 @@ struct ArgType: Decodable {
 extension ArgType: Equatable { }
 extension ArgType: Hashable { }
 
-struct ArgsT: Decodable {
-    let name: String
-    let type: DataType
-    let ret: String?
-    let signature: String?
+public struct ArgsT: Decodable {
+    public let name: String
+    public let type: DataType
+    public let ret: String?
+    public let signature: String?
 
-    enum Keys: String, CodingKey {
+    public enum Keys: String, CodingKey {
         case name
         case type
         case ret
         case signature
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         self.name = try container.decode(String.self, forKey: .name).swiftEscaped
         self.type = try container.decode(DataType.self, forKey: .type)
@@ -68,11 +66,11 @@ struct ArgsT: Decodable {
         self.signature = try container.decodeIfPresent(String.self, forKey: .signature)
     }
 
-    @inlinable var isValid: Bool {
+    @inlinable public var isValid: Bool {
         type.isValid && name != "..."
     }
 
-    var argName: String {
+    public var argName: String {
         switch name {
         case "...":
             return "arguments"
@@ -81,7 +79,7 @@ struct ArgsT: Decodable {
         }
     }
 
-    var toSwift: String {
+    public var toSwift: String {
         switch self.type.type {
         case let .custom(name) where name.hasSuffix("Callback") && argName.contains("callback"):
             return "_ \(argName): @escaping \(self.type.toString(.argSwift))"
@@ -90,7 +88,8 @@ struct ArgsT: Decodable {
         }
     }
 
-    func wrapCArg(_ arg: String) -> String {
+    // swiftlint:disable:next cyclomatic_complexity
+    public func wrapCArg(_ arg: String) -> String {
         switch self.type.meta {
         case .primitive:
             return arg
@@ -127,7 +126,7 @@ struct ArgsT: Decodable {
         }
     }
 
-    var toC: String {
+    public var toC: String {
         var out: String = argName
         switch type.type {
         case .char where type.isConst == true && type.meta == .pointer:

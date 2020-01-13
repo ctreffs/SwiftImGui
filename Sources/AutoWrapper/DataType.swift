@@ -5,28 +5,30 @@
 //  Created by Christian Treffs on 25.10.19.
 //
 
-struct DataType: Decodable {
-    let meta: MetaType
-    let isConst: Bool
-    let type: ValueType
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable function_body_length
+public struct DataType: Decodable {
+    public let meta: MetaType
+    public let isConst: Bool
+    public let type: ValueType
 
-    init(meta: MetaType, type: ValueType, isConst: Bool) {
+    public init(meta: MetaType, type: ValueType, isConst: Bool) {
         self.meta = meta
         self.type = type
         self.isConst = isConst
     }
 
-    @inlinable var isValid: Bool {
+    @inlinable public var isValid: Bool {
         meta != .unknown && type != .unknown && type != .generic
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         self.init(string: raw)
     }
 
-    init(string: String) {
+    public init(string: String) {
         var string = string
 
         // const
@@ -119,13 +121,13 @@ struct DataType: Decodable {
 
     }
 
-    enum Context {
+    public enum Context {
         case argSwift
         case argC
         case ret
     }
 
-    func wrapIn(_ context: Context, _ toWrap: String) -> String {
+    public func wrapIn(_ context: Context, _ toWrap: String) -> String {
         switch meta {
         case .primitive:
             return toWrap
@@ -181,7 +183,7 @@ struct DataType: Decodable {
         }
     }
 
-    func toString(_ context: Context, wrapped: Bool = true) -> String {
+    public func toString(_ context: Context, wrapped: Bool = true) -> String {
         let out: String
 
         switch type {
@@ -227,7 +229,7 @@ extension DataType: Hashable { }
 
 // MARK: - MetaType
 extension DataType {
-    enum MetaType: Equatable, Hashable {
+    public enum MetaType: Equatable, Hashable {
         case primitive
         case arrayFixedSize(Int)
         case array
@@ -241,7 +243,7 @@ extension DataType {
 
 // MARK: - Value Type
 extension DataType {
-    enum ValueType: Equatable, Hashable {
+    public enum ValueType: Equatable, Hashable {
         case void
         case bool
         case int
@@ -258,7 +260,7 @@ extension DataType {
         case generic
         case unknown
 
-        init?(rawValue: String) {
+        public init?(rawValue: String) {
             switch rawValue {
             case "void":
                 self = .void
@@ -286,7 +288,7 @@ extension DataType {
             }
         }
 
-        @inlinable var isNumber: Bool {
+        @inlinable public var isNumber: Bool {
             switch self {
             case .int,
                  .uint,

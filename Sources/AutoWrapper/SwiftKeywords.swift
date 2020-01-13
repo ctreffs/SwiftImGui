@@ -6,7 +6,7 @@
 //
 
 // swiftlint:disable identifier_name
-enum SwiftKeyword: String {
+public enum SwiftKeyword: String {
     case `Self`
     case `Type`
     case `as`
@@ -87,7 +87,7 @@ enum SwiftKeyword: String {
 }
 
 extension String {
-    var swiftEscaped: String {
+    public var swiftEscaped: String {
         guard let swiftKeyword = SwiftKeyword(rawValue: self) else {
             return self
         }

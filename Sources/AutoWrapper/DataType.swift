@@ -141,8 +141,14 @@ struct DataType: Decodable {
             return "inout [\(toWrap)]"
         //return "inout UnsafePointer<\(toWrap)>!"
         case let .arrayFixedSize(size) where isConst == false:
-            // tuple
-            return "inout (\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
+            if type.isNumber && size < 5 {
+                // SIMD type
+                return "inout SIMD\(size)<\(toWrap)>"
+            } else {
+                // tuple
+                return "inout (\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
+            }
+
         case let .arrayFixedSize(size):
             return "(\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
         case .pointer where isConst == true && type == .char:
@@ -363,6 +369,19 @@ extension DataType {
 
             default:
                 return nil
+            }
+        }
+
+        @inlinable var isNumber: Bool {
+            switch self {
+            case .int,
+                 .uint,
+                 .float,
+                 .double:
+                return true
+
+            default:
+                return false
             }
         }
     }

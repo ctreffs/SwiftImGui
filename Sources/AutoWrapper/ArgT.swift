@@ -100,7 +100,13 @@ struct ArgsT: Decodable {
         case .array:
             return "&\(arg)"
         case let .arrayFixedSize(count) where self.type.isConst == false:
-            return "UnsafeMutableBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
+            if type.type.isNumber && count < 5 {
+                // SIMD
+                return "withUnsafeMutablePointer(to: &\(arg)) { $0.withMemoryRebound(to: \(self.type.toString(.argSwift, wrapped: false)).self, capacity: \(count)) { $0 } }"
+            } else {
+                return "UnsafeMutableBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
+            }
+
         case let .arrayFixedSize(count):
             return "UnsafeBufferPointer<\(self.type.toString(.argSwift, wrapped: false))>(start: &\(arg).0, count: \(count)).baseAddress!"
         case .reference:

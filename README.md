@@ -102,13 +102,13 @@ Things that need to be done are, among others:
 - [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped; 543 will be wrapped properly)
 - [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
 - [ ] Find a way to automate the remaining necessary manual adjustments in the cimgui generator template
-- [ ] Support for [Cocoapods](https://cocoapods.org) packaging
+- [x] Support for [Cocoapods](https://cocoapods.org) packaging
 - [ ] Support for [Carthage](https://github.com/Carthage/Carthage) packaging
 - [ ] Write some additional tests to improve coverage
 
 ## 🏷️ Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](/releases). 
 
 ## ✍️ Authors
 

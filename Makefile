@@ -30,15 +30,24 @@ copyLibImGui:
 	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui_src)
 
 generateCInterface:
-	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl
+	cd $(imgui_src)/generator && luajit ./generator.lua clang sdl glfw glut metal
 
 buildCImGui: updateCLibImGui generateCInterface copyLibImGui
 
 buildAutoWrapper:
 	swift build -c release --product AutoWrapper
 
+buildRelease:
+	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage
+
+runCI:
+	swift package reset
+	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
+	swift test -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
+
 wrapLibImGui: buildAutoWrapper
 	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGui+Definitions.swift
+	#$(release_dir)/AutoWrapper $(imgui_src)/generator/output/impl_definitions.json $(swift_imgui_src)/ImGui+ImplDefinitions.swift
 
 clean:
 	swift package reset

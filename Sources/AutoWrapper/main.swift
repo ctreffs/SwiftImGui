@@ -22,16 +22,18 @@ public func getDirectory(ofFile filePath: String = #file) -> String {
 }
 
 // Input: <SRC_ROOT>/3rdparty/cimgui/generator/output/definitions.json
-public let kInputFile: String
+public let kInputFiles: [String]
 // Output <SRC_ROOT>/Sources/ImGui/ImGui+Definitions.swift
-public let kOutputFile: String
+public let kOutputFiles: [String]
 
 if CommandLine.arguments.count == 3 {
-    kInputFile = CommandLine.arguments[1]
-    kOutputFile = CommandLine.arguments[2]
+    kInputFiles = [CommandLine.arguments[1]]
+    kOutputFiles = [CommandLine.arguments[2]]
 } else {
-    kInputFile = getDirectory() + "/../../3rdparty/cimgui/generator/output/definitions.json"
-    kOutputFile = getDirectory() + "/../ImGui/ImGui+Definitions.swift"
+    let src = getDirectory() + "/../../3rdparty/cimgui/generator/output/"
+    let dest = getDirectory() + "/../ImGui/"
+    kInputFiles = ["definitions.json"].map { "\(src)\($0)" }
+    kOutputFiles = ["ImGui+Definitions.swift"].map { "\(dest)\($0)" }
 }
 
 public let kHeader = """
@@ -52,14 +54,16 @@ import CImGui
 public let kFooter = """
 """
 
-try convert(filePath: kInputFile, validOnly: true) { body in
-    let out: String = [kHeader, body, kFooter].joined(separator: "\n\n")
+for (inputFile, outputFile) in zip(kInputFiles, kOutputFiles) {
+    try convert(filePath: inputFile, validOnly: true) { body in
+        let out: String = [kHeader, body, kFooter].joined(separator: "\n\n")
 
-    guard let data: Data = out.data(using: .utf8) else {
-        throw ConversionError(localizedDescription: "Could not generate data from output string \(out)")
+        guard let data: Data = out.data(using: .utf8) else {
+            throw ConversionError(localizedDescription: "Could not generate data from output string \(out)")
+        }
+
+        let outURL = URL(fileURLWithPath: outputFile)
+
+        try data.write(to: outURL)
     }
-
-    let outURL = URL(fileURLWithPath: kOutputFile)
-
-    try data.write(to: outURL)
 }

@@ -17,7 +17,7 @@ struct DataType: Decodable {
     }
 
     @inlinable var isValid: Bool {
-        return meta != .unknown && type != .unknown && type != .generic
+        meta != .unknown && type != .unknown && type != .generic
     }
 
     init(from decoder: Decoder) throws {

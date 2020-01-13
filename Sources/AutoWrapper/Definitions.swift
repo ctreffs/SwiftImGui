@@ -48,15 +48,15 @@ struct FunctionDef: Decodable {
     let namespace: String?
 
     @inlinable var isValid: Bool {
-        return argsT.allSatisfy { $0.isValid } && returnType.isValid && !Exceptions.unresolvedIdentifier.contains(ov_cimguiname)
+        argsT.allSatisfy { $0.isValid } && returnType.isValid && !Exceptions.unresolvedIdentifier.contains(ov_cimguiname)
     }
 
     func encode(swift def: [ArgsT]) -> String {
-        return def.map { $0.toSwift }.joined(separator: ", ")
+        def.map { $0.toSwift }.joined(separator: ", ")
     }
 
     func encode(c def: [ArgsT]) -> String {
-        return def.map { $0.toC }.joined(separator: ",")
+        def.map { $0.toC }.joined(separator: ",")
     }
 
     var encodedFuncname: String {
@@ -121,7 +121,7 @@ struct FunctionDef: Decodable {
     }
 
     var toSwift: String {
-        return """
+        """
         \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
         \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
         }
@@ -132,7 +132,7 @@ extension FunctionDef: Equatable { }
 extension FunctionDef: Hashable { }
 extension FunctionDef: Comparable {
     static func < (lhs: FunctionDef, rhs: FunctionDef) -> Bool {
-        return lhs.encodedFuncname < rhs.encodedFuncname
+        lhs.encodedFuncname < rhs.encodedFuncname
     }
 }
 
@@ -148,7 +148,7 @@ struct Definition: Decodable {
     let constructors: [ConstructorDef]
 
     var validFunctions: Set<FunctionDef> {
-        return functions.filter { $0.isValid }
+        functions.filter { $0.isValid }
     }
 
     init(from decoder: Decoder) throws {

@@ -25,13 +25,13 @@ extension String {
     }
 
     public mutating func cMutableStrPtr() -> UnsafeMutablePointer<CChar>! {
-        return UnsafeMutablePointer<CChar>(mutating: self.cStrPtr())
+        UnsafeMutablePointer<CChar>(mutating: self.cStrPtr())
     }
 }
 
 extension Array {
     public subscript<R>(representable: R) -> Element where R: RawRepresentable, R.RawValue: FixedWidthInteger {
-        get { return self[Int(representable.rawValue)] }
+        get { self[Int(representable.rawValue)] }
         set { self[Int(representable.rawValue)] = newValue }
     }
 }
@@ -45,12 +45,12 @@ public struct CArray<T> {
     }
 
     public var count: Int {
-        return ptr.count
+        ptr.count
     }
 
     public subscript<I>(index: I) -> T where I: FixedWidthInteger {
         get {
-            return ptr[Int(index)]
+            ptr[Int(index)]
         }
         set {
             ptr[Int(index)] = newValue
@@ -59,7 +59,7 @@ public struct CArray<T> {
 
     public subscript<R>(representable: R) -> T where R: RawRepresentable, R.RawValue: FixedWidthInteger {
         get {
-            return self[representable.rawValue]
+            self[representable.rawValue]
         }
         set {
             self[representable.rawValue] = newValue
@@ -108,15 +108,15 @@ extension CArray {
 
 /// Offset of _MEMBER within _TYPE. Standardized as offsetof() in modern C++.
 public func IM_OFFSETOF<T>(_ member: PartialKeyPath<T>) -> Int {
-    return MemoryLayout<T>.offset(of: member)!
+    MemoryLayout<T>.offset(of: member)!
 }
 
 /// Size of a static C-style array. Don't use on pointers!
 public func IM_ARRAYSIZE<T>(_ cTupleArray: T) -> Int {
     //#define IM_ARRAYSIZE(_ARR)          ((int)(sizeof(_ARR)/sizeof(*_ARR)))
-    let m = Mirror(reflecting: cTupleArray)
-    precondition(m.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
-    return m.children.count
+    let mirror = Mirror(reflecting: cTupleArray)
+    precondition(mirror.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
+    return mirror.children.count
 }
 
 /// Debug Check Version

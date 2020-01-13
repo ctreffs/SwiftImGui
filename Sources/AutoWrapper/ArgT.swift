@@ -13,7 +13,7 @@ struct ArgType: Decodable {
     let type: DataType
 
     @inlinable var isValid: Bool {
-        return type.isValid
+        type.isValid
     }
 
     init(from decoder: Decoder) throws {
@@ -69,7 +69,7 @@ struct ArgsT: Decodable {
     }
 
     @inlinable var isValid: Bool {
-        return type.isValid && name != "..."
+        type.isValid && name != "..."
     }
 
     var argName: String {

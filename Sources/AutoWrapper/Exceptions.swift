@@ -35,7 +35,7 @@ struct Declaration {
     let name: String
     let typealiasType: String
     var dataType: DataType {
-        return DataType(meta: .primitive, type: .custom(name), isConst: true)
+        DataType(meta: .primitive, type: .custom(name), isConst: true)
     }
 }
 

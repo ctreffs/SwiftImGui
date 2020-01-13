@@ -38,7 +38,7 @@ import PackageDescription
 let package = Package(
     name: "YourPackageName",
     dependencies: [
-        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.0.0")
+        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.1.0")
     ],
     targets: [
         .target(
@@ -108,7 +108,7 @@ Things that need to be done are, among others:
 
 ## 🏷️ Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](/releases). 
 
 ## ✍️ Authors
 

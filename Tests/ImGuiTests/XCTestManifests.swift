@@ -8,13 +8,13 @@ extension ImGuiTests {
     static let __allTests__ImGuiTests = [
         ("testCreateContext", testCreateContext),
         ("testGetIO", testGetIO),
-        ("testVersion", testVersion),
+        ("testVersion", testVersion)
     ]
 }
 
 public func __allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(ImGuiTests.__allTests__ImGuiTests),
+        testCase(ImGuiTests.__allTests__ImGuiTests)
     ]
 }
 #endif

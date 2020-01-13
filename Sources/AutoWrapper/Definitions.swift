@@ -5,60 +5,52 @@
 //  Created by Christian Treffs on 25.10.19.
 //
 
-typealias Definitions = [String: [Definition]]
+public typealias Definitions = [String: [Definition]]
 
-struct DestructorDef: Decodable {
-    let destructor: Bool
-    let args: String
-    let signature: String
-
-    let cimguiname: String
-
-    let stname: String
-    let argsT: [ArgsT]
+public struct DestructorDef: Decodable {
+    public let destructor: Bool
+    public let args: String
+    public let signature: String
+    public let cimguiname: String
+    public let stname: String
+    public let argsT: [ArgsT]
 }
 
-struct ConstructorDef: Decodable {
-    let constructor: Bool
-    let args: String
-    let signature: String
-
-    let cimguiname: String
-
-    let stname: String
-    let argsT: [ArgsT]
+public struct ConstructorDef: Decodable {
+    public let constructor: Bool
+    public let args: String
+    public let signature: String
+    public let cimguiname: String
+    public let stname: String
+    public let argsT: [ArgsT]
 }
 
-struct FunctionDef: Decodable {
-    let funcname: String
+public struct FunctionDef: Decodable {
+    public let funcname: String
+    public let args: String
+    public let signature: String
+    public let cimguiname: String
+    // swiftlint:disable:next identifier_name
+    public let ov_cimguiname: String
+    public let stname: String
+    public let argsT: [ArgsT]
+    public let ret: DataType?
+    public let templated: Bool = false
+    public let namespace: String?
 
-    let args: String
-    let signature: String
-
-    let cimguiname: String
-    let ov_cimguiname: String
-
-    let stname: String
-    let argsT: [ArgsT]
-    let ret: DataType?
-
-    let templated: Bool = false
-
-    let namespace: String?
-
-    @inlinable var isValid: Bool {
-        return argsT.allSatisfy { $0.isValid } && returnType.isValid && !Exceptions.unresolvedIdentifier.contains(ov_cimguiname)
+    @inlinable public var isValid: Bool {
+        argsT.allSatisfy { $0.isValid } && returnType.isValid && !Exceptions.unresolvedIdentifier.contains(ov_cimguiname)
     }
 
-    func encode(swift def: [ArgsT]) -> String {
-        return def.map { $0.toSwift }.joined(separator: ", ")
+    public func encode(swift def: [ArgsT]) -> String {
+        def.map { $0.toSwift }.joined(separator: ", ")
     }
 
-    func encode(c def: [ArgsT]) -> String {
-        return def.map { $0.toC }.joined(separator: ",")
+    public func encode(c def: [ArgsT]) -> String {
+        def.map { $0.toC }.joined(separator: ",")
     }
 
-    var encodedFuncname: String {
+    public var encodedFuncname: String {
         guard let range = ov_cimguiname.range(of: funcname) else {
             assertionFailure("Original name should contain funcname")
             return funcname
@@ -84,7 +76,7 @@ struct FunctionDef: Decodable {
         return combinedName.replacingOccurrences(of: "_", with: "")
     }
 
-    var returnType: DataType {
+    public var returnType: DataType {
         guard let ret = self.ret else {
             return DataType(meta: .primitive, type: .void, isConst: false)
         }
@@ -92,7 +84,7 @@ struct FunctionDef: Decodable {
         return ret
     }
 
-    func wrapCCall(_ call: @autoclosure () -> String) -> String {
+    public func wrapCCall(_ call: @autoclosure () -> String) -> String {
         switch (returnType.meta, returnType.type) {
         case (.pointer, .char):
             return "String(cString: \(call()))"
@@ -101,7 +93,7 @@ struct FunctionDef: Decodable {
         }
     }
 
-    var innerReturn: String {
+    public var innerReturn: String {
         switch returnType.type {
         case .void where returnType.isConst == true:
             return ""
@@ -110,7 +102,7 @@ struct FunctionDef: Decodable {
         }
     }
 
-    var funcDefs: String {
+    public var funcDefs: String {
         switch returnType.type {
         case .bool:
             return "@inlinable @discardableResult public func"
@@ -119,8 +111,8 @@ struct FunctionDef: Decodable {
         }
     }
 
-    var toSwift: String {
-        return """
+    public var toSwift: String {
+        """
         \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
         \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
         }
@@ -130,27 +122,27 @@ struct FunctionDef: Decodable {
 extension FunctionDef: Equatable { }
 extension FunctionDef: Hashable { }
 extension FunctionDef: Comparable {
-    static func < (lhs: FunctionDef, rhs: FunctionDef) -> Bool {
-        return lhs.encodedFuncname < rhs.encodedFuncname
+    public static func < (lhs: FunctionDef, rhs: FunctionDef) -> Bool {
+        lhs.encodedFuncname < rhs.encodedFuncname
     }
 }
 
-struct Definition: Decodable {
-    enum Keys: String, CodingKey {
+public struct Definition: Decodable {
+    public enum Keys: String, CodingKey {
         case funcname
         case destructor
         case constructor
     }
 
-    let functions: Set<FunctionDef>
-    let destructors: [DestructorDef]
-    let constructors: [ConstructorDef]
+    public let functions: Set<FunctionDef>
+    public let destructors: [DestructorDef]
+    public let constructors: [ConstructorDef]
 
-    var validFunctions: Set<FunctionDef> {
-        return functions.filter { $0.isValid }
+    public var validFunctions: Set<FunctionDef> {
+        functions.filter { $0.isValid }
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
 
         var functions: Set<FunctionDef> = []
@@ -170,51 +162,3 @@ struct Definition: Decodable {
         self.constructors = constructors
     }
 }
-
-/*
- struct Prototype {
- let args: String
- let signature: String
-
- let callArgs: String
- let cimguiname: String
- let ovCimguiname: String
- let stname: String
- let argsT: [ArgsT]
-
- let defaults: Defaults
- let funcname: String?
-
- let ret: String?
- let argsoriginal: String?
-
- let nonUdt: Int?
- let retorig: Retorig?
- let constructor: Bool?
- let destructor: Bool?
- let isvararg: Isvararg?
- let manual: Bool?
- let templated: Bool?
- let retref: String?
- let namespace: Namespace?
- }
-
- enum Defaults {
- case anythingArray([Any?])
- case stringMap([String: String])
- }
-
- enum Isvararg {
- case empty
- }
-
- enum Namespace {
- case imGui
- }
-
- enum Retorig {
- case imColor
- case imVec2
- case imVec4
- }
- */

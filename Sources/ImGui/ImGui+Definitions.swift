@@ -645,20 +645,20 @@ public typealias ImGuiContext = OpaquePointer
 	return igColorConvertU32ToFloat4_nonUDT2(`in`)
 }
 
-@inlinable @discardableResult public func ImGuiColorEdit3(_ label: String?, _ col: inout (Float,Float,Float), _ flags: ImGuiColorEditFlags) -> Bool {
-	return igColorEdit3(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &col.0, count: 3).baseAddress!,flags)
+@inlinable @discardableResult public func ImGuiColorEdit3(_ label: String?, _ col: inout SIMD3<Float>, _ flags: ImGuiColorEditFlags) -> Bool {
+	return igColorEdit3(label?.cStrPtr(),withUnsafeMutablePointer(to: &col) { $0.withMemoryRebound(to: Float.self, capacity: 3) { $0 } },flags)
 }
 
-@inlinable @discardableResult public func ImGuiColorEdit4(_ label: String?, _ col: inout (Float,Float,Float,Float), _ flags: ImGuiColorEditFlags) -> Bool {
-	return igColorEdit4(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &col.0, count: 4).baseAddress!,flags)
+@inlinable @discardableResult public func ImGuiColorEdit4(_ label: String?, _ col: inout SIMD4<Float>, _ flags: ImGuiColorEditFlags) -> Bool {
+	return igColorEdit4(label?.cStrPtr(),withUnsafeMutablePointer(to: &col) { $0.withMemoryRebound(to: Float.self, capacity: 4) { $0 } },flags)
 }
 
-@inlinable @discardableResult public func ImGuiColorPicker3(_ label: String?, _ col: inout (Float,Float,Float), _ flags: ImGuiColorEditFlags) -> Bool {
-	return igColorPicker3(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &col.0, count: 3).baseAddress!,flags)
+@inlinable @discardableResult public func ImGuiColorPicker3(_ label: String?, _ col: inout SIMD3<Float>, _ flags: ImGuiColorEditFlags) -> Bool {
+	return igColorPicker3(label?.cStrPtr(),withUnsafeMutablePointer(to: &col) { $0.withMemoryRebound(to: Float.self, capacity: 3) { $0 } },flags)
 }
 
-@inlinable @discardableResult public func ImGuiColorPicker4(_ label: String?, _ col: inout (Float,Float,Float,Float), _ flags: ImGuiColorEditFlags, _ ref_col: UnsafePointer<Float>!) -> Bool {
-	return igColorPicker4(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &col.0, count: 4).baseAddress!,flags,ref_col)
+@inlinable @discardableResult public func ImGuiColorPicker4(_ label: String?, _ col: inout SIMD4<Float>, _ flags: ImGuiColorEditFlags, _ ref_col: UnsafePointer<Float>!) -> Bool {
+	return igColorPicker4(label?.cStrPtr(),withUnsafeMutablePointer(to: &col) { $0.withMemoryRebound(to: Float.self, capacity: 4) { $0 } },flags,ref_col)
 }
 
 @inlinable public func ImGuiColumns(_ count: Int32, _ id: String?, _ border: Bool) -> Void {
@@ -701,16 +701,16 @@ public typealias ImGuiContext = OpaquePointer
 	return igDragFloat(label?.cStrPtr(),v,v_speed,v_min,v_max,format?.cStrPtr(),power)
 }
 
-@inlinable @discardableResult public func ImGuiDragFloat2(_ label: String?, _ v: inout (Float,Float), _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
-	return igDragFloat2(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 2).baseAddress!,v_speed,v_min,v_max,format?.cStrPtr(),power)
+@inlinable @discardableResult public func ImGuiDragFloat2(_ label: String?, _ v: inout SIMD2<Float>, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
+	return igDragFloat2(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 2) { $0 } },v_speed,v_min,v_max,format?.cStrPtr(),power)
 }
 
-@inlinable @discardableResult public func ImGuiDragFloat3(_ label: String?, _ v: inout (Float,Float,Float), _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
-	return igDragFloat3(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 3).baseAddress!,v_speed,v_min,v_max,format?.cStrPtr(),power)
+@inlinable @discardableResult public func ImGuiDragFloat3(_ label: String?, _ v: inout SIMD3<Float>, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
+	return igDragFloat3(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 3) { $0 } },v_speed,v_min,v_max,format?.cStrPtr(),power)
 }
 
-@inlinable @discardableResult public func ImGuiDragFloat4(_ label: String?, _ v: inout (Float,Float,Float,Float), _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
-	return igDragFloat4(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 4).baseAddress!,v_speed,v_min,v_max,format?.cStrPtr(),power)
+@inlinable @discardableResult public func ImGuiDragFloat4(_ label: String?, _ v: inout SIMD4<Float>, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
+	return igDragFloat4(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 4) { $0 } },v_speed,v_min,v_max,format?.cStrPtr(),power)
 }
 
 @inlinable @discardableResult public func ImGuiDragFloatRange2(_ label: String?, _ v_current_min: UnsafeMutablePointer<Float>!, _ v_current_max: UnsafeMutablePointer<Float>!, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ format_max: String?, _ power: Float) -> Bool {
@@ -721,16 +721,16 @@ public typealias ImGuiContext = OpaquePointer
 	return igDragInt(label?.cStrPtr(),v,v_speed,v_min,v_max,format?.cStrPtr())
 }
 
-@inlinable @discardableResult public func ImGuiDragInt2(_ label: String?, _ v: inout (Int32,Int32), _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
-	return igDragInt2(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 2).baseAddress!,v_speed,v_min,v_max,format?.cStrPtr())
+@inlinable @discardableResult public func ImGuiDragInt2(_ label: String?, _ v: inout SIMD2<Int32>, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
+	return igDragInt2(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 2) { $0 } },v_speed,v_min,v_max,format?.cStrPtr())
 }
 
-@inlinable @discardableResult public func ImGuiDragInt3(_ label: String?, _ v: inout (Int32,Int32,Int32), _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
-	return igDragInt3(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 3).baseAddress!,v_speed,v_min,v_max,format?.cStrPtr())
+@inlinable @discardableResult public func ImGuiDragInt3(_ label: String?, _ v: inout SIMD3<Int32>, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
+	return igDragInt3(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 3) { $0 } },v_speed,v_min,v_max,format?.cStrPtr())
 }
 
-@inlinable @discardableResult public func ImGuiDragInt4(_ label: String?, _ v: inout (Int32,Int32,Int32,Int32), _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
-	return igDragInt4(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 4).baseAddress!,v_speed,v_min,v_max,format?.cStrPtr())
+@inlinable @discardableResult public func ImGuiDragInt4(_ label: String?, _ v: inout SIMD4<Int32>, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
+	return igDragInt4(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 4) { $0 } },v_speed,v_min,v_max,format?.cStrPtr())
 }
 
 @inlinable @discardableResult public func ImGuiDragIntRange2(_ label: String?, _ v_current_min: UnsafeMutablePointer<Int32>!, _ v_current_max: UnsafeMutablePointer<Int32>!, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?, _ format_max: String?) -> Bool {
@@ -1249,32 +1249,32 @@ public typealias ImGuiContext = OpaquePointer
 	return igInputFloat(label?.cStrPtr(),v,step,step_fast,format?.cStrPtr(),flags)
 }
 
-@inlinable @discardableResult public func ImGuiInputFloat2(_ label: String?, _ v: inout (Float,Float), _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
-	return igInputFloat2(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 2).baseAddress!,format?.cStrPtr(),flags)
+@inlinable @discardableResult public func ImGuiInputFloat2(_ label: String?, _ v: inout SIMD2<Float>, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
+	return igInputFloat2(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 2) { $0 } },format?.cStrPtr(),flags)
 }
 
-@inlinable @discardableResult public func ImGuiInputFloat3(_ label: String?, _ v: inout (Float,Float,Float), _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
-	return igInputFloat3(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 3).baseAddress!,format?.cStrPtr(),flags)
+@inlinable @discardableResult public func ImGuiInputFloat3(_ label: String?, _ v: inout SIMD3<Float>, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
+	return igInputFloat3(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 3) { $0 } },format?.cStrPtr(),flags)
 }
 
-@inlinable @discardableResult public func ImGuiInputFloat4(_ label: String?, _ v: inout (Float,Float,Float,Float), _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
-	return igInputFloat4(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 4).baseAddress!,format?.cStrPtr(),flags)
+@inlinable @discardableResult public func ImGuiInputFloat4(_ label: String?, _ v: inout SIMD4<Float>, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
+	return igInputFloat4(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 4) { $0 } },format?.cStrPtr(),flags)
 }
 
 @inlinable @discardableResult public func ImGuiInputInt(_ label: String?, _ v: UnsafeMutablePointer<Int32>!, _ step: Int32, _ step_fast: Int32, _ flags: ImGuiInputTextFlags) -> Bool {
 	return igInputInt(label?.cStrPtr(),v,step,step_fast,flags)
 }
 
-@inlinable @discardableResult public func ImGuiInputInt2(_ label: String?, _ v: inout (Int32,Int32), _ flags: ImGuiInputTextFlags) -> Bool {
-	return igInputInt2(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 2).baseAddress!,flags)
+@inlinable @discardableResult public func ImGuiInputInt2(_ label: String?, _ v: inout SIMD2<Int32>, _ flags: ImGuiInputTextFlags) -> Bool {
+	return igInputInt2(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 2) { $0 } },flags)
 }
 
-@inlinable @discardableResult public func ImGuiInputInt3(_ label: String?, _ v: inout (Int32,Int32,Int32), _ flags: ImGuiInputTextFlags) -> Bool {
-	return igInputInt3(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 3).baseAddress!,flags)
+@inlinable @discardableResult public func ImGuiInputInt3(_ label: String?, _ v: inout SIMD3<Int32>, _ flags: ImGuiInputTextFlags) -> Bool {
+	return igInputInt3(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 3) { $0 } },flags)
 }
 
-@inlinable @discardableResult public func ImGuiInputInt4(_ label: String?, _ v: inout (Int32,Int32,Int32,Int32), _ flags: ImGuiInputTextFlags) -> Bool {
-	return igInputInt4(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 4).baseAddress!,flags)
+@inlinable @discardableResult public func ImGuiInputInt4(_ label: String?, _ v: inout SIMD4<Int32>, _ flags: ImGuiInputTextFlags) -> Bool {
+	return igInputInt4(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 4) { $0 } },flags)
 }
 
 @inlinable @discardableResult public func ImGuiInputScalar(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ p_step: UnsafeRawPointer!, _ p_step_fast: UnsafeRawPointer!, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1909,32 +1909,32 @@ public typealias ImGuiContext = OpaquePointer
 	return igSliderFloat(label?.cStrPtr(),v,v_min,v_max,format?.cStrPtr(),power)
 }
 
-@inlinable @discardableResult public func ImGuiSliderFloat2(_ label: String?, _ v: inout (Float,Float), _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
-	return igSliderFloat2(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 2).baseAddress!,v_min,v_max,format?.cStrPtr(),power)
+@inlinable @discardableResult public func ImGuiSliderFloat2(_ label: String?, _ v: inout SIMD2<Float>, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
+	return igSliderFloat2(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 2) { $0 } },v_min,v_max,format?.cStrPtr(),power)
 }
 
-@inlinable @discardableResult public func ImGuiSliderFloat3(_ label: String?, _ v: inout (Float,Float,Float), _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
-	return igSliderFloat3(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 3).baseAddress!,v_min,v_max,format?.cStrPtr(),power)
+@inlinable @discardableResult public func ImGuiSliderFloat3(_ label: String?, _ v: inout SIMD3<Float>, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
+	return igSliderFloat3(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 3) { $0 } },v_min,v_max,format?.cStrPtr(),power)
 }
 
-@inlinable @discardableResult public func ImGuiSliderFloat4(_ label: String?, _ v: inout (Float,Float,Float,Float), _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
-	return igSliderFloat4(label?.cStrPtr(),UnsafeMutableBufferPointer<Float>(start: &v.0, count: 4).baseAddress!,v_min,v_max,format?.cStrPtr(),power)
+@inlinable @discardableResult public func ImGuiSliderFloat4(_ label: String?, _ v: inout SIMD4<Float>, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
+	return igSliderFloat4(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Float.self, capacity: 4) { $0 } },v_min,v_max,format?.cStrPtr(),power)
 }
 
 @inlinable @discardableResult public func ImGuiSliderInt(_ label: String?, _ v: UnsafeMutablePointer<Int32>!, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
 	return igSliderInt(label?.cStrPtr(),v,v_min,v_max,format?.cStrPtr())
 }
 
-@inlinable @discardableResult public func ImGuiSliderInt2(_ label: String?, _ v: inout (Int32,Int32), _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
-	return igSliderInt2(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 2).baseAddress!,v_min,v_max,format?.cStrPtr())
+@inlinable @discardableResult public func ImGuiSliderInt2(_ label: String?, _ v: inout SIMD2<Int32>, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
+	return igSliderInt2(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 2) { $0 } },v_min,v_max,format?.cStrPtr())
 }
 
-@inlinable @discardableResult public func ImGuiSliderInt3(_ label: String?, _ v: inout (Int32,Int32,Int32), _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
-	return igSliderInt3(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 3).baseAddress!,v_min,v_max,format?.cStrPtr())
+@inlinable @discardableResult public func ImGuiSliderInt3(_ label: String?, _ v: inout SIMD3<Int32>, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
+	return igSliderInt3(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 3) { $0 } },v_min,v_max,format?.cStrPtr())
 }
 
-@inlinable @discardableResult public func ImGuiSliderInt4(_ label: String?, _ v: inout (Int32,Int32,Int32,Int32), _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
-	return igSliderInt4(label?.cStrPtr(),UnsafeMutableBufferPointer<Int32>(start: &v.0, count: 4).baseAddress!,v_min,v_max,format?.cStrPtr())
+@inlinable @discardableResult public func ImGuiSliderInt4(_ label: String?, _ v: inout SIMD4<Int32>, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
+	return igSliderInt4(label?.cStrPtr(),withUnsafeMutablePointer(to: &v) { $0.withMemoryRebound(to: Int32.self, capacity: 4) { $0 } },v_min,v_max,format?.cStrPtr())
 }
 
 @inlinable @discardableResult public func ImGuiSliderScalar(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ p_min: UnsafeRawPointer!, _ p_max: UnsafeRawPointer!, _ format: String?, _ power: Float) -> Bool {

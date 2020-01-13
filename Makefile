@@ -42,7 +42,7 @@ buildRelease:
 
 runCI:
 	swift package reset
-	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage
+	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
 	swift test
 
 wrapLibImGui: buildAutoWrapper

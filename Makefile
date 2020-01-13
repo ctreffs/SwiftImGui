@@ -30,7 +30,7 @@ copyLibImGui:
 	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui_src)
 
 generateCInterface:
-	cd $(imgui_src)/generator && luajit ./generator.lua gcc glfw opengl3 opengl2 sdl
+	cd $(imgui_src)/generator && luajit ./generator.lua clang sdl glfw glut metal
 
 buildCImGui: updateCLibImGui generateCInterface copyLibImGui
 
@@ -47,6 +47,7 @@ runCI:
 
 wrapLibImGui: buildAutoWrapper
 	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGui+Definitions.swift
+	#$(release_dir)/AutoWrapper $(imgui_src)/generator/output/impl_definitions.json $(swift_imgui_src)/ImGui+ImplDefinitions.swift
 
 clean:
 	swift package reset

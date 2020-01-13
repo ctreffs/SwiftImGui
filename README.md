@@ -38,7 +38,7 @@ import PackageDescription
 let package = Package(
     name: "YourPackageName",
     dependencies: [
-        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.0.0")
+        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.1.0")
     ],
     targets: [
         .target(
@@ -102,7 +102,7 @@ Things that need to be done are, among others:
 - [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped; 543 will be wrapped properly)
 - [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
 - [ ] Find a way to automate the remaining necessary manual adjustments in the cimgui generator template
-- [x] Support for [Cocoapods](https://cocoapods.org) packaging
+- [ ] Support for [Cocoapods](https://cocoapods.org) packaging
 - [ ] Support for [Carthage](https://github.com/Carthage/Carthage) packaging
 - [ ] Write some additional tests to improve coverage
 

@@ -37,6 +37,14 @@ buildCImGui: updateCLibImGui generateCInterface copyLibImGui
 buildAutoWrapper:
 	swift build -c release --product AutoWrapper
 
+buildRelease:
+	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage
+
+runCI:
+	swift package reset
+	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
+	swift test -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
+
 wrapLibImGui: buildAutoWrapper
 	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGui+Definitions.swift
 

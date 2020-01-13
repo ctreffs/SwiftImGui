@@ -8,7 +8,7 @@ extension ImGuiTests {
     static let __allTests__ImGuiTests = [
         ("testCreateContext", testCreateContext),
         ("testGetIO", testGetIO),
-        ("testVersion", testVersion)
+        ("testImGuiVersion", testImGuiVersion)
     ]
 }
 

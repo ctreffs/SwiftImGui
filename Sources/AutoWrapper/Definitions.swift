@@ -36,6 +36,7 @@ struct FunctionDef: Decodable {
     let signature: String
 
     let cimguiname: String
+    // swiftlint:disable:next identifier_name
     let ov_cimguiname: String
 
     let stname: String

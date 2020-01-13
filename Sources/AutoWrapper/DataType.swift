@@ -329,7 +329,9 @@ extension DataType {
         case char
         case float
         case double
+        // swiftlint:disable:next identifier_name
         case size_t
+        // swiftlint:disable:next identifier_name
         case va_list
         case custom(String)
 

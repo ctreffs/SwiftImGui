@@ -5,6 +5,7 @@
 //  Created by Christian Treffs on 25.10.19.
 //
 
+// swiftlint:disable identifier_name
 enum SwiftKeyword: String {
     case `Self`
     case `Type`

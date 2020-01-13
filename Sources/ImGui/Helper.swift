@@ -67,6 +67,7 @@ public struct CArray<T> {
     }
 }
 
+// swiftlint:disable large_tuple
 extension CArray {
     public init(_ cArray: inout (T, T)) {
         self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))

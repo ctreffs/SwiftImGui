@@ -1,15 +1,25 @@
 included:
   - Sources
+  - Tests
 excluded:
-  - docs
+  - .build
   - build
+  - docs
   - Sources/CImGui
   - Sources/Demos
-  - Tests
+  - Sources/Demos/*/main.swift
   - Sources/ImGui/ImGui+Definitions.swift
+  - Tests/*/*/XCTestManifests.swift
+  - Tests/*/XCTestManifests.swift
+  - Tests/LinuxMain.swift
 identifier_name:
   excluded:
     - id
+    - i
+    - y
+    - x
+    - z
+    - w
 line_length: 220
 number_separator:
   minimum_length: 5
@@ -89,7 +99,7 @@ opt_in_rules:
   - switch_case_on_newline
   - toggle_bool
   - trailing_closure
-  - unavailable_function
+  #- unavailable_function
   - unneeded_parentheses_in_closure_argument
   - untyped_error_in_catch
   - unused_import

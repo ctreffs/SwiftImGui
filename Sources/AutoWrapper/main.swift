@@ -8,15 +8,30 @@
 import struct Foundation.URL
 import struct Foundation.Data
 
-// Input: <SRC_ROOT>/3rdparty/cimgui/generator/output/definitions.json
-// Output <SRC_ROOT>/Source/ImGui/ImGui+Definitions.swift
-
 struct ConversionError: Swift.Error {
     let localizedDescription: String
 }
 
-guard CommandLine.arguments.count == 3 else {
-    throw ConversionError(localizedDescription: "Converter needs exactly 2 parameters: [1]: Input file path, [2]: Output file path")
+public func getDirectory(ofFile filePath: String = #file) -> String {
+    guard let lastSlashIdx = filePath.lastIndex(of: "/") else {
+        return filePath
+    }
+    var dirPath = filePath
+    dirPath.removeSubrange(lastSlashIdx..<filePath.endIndex)
+    return dirPath
+}
+
+// Input: <SRC_ROOT>/3rdparty/cimgui/generator/output/definitions.json
+let inputFile: String
+// Output <SRC_ROOT>/Sources/ImGui/ImGui+Definitions.swift
+let outputFile: String
+
+if CommandLine.arguments.count == 3 {
+    inputFile = CommandLine.arguments[1]
+    outputFile = CommandLine.arguments[2]
+} else {
+    inputFile = getDirectory() + "/../../3rdparty/cimgui/generator/output/definitions.json"
+    outputFile = getDirectory() + "/../ImGui/ImGui+Definitions.swift"
 }
 
 let header = """
@@ -37,14 +52,14 @@ import CImGui
 let footer = """
 """
 
-try convert(filePath: CommandLine.arguments[1], validOnly: true) { body in
+try convert(filePath: inputFile, validOnly: true) { body in
     let out: String = [header, body, footer].joined(separator: "\n\n")
 
     guard let data: Data = out.data(using: .utf8) else {
         throw ConversionError(localizedDescription: "Could not generate data from output string \(out)")
     }
 
-    let outURL = URL(fileURLWithPath: CommandLine.arguments[2])
+    let outURL = URL(fileURLWithPath: outputFile)
 
     try data.write(to: outURL)
 }

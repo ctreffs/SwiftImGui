@@ -5,30 +5,6 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
-import Foundation
-
-extension String {
-    public func cStrPtr() -> UnsafePointer<CChar>! {
-        guard let cString: [CChar] = self.cString(using: .utf8) else {
-            assertionFailure("could not create cString with encoding from \(self)")
-            return nil
-        }
-
-        return cString.withUnsafeBufferPointer { ptr -> UnsafePointer<CChar>? in
-            guard let startAddress = ptr.baseAddress else {
-                assertionFailure("could not get start address of cString \(cString)")
-                return nil
-            }
-
-            return startAddress
-        }
-    }
-
-    public mutating func cMutableStrPtr() -> UnsafeMutablePointer<CChar>! {
-        UnsafeMutablePointer<CChar>(mutating: self.cStrPtr())
-    }
-}
-
 extension Array {
     public subscript<R>(representable: R) -> Element where R: RawRepresentable, R.RawValue: FixedWidthInteger {
         get { self[Int(representable.rawValue)] }

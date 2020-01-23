@@ -52,20 +52,24 @@ struct FunctionBodyRenderer {
         let callSignature = "\(returnKeyword)\(prependCall)\(callName)(" + callArguments.joined(separator: ",") + ")\(appendCall)"
 
         // render output
-        // TODO: indentation
-
         assert(preCallLines.count == postCallLines.count)
-
-        let preCall = preCallLines.joined(separator: "\n\t")
-        let postCall = postCallLines.joined(separator: "\n\t")
 
         let functionBody: String
         if preCallLines.isEmpty {
-            functionBody = callSignature
+            functionBody = "\t" + callSignature
         } else {
-            functionBody = [preCall, callSignature, postCall].joined(separator: "\n")
+            var begin: String = ""
+            var end: String = ""
+
+            let maxIndentation: Int = preCallLines.count
+            for (index, (pre, post)) in zip(preCallLines, postCallLines.reversed()).enumerated() {
+                begin.append(String(repeating: "\t", count: index + 1) + pre + "\n")
+                end.append(String(repeating: "\t", count: maxIndentation - index) + post + "\n")
+            }
+
+            functionBody = begin + String(repeating: "\t", count: maxIndentation + 1) + callSignature + "\n" + end
         }
-        return "\t"+functionBody
+        return functionBody
     }
 
     enum ParsedArg {

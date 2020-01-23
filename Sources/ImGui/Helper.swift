@@ -11,6 +11,56 @@ extension Array {
         set { self[Int(representable.rawValue)] = newValue }
     }
 }
+/// Compute the prefix sum of `seq`.
+public func scan<
+    S: Sequence, U
+    >(_ seq: S, _ initial: U, _ combine: (U, S.Iterator.Element) -> U) -> [U] {
+    var result: [U] = []
+    result.reserveCapacity(seq.underestimatedCount)
+    var runningResult = initial
+    for element in seq {
+        runningResult = combine(runningResult, element)
+        result.append(runningResult)
+    }
+    return result
+}
+/// https://oleb.net/blog/2016/10/swift-array-of-c-strings/
+// from: https://forums.swift.org/t/bridging-string-to-const-char-const/3804/4
+public func withArrayOfCStrings<R>(
+    _ args: [String],
+    _ body: ([UnsafePointer<CChar>?]) -> R) -> R {
+    let argsCounts = Array(args.map {
+        $0.utf8.count + 1
+    })
+    let argsOffsets = [0] + scan(argsCounts, 0, +)
+    let argsBufferSize = argsOffsets.last!
+
+    var argsBuffer: [UInt8] = []
+    argsBuffer.reserveCapacity(argsBufferSize)
+    for arg in args {
+        argsBuffer.append(contentsOf: arg.utf8)
+        argsBuffer.append(0)
+    }
+
+    return argsBuffer.withUnsafeBufferPointer {
+        argsBuffer in
+        let ptr = UnsafeRawPointer(argsBuffer.baseAddress!)
+            .bindMemory(to: CChar.self, capacity: argsBuffer.count)
+        var cStrings: [UnsafePointer<CChar>?] = argsOffsets.map {
+            ptr + $0
+        }
+        cStrings[cStrings.count - 1] = nil
+        return body(cStrings)
+    }
+}
+
+public func withArrayOfCStringsBasePointer<Result>(_ strings: [String], _ body: (UnsafePointer<UnsafePointer<Int8>?>?) -> Result) -> Result {
+    withArrayOfCStrings(strings) { arrayPtr in
+        arrayPtr.withUnsafeBufferPointer { bufferPtr in
+            body(bufferPtr.baseAddress)
+        }
+    }
+}
 
 /// https://forums.developer.apple.com/thread/72120
 public struct CArray<T> {

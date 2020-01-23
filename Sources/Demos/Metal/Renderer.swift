@@ -92,7 +92,7 @@ extension Renderer: MTKViewDelegate {
             ImGuiCheckbox("Demo Window", &show_demo_window)
             ImGuiCheckbox("Another Window", &show_another_window)
 
-            ImGuiSliderFloat("Float Slider", &f, 0.0, 1.0, nil, 1) // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGuiSliderFloat("Float Slider", &f, 0.0, 1.0, "", 1) // Edit 1 float using a slider from 0.0f to 1.0f
 
             ImGuiColorEdit3("clear color", &clear_color, 0) // Edit 3 floats representing a color
 

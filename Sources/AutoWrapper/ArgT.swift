@@ -78,7 +78,7 @@ public struct ArgsT: Decodable {
     }
 
     @inlinable public var isValid: Bool {
-        type.isValid && escapedName != "..."
+        type.isValid && name != "..."
     }
 
     public var toSwift: String {

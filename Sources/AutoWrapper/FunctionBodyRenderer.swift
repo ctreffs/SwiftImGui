@@ -87,8 +87,11 @@ struct FunctionBodyRenderer {
             return [.line(arg.escapedName)]
 
         case .array where arg.type.type == .char:
-            // FIXME: this seems wrong!!!
-            return [.line("\(arg.escapedName).map { $0.cStrPtr() }")]
+            return [
+                .preLine("withArrayOfCStringsBasePointer(\(arg.escapedName)) { \(arg.name)Ptr in"),
+                .line("\(arg.name)Ptr"),
+                .postLine("}")
+            ]
 
         case .array, .reference:
             return [.line("&\(arg.escapedName)")]

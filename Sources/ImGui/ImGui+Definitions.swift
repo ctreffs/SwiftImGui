@@ -107,7 +107,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImDrawList_AddText(this,pos,col,text_beginPtr,text_endPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImDrawListAddTextFontPtr(_ this: UnsafeMutablePointer<ImDrawList>!, _ font: UnsafePointer<ImFont>!, _ font_size: Float, _ pos: ImVec2, _ col: ImU32, _ text_begin: String?, _ text_end: String?, _ wrap_width: Float, _ cpu_fine_clip_rect: UnsafePointer<ImVec4>!) -> Void {
@@ -116,7 +115,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImDrawList_AddTextFontPtr(this,font,font_size,pos,col,text_beginPtr,text_endPtr,wrap_width,cpu_fine_clip_rect)
 		}
 	}
-
 }
 
 @inlinable public func ImDrawListAddTriangle(_ this: UnsafeMutablePointer<ImDrawList>!, _ p1: ImVec2, _ p2: ImVec2, _ p3: ImVec2, _ col: ImU32, _ thickness: Float) -> Void {
@@ -315,14 +313,12 @@ public typealias ImGuiContext = OpaquePointer
 	filename!.withCString { filenamePtr in
 		return ImFontAtlas_AddFontFromFileTTF(this,filenamePtr,size_pixels,font_cfg,glyph_ranges)
 	}
-
 }
 
 @inlinable public func ImFontAtlasAddFontFromMemoryCompressedBase85TTF(_ this: UnsafeMutablePointer<ImFontAtlas>!, _ compressed_font_data_base85: String?, _ size_pixels: Float, _ font_cfg: UnsafePointer<ImFontConfig>!, _ glyph_ranges: UnsafePointer<ImWchar>!) -> UnsafeMutablePointer<ImFont>! {
 	compressed_font_data_base85!.withCString { compressed_font_data_base85Ptr in
 		return ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(this,compressed_font_data_base85Ptr,size_pixels,font_cfg,glyph_ranges)
 	}
-
 }
 
 @inlinable public func ImFontAtlasAddFontFromMemoryCompressedTTF(_ this: UnsafeMutablePointer<ImFontAtlas>!, _ compressed_font_data: UnsafeRawPointer!, _ compressed_font_size: Int32, _ size_pixels: Float, _ font_cfg: UnsafePointer<ImFontConfig>!, _ glyph_ranges: UnsafePointer<ImWchar>!) -> UnsafeMutablePointer<ImFont>! {
@@ -419,7 +415,6 @@ public typealias ImGuiContext = OpaquePointer
 			return String(cString: ImFont_CalcWordWrapPositionA(this,scale,textPtr,text_endPtr,wrap_width))
 		}
 	}
-
 }
 
 @inlinable public func ImFontClearOutputData(_ this: UnsafeMutablePointer<ImFont>!) -> Void {
@@ -456,7 +451,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImFontGlyphRangesBuilder_AddText(this,textPtr,text_endPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImFontGlyphRangesBuilderBuildRanges(_ this: UnsafeMutablePointer<ImFontGlyphRangesBuilder>!, _ out_ranges: UnsafeMutablePointer<ImVector_ImWchar>!) -> Void {
@@ -493,7 +487,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImFont_RenderText(this,draw_list,size,pos,col,clip_rect,text_beginPtr,text_endPtr,wrap_width,cpu_fine_clip)
 		}
 	}
-
 }
 
 @inlinable public func ImFontSetFallbackChar(_ this: UnsafeMutablePointer<ImFont>!, _ c: ImWchar) -> Void {
@@ -504,7 +497,6 @@ public typealias ImGuiContext = OpaquePointer
 	type!.withCString { typePtr in
 		return igAcceptDragDropPayload(typePtr,flags)
 	}
-
 }
 
 @inlinable public func ImGuiAlignTextToFramePadding() -> Void {
@@ -515,21 +507,18 @@ public typealias ImGuiContext = OpaquePointer
 	str_id!.withCString { str_idPtr in
 		return igArrowButton(str_idPtr,dir)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBegin(_ name: String?, _ p_open: UnsafeMutablePointer<Bool>!, _ flags: ImGuiWindowFlags) -> Bool {
 	name!.withCString { namePtr in
 		return igBegin(namePtr,p_open,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginChild(_ str_id: String?, _ size: ImVec2, _ border: Bool, _ flags: ImGuiWindowFlags) -> Bool {
 	str_id!.withCString { str_idPtr in
 		return igBeginChild(str_idPtr,size,border,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginChildFrame(_ id: ImGuiID, _ size: ImVec2, _ flags: ImGuiWindowFlags) -> Bool {
@@ -546,7 +535,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igBeginCombo(labelPtr,preview_valuePtr,flags)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginDragDropSource(_ flags: ImGuiDragDropFlags) -> Bool {
@@ -569,7 +557,6 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igBeginMenu(labelPtr,enabled)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginMenuBar() -> Bool {
@@ -580,49 +567,42 @@ public typealias ImGuiContext = OpaquePointer
 	str_id!.withCString { str_idPtr in
 		return igBeginPopup(str_idPtr,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginPopupContextItem(_ str_id: String?, _ mouse_button: Int32) -> Bool {
 	str_id!.withCString { str_idPtr in
 		return igBeginPopupContextItem(str_idPtr,mouse_button)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginPopupContextVoid(_ str_id: String?, _ mouse_button: Int32) -> Bool {
 	str_id!.withCString { str_idPtr in
 		return igBeginPopupContextVoid(str_idPtr,mouse_button)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginPopupContextWindow(_ str_id: String?, _ mouse_button: Int32, _ also_over_items: Bool) -> Bool {
 	str_id!.withCString { str_idPtr in
 		return igBeginPopupContextWindow(str_idPtr,mouse_button,also_over_items)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginPopupModal(_ name: String?, _ p_open: UnsafeMutablePointer<Bool>!, _ flags: ImGuiWindowFlags) -> Bool {
 	name!.withCString { namePtr in
 		return igBeginPopupModal(namePtr,p_open,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginTabBar(_ str_id: String?, _ flags: ImGuiTabBarFlags) -> Bool {
 	str_id!.withCString { str_idPtr in
 		return igBeginTabBar(str_idPtr,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiBeginTabItem(_ label: String?, _ p_open: UnsafeMutablePointer<Bool>!, _ flags: ImGuiTabItemFlags) -> Bool {
 	label!.withCString { labelPtr in
 		return igBeginTabItem(labelPtr,p_open,flags)
 	}
-
 }
 
 @inlinable public func ImGuiBeginTooltip() -> Void {
@@ -639,14 +619,12 @@ public typealias ImGuiContext = OpaquePointer
 			return igBulletTextV(fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiButton(_ label: String?, _ size: ImVec2) -> Bool {
 	label!.withCString { labelPtr in
 		return igButton(labelPtr,size)
 	}
-
 }
 
 @inlinable public func ImGuiCalcItemWidth() -> Float {
@@ -663,7 +641,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igCalcTextSize(textPtr,text_endPtr,hide_text_after_double_hash,wrap_width)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiCalcTextSizenonUDT(_ pOut: UnsafeMutablePointer<ImVec2>!, _ text: String?, _ text_end: String?, _ hide_text_after_double_hash: Bool, _ wrap_width: Float) -> Void {
@@ -672,7 +649,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igCalcTextSize_nonUDT(pOut,textPtr,text_endPtr,hide_text_after_double_hash,wrap_width)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiCalcTextSizenonUDT2(_ text: String?, _ text_end: String?, _ hide_text_after_double_hash: Bool, _ wrap_width: Float) -> ImVec2_Simple {
@@ -681,7 +657,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igCalcTextSize_nonUDT2(textPtr,text_endPtr,hide_text_after_double_hash,wrap_width)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiCaptureKeyboardFromApp(_ want_capture_keyboard_value: Bool) -> Void {
@@ -696,14 +671,12 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igCheckbox(labelPtr,v)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiCheckboxFlags(_ label: String?, _ flags: UnsafeMutablePointer<UInt32>!, _ flags_value: UInt32) -> Bool {
 	label!.withCString { labelPtr in
 		return igCheckboxFlags(labelPtr,flags,flags_value)
 	}
-
 }
 
 @inlinable public func ImGuiCloseCurrentPopup() -> Void {
@@ -714,21 +687,18 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igCollapsingHeader(labelPtr,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiCollapsingHeaderBoolPtr(_ label: String?, _ p_open: UnsafeMutablePointer<Bool>!, _ flags: ImGuiTreeNodeFlags) -> Bool {
 	label!.withCString { labelPtr in
 		return igCollapsingHeaderBoolPtr(labelPtr,p_open,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiColorButton(_ desc_id: String?, _ col: ImVec4, _ flags: ImGuiColorEditFlags, _ size: ImVec2) -> Bool {
 	desc_id!.withCString { desc_idPtr in
 		return igColorButton(desc_idPtr,col,flags,size)
 	}
-
 }
 
 @inlinable public func ImGuiColorConvertFloat4ToU32(_ `in`: ImVec4) -> ImU32 {
@@ -763,7 +733,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiColorEdit4(_ label: String?, _ col: inout SIMD4<Float>, _ flags: ImGuiColorEditFlags) -> Bool {
@@ -774,7 +743,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiColorPicker3(_ label: String?, _ col: inout SIMD3<Float>, _ flags: ImGuiColorEditFlags) -> Bool {
@@ -785,7 +753,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiColorPicker4(_ label: String?, _ col: inout SIMD4<Float>, _ flags: ImGuiColorEditFlags, _ ref_col: UnsafePointer<Float>!) -> Bool {
@@ -796,14 +763,12 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable public func ImGuiColumns(_ count: Int32, _ id: String?, _ border: Bool) -> Void {
 	id!.withCString { idPtr in
 		return igColumns(count,idPtr,border)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiCombo(_ label: String?, _ current_item: UnsafeMutablePointer<Int32>!, _ items: [String], _ items_count: Int32, _ popup_max_height_in_items: Int32) -> Bool {
@@ -812,7 +777,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igCombo(labelPtr,current_item,itemsPtr,items_count,popup_max_height_in_items)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiComboStr(_ label: String?, _ current_item: UnsafeMutablePointer<Int32>!, _ items_separated_by_zeros: String?, _ popup_max_height_in_items: Int32) -> Bool {
@@ -821,7 +785,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igComboStr(labelPtr,current_item,items_separated_by_zerosPtr,popup_max_height_in_items)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiCreateContext(_ shared_font_atlas: UnsafeMutablePointer<ImFontAtlas>!) -> ImGuiContext {
@@ -832,7 +795,6 @@ public typealias ImGuiContext = OpaquePointer
 	version_str!.withCString { version_strPtr in
 		return igDebugCheckVersionAndDataLayout(version_strPtr,sz_io,sz_style,sz_vec2,sz_vec4,sz_drawvert,sz_drawidx)
 	}
-
 }
 
 @inlinable public func ImGuiDestroyContext(_ ctx: ImGuiContext) -> Void {
@@ -857,7 +819,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igDragFloat(labelPtr,v,v_speed,v_min,v_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragFloat2(_ label: String?, _ v: inout SIMD2<Float>, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
@@ -870,7 +831,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragFloat3(_ label: String?, _ v: inout SIMD3<Float>, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
@@ -883,7 +843,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragFloat4(_ label: String?, _ v: inout SIMD4<Float>, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
@@ -896,7 +855,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragFloatRange2(_ label: String?, _ v_current_min: UnsafeMutablePointer<Float>!, _ v_current_max: UnsafeMutablePointer<Float>!, _ v_speed: Float, _ v_min: Float, _ v_max: Float, _ format: String?, _ format_max: String?, _ power: Float) -> Bool {
@@ -907,7 +865,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragInt(_ label: String?, _ v: UnsafeMutablePointer<Int32>!, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -916,7 +873,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igDragInt(labelPtr,v,v_speed,v_min,v_max,formatPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragInt2(_ label: String?, _ v: inout SIMD2<Int32>, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -929,7 +885,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragInt3(_ label: String?, _ v: inout SIMD3<Int32>, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -942,7 +897,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragInt4(_ label: String?, _ v: inout SIMD4<Int32>, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -955,7 +909,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragIntRange2(_ label: String?, _ v_current_min: UnsafeMutablePointer<Int32>!, _ v_current_max: UnsafeMutablePointer<Int32>!, _ v_speed: Float, _ v_min: Int32, _ v_max: Int32, _ format: String?, _ format_max: String?) -> Bool {
@@ -966,7 +919,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragScalar(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ v_speed: Float, _ p_min: UnsafeRawPointer!, _ p_max: UnsafeRawPointer!, _ format: String?, _ power: Float) -> Bool {
@@ -975,7 +927,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igDragScalar(labelPtr,data_type,p_data,v_speed,p_min,p_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiDragScalarN(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ components: Int32, _ v_speed: Float, _ p_min: UnsafeRawPointer!, _ p_max: UnsafeRawPointer!, _ format: String?, _ power: Float) -> Bool {
@@ -984,7 +935,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igDragScalarN(labelPtr,data_type,p_data,components,v_speed,p_min,p_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiDummy(_ size: ImVec2) -> Void {
@@ -1233,14 +1183,12 @@ public typealias ImGuiContext = OpaquePointer
 			return igGetIDRange(str_id_beginPtr,str_id_endPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiGetIDStr(_ str_id: String?) -> ImGuiID {
 	str_id!.withCString { str_idPtr in
 		return igGetIDStr(str_idPtr)
 	}
-
 }
 
 @inlinable public func ImGuiGetIO() -> UnsafeMutablePointer<ImGuiIO>! {
@@ -1475,7 +1423,6 @@ public typealias ImGuiContext = OpaquePointer
 	str!.withCString { strPtr in
 		return ImGuiIO_AddInputCharactersUTF8(this,strPtr)
 	}
-
 }
 
 @inlinable public func ImGuiIOClearInputCharacters(_ this: UnsafeMutablePointer<ImGuiIO>!) -> Void {
@@ -1500,7 +1447,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igInputDouble(labelPtr,v,step,step_fast,formatPtr,flags)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputFloat(_ label: String?, _ v: UnsafeMutablePointer<Float>!, _ step: Float, _ step_fast: Float, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1509,7 +1455,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igInputFloat(labelPtr,v,step,step_fast,formatPtr,flags)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputFloat2(_ label: String?, _ v: inout SIMD2<Float>, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1522,7 +1467,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputFloat3(_ label: String?, _ v: inout SIMD3<Float>, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1535,7 +1479,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputFloat4(_ label: String?, _ v: inout SIMD4<Float>, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1548,14 +1491,12 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputInt(_ label: String?, _ v: UnsafeMutablePointer<Int32>!, _ step: Int32, _ step_fast: Int32, _ flags: ImGuiInputTextFlags) -> Bool {
 	label!.withCString { labelPtr in
 		return igInputInt(labelPtr,v,step,step_fast,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputInt2(_ label: String?, _ v: inout SIMD2<Int32>, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1566,7 +1507,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputInt3(_ label: String?, _ v: inout SIMD3<Int32>, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1577,7 +1517,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputInt4(_ label: String?, _ v: inout SIMD4<Int32>, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1588,7 +1527,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputScalar(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ p_step: UnsafeRawPointer!, _ p_step_fast: UnsafeRawPointer!, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1597,7 +1535,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igInputScalar(labelPtr,data_type,p_data,p_step,p_step_fast,formatPtr,flags)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputScalarN(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ components: Int32, _ p_step: UnsafeRawPointer!, _ p_step_fast: UnsafeRawPointer!, _ format: String?, _ flags: ImGuiInputTextFlags) -> Bool {
@@ -1606,7 +1543,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igInputScalarN(labelPtr,data_type,p_data,components,p_step,p_step_fast,formatPtr,flags)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputText(_ label: String?, _ buf: inout String?, _ buf_size: Int, _ flags: ImGuiInputTextFlags, _ callback: @escaping ImGuiInputTextCallback, _ user_data: UnsafeMutableRawPointer!) -> Bool {
@@ -1615,7 +1551,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igInputText(labelPtr,UnsafeMutablePointer(mutating: bufPtr),buf_size,flags,callback,user_data)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiInputTextCallbackDataDeleteChars(_ this: UnsafeMutablePointer<ImGuiInputTextCallbackData>!, _ pos: Int32, _ bytes_count: Int32) -> Void {
@@ -1632,7 +1567,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImGuiInputTextCallbackData_InsertChars(this,pos,textPtr,text_endPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputTextMultiline(_ label: String?, _ buf: inout String?, _ buf_size: Int, _ size: ImVec2, _ flags: ImGuiInputTextFlags, _ callback: @escaping ImGuiInputTextCallback, _ user_data: UnsafeMutableRawPointer!) -> Bool {
@@ -1641,7 +1575,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igInputTextMultiline(labelPtr,UnsafeMutablePointer(mutating: bufPtr),buf_size,size,flags,callback,user_data)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInputTextWithHint(_ label: String?, _ hint: String?, _ buf: inout String?, _ buf_size: Int, _ flags: ImGuiInputTextFlags, _ callback: @escaping ImGuiInputTextCallback, _ user_data: UnsafeMutableRawPointer!) -> Bool {
@@ -1652,14 +1585,12 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiInvisibleButton(_ str_id: String?, _ size: ImVec2) -> Bool {
 	str_id!.withCString { str_idPtr in
 		return igInvisibleButton(str_idPtr,size)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiIsAnyItemActive() -> Bool {
@@ -1758,7 +1689,6 @@ public typealias ImGuiContext = OpaquePointer
 	str_id!.withCString { str_idPtr in
 		return igIsPopupOpen(str_idPtr)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiIsRectVisible(_ size: ImVec2) -> Bool {
@@ -1797,7 +1727,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable public func ImGuiListBoxFooter() -> Void {
@@ -1808,14 +1737,12 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igListBoxHeaderInt(labelPtr,items_count,height_in_items)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiListBoxHeaderVec2(_ label: String?, _ size: ImVec2) -> Bool {
 	label!.withCString { labelPtr in
 		return igListBoxHeaderVec2(labelPtr,size)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiListBoxStrarr(_ label: String?, _ current_item: UnsafeMutablePointer<Int32>!, _ items: [String], _ items_count: Int32, _ height_in_items: Int32) -> Bool {
@@ -1824,7 +1751,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igListBoxStr_arr(labelPtr,current_item,itemsPtr,items_count,height_in_items)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiListClipperBegin(_ this: UnsafeMutablePointer<ImGuiListClipper>!, _ items_count: Int32, _ items_height: Float) -> Void {
@@ -1843,14 +1769,12 @@ public typealias ImGuiContext = OpaquePointer
 	ini_filename!.withCString { ini_filenamePtr in
 		return igLoadIniSettingsFromDisk(ini_filenamePtr)
 	}
-
 }
 
 @inlinable public func ImGuiLoadIniSettingsFromMemory(_ ini_data: String?, _ ini_size: Int) -> Void {
 	ini_data!.withCString { ini_dataPtr in
 		return igLoadIniSettingsFromMemory(ini_dataPtr,ini_size)
 	}
-
 }
 
 @inlinable public func ImGuiLogButtons() -> Void {
@@ -1869,7 +1793,6 @@ public typealias ImGuiContext = OpaquePointer
 	filename!.withCString { filenamePtr in
 		return igLogToFile(auto_open_depth,filenamePtr)
 	}
-
 }
 
 @inlinable public func ImGuiLogToTTY(_ auto_open_depth: Int32) -> Void {
@@ -1890,7 +1813,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igMenuItemBool(labelPtr,shortcutPtr,selected,enabled)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiMenuItemBoolPtr(_ label: String?, _ shortcut: String?, _ p_selected: UnsafeMutablePointer<Bool>!, _ enabled: Bool) -> Bool {
@@ -1899,7 +1821,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igMenuItemBoolPtr(labelPtr,shortcutPtr,p_selected,enabled)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiNewFrame() -> Void {
@@ -1918,14 +1839,12 @@ public typealias ImGuiContext = OpaquePointer
 	str_id!.withCString { str_idPtr in
 		return igOpenPopup(str_idPtr)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiOpenPopupOnItemClick(_ str_id: String?, _ mouse_button: Int32) -> Bool {
 	str_id!.withCString { str_idPtr in
 		return igOpenPopupOnItemClick(str_idPtr,mouse_button)
 	}
-
 }
 
 @inlinable public func ImGuiPayloadClear(_ this: UnsafeMutablePointer<ImGuiPayload>!) -> Void {
@@ -1936,7 +1855,6 @@ public typealias ImGuiContext = OpaquePointer
 	type!.withCString { typePtr in
 		return ImGuiPayload_IsDataType(this,typePtr)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiPayloadIsDelivery(_ this: UnsafeMutablePointer<ImGuiPayload>!) -> Bool {
@@ -1953,7 +1871,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igPlotHistogramFloatPtr(labelPtr,values,values_count,values_offset,overlay_textPtr,scale_min,scale_max,graph_size,stride)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiPlotLines(_ label: String?, _ values: UnsafePointer<Float>!, _ values_count: Int32, _ values_offset: Int32, _ overlay_text: String?, _ scale_min: Float, _ scale_max: Float, _ graph_size: ImVec2, _ stride: Int32) -> Void {
@@ -1962,7 +1879,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igPlotLines(labelPtr,values,values_count,values_offset,overlay_textPtr,scale_min,scale_max,graph_size,stride)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiPopAllowKeyboardFocus() -> Void {
@@ -2005,7 +1921,6 @@ public typealias ImGuiContext = OpaquePointer
 	overlay!.withCString { overlayPtr in
 		return igProgressBar(fraction,size_arg,overlayPtr)
 	}
-
 }
 
 @inlinable public func ImGuiPushAllowKeyboardFocus(_ allow_keyboard_focus: Bool) -> Void {
@@ -2038,14 +1953,12 @@ public typealias ImGuiContext = OpaquePointer
 			return igPushIDRange(str_id_beginPtr,str_id_endPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiPushIDStr(_ str_id: String?) -> Void {
 	str_id!.withCString { str_idPtr in
 		return igPushIDStr(str_idPtr)
 	}
-
 }
 
 @inlinable public func ImGuiPushItemWidth(_ item_width: Float) -> Void {
@@ -2076,14 +1989,12 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igRadioButtonBool(labelPtr,active)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiRadioButtonIntPtr(_ label: String?, _ v: UnsafeMutablePointer<Int32>!, _ v_button: Int32) -> Bool {
 	label!.withCString { labelPtr in
 		return igRadioButtonIntPtr(labelPtr,v,v_button)
 	}
-
 }
 
 @inlinable public func ImGuiRender() -> Void {
@@ -2106,7 +2017,6 @@ public typealias ImGuiContext = OpaquePointer
 	ini_filename!.withCString { ini_filenamePtr in
 		return igSaveIniSettingsToDisk(ini_filenamePtr)
 	}
-
 }
 
 @inlinable public func ImGuiSaveIniSettingsToMemory(_ out_ini_size: UnsafeMutablePointer<Int>!) -> String? {
@@ -2117,14 +2027,12 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igSelectable(labelPtr,selected,flags,size)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSelectableBoolPtr(_ label: String?, _ p_selected: UnsafeMutablePointer<Bool>!, _ flags: ImGuiSelectableFlags, _ size: ImVec2) -> Bool {
 	label!.withCString { labelPtr in
 		return igSelectableBoolPtr(labelPtr,p_selected,flags,size)
 	}
-
 }
 
 @inlinable public func ImGuiSeparator() -> Void {
@@ -2135,7 +2043,6 @@ public typealias ImGuiContext = OpaquePointer
 	text!.withCString { textPtr in
 		return igSetClipboardText(textPtr)
 	}
-
 }
 
 @inlinable public func ImGuiSetColorEditOptions(_ flags: ImGuiColorEditFlags) -> Void {
@@ -2174,7 +2081,6 @@ public typealias ImGuiContext = OpaquePointer
 	type!.withCString { typePtr in
 		return igSetDragDropPayload(typePtr,data,sz,cond)
 	}
-
 }
 
 @inlinable public func ImGuiSetItemAllowOverlap() -> Void {
@@ -2273,7 +2179,6 @@ public typealias ImGuiContext = OpaquePointer
 	tab_or_docked_window_label!.withCString { tab_or_docked_window_labelPtr in
 		return igSetTabItemClosed(tab_or_docked_window_labelPtr)
 	}
-
 }
 
 @inlinable public func ImGuiSetTooltipV(_ fmt: String?, _ args: CVarArg...) -> Void {
@@ -2282,7 +2187,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igSetTooltipV(fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiSetWindowCollapsedBool(_ collapsed: Bool, _ cond: ImGuiCond) -> Void {
@@ -2293,7 +2197,6 @@ public typealias ImGuiContext = OpaquePointer
 	name!.withCString { namePtr in
 		return igSetWindowCollapsedStr(namePtr,collapsed,cond)
 	}
-
 }
 
 @inlinable public func ImGuiSetWindowFocus() -> Void {
@@ -2304,7 +2207,6 @@ public typealias ImGuiContext = OpaquePointer
 	name!.withCString { namePtr in
 		return igSetWindowFocusStr(namePtr)
 	}
-
 }
 
 @inlinable public func ImGuiSetWindowFontScale(_ scale: Float) -> Void {
@@ -2315,7 +2217,6 @@ public typealias ImGuiContext = OpaquePointer
 	name!.withCString { namePtr in
 		return igSetWindowPosStr(namePtr,pos,cond)
 	}
-
 }
 
 @inlinable public func ImGuiSetWindowPosVec2(_ pos: ImVec2, _ cond: ImGuiCond) -> Void {
@@ -2326,7 +2227,6 @@ public typealias ImGuiContext = OpaquePointer
 	name!.withCString { namePtr in
 		return igSetWindowSizeStr(namePtr,size,cond)
 	}
-
 }
 
 @inlinable public func ImGuiSetWindowSizeVec2(_ size: ImVec2, _ cond: ImGuiCond) -> Void {
@@ -2345,7 +2245,6 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igShowFontSelector(labelPtr)
 	}
-
 }
 
 @inlinable public func ImGuiShowMetricsWindow(_ p_open: UnsafeMutablePointer<Bool>!) -> Void {
@@ -2360,7 +2259,6 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return igShowStyleSelector(labelPtr)
 	}
-
 }
 
 @inlinable public func ImGuiShowUserGuide() -> Void {
@@ -2373,7 +2271,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igSliderAngle(labelPtr,v_rad,v_degrees_min,v_degrees_max,formatPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderFloat(_ label: String?, _ v: UnsafeMutablePointer<Float>!, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
@@ -2382,7 +2279,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igSliderFloat(labelPtr,v,v_min,v_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderFloat2(_ label: String?, _ v: inout SIMD2<Float>, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
@@ -2395,7 +2291,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderFloat3(_ label: String?, _ v: inout SIMD3<Float>, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
@@ -2408,7 +2303,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderFloat4(_ label: String?, _ v: inout SIMD4<Float>, _ v_min: Float, _ v_max: Float, _ format: String?, _ power: Float) -> Bool {
@@ -2421,7 +2315,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderInt(_ label: String?, _ v: UnsafeMutablePointer<Int32>!, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -2430,7 +2323,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igSliderInt(labelPtr,v,v_min,v_max,formatPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderInt2(_ label: String?, _ v: inout SIMD2<Int32>, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -2443,7 +2335,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderInt3(_ label: String?, _ v: inout SIMD3<Int32>, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -2456,7 +2347,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderInt4(_ label: String?, _ v: inout SIMD4<Int32>, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -2469,7 +2359,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderScalar(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ p_min: UnsafeRawPointer!, _ p_max: UnsafeRawPointer!, _ format: String?, _ power: Float) -> Bool {
@@ -2478,7 +2367,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igSliderScalar(labelPtr,data_type,p_data,p_min,p_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSliderScalarN(_ label: String?, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ components: Int32, _ p_min: UnsafeRawPointer!, _ p_max: UnsafeRawPointer!, _ format: String?, _ power: Float) -> Bool {
@@ -2487,14 +2375,12 @@ public typealias ImGuiContext = OpaquePointer
 			return igSliderScalarN(labelPtr,data_type,p_data,components,p_min,p_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiSmallButton(_ label: String?) -> Bool {
 	label!.withCString { labelPtr in
 		return igSmallButton(labelPtr)
 	}
-
 }
 
 @inlinable public func ImGuiSpacing() -> Void {
@@ -2579,7 +2465,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImGuiTextBuffer_append(this,strPtr,str_endPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiTextBufferAppendfv(_ this: UnsafeMutablePointer<ImGuiTextBuffer>!, _ fmt: String?, _ args: CVarArg...) -> Void {
@@ -2588,7 +2473,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImGuiTextBuffer_appendfv(this,fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiTextBufferBegin(_ this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> String? {
@@ -2625,7 +2509,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igTextColoredV(col,fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiTextDisabledV(_ fmt: String?, _ args: CVarArg...) -> Void {
@@ -2634,7 +2517,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igTextDisabledV(fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiTextFilterBuild(_ this: UnsafeMutablePointer<ImGuiTextFilter>!) -> Void {
@@ -2649,7 +2531,6 @@ public typealias ImGuiContext = OpaquePointer
 	label!.withCString { labelPtr in
 		return ImGuiTextFilter_Draw(this,labelPtr,width)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTextFilterIsActive(_ this: UnsafeMutablePointer<ImGuiTextFilter>!) -> Bool {
@@ -2662,7 +2543,6 @@ public typealias ImGuiContext = OpaquePointer
 			return ImGuiTextFilter_PassFilter(this,textPtr,text_endPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTextRangeEmpty(_ this: UnsafeMutablePointer<ImGuiTextRange>!) -> Bool {
@@ -2679,7 +2559,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igTextUnformatted(textPtr,text_endPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiTextV(_ fmt: String?, _ args: CVarArg...) -> Void {
@@ -2688,7 +2567,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igTextV(fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiTextWrappedV(_ fmt: String?, _ args: CVarArg...) -> Void {
@@ -2697,14 +2575,12 @@ public typealias ImGuiContext = OpaquePointer
 			return igTextWrappedV(fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTreeNodeExStr(_ label: String?, _ flags: ImGuiTreeNodeFlags) -> Bool {
 	label!.withCString { labelPtr in
 		return igTreeNodeExStr(labelPtr,flags)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTreeNodeExVPtr(_ ptr_id: UnsafeRawPointer!, _ flags: ImGuiTreeNodeFlags, _ fmt: String?, _ args: CVarArg...) -> Bool {
@@ -2713,7 +2589,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igTreeNodeExVPtr(ptr_id,flags,fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTreeNodeExVStr(_ str_id: String?, _ flags: ImGuiTreeNodeFlags, _ fmt: String?, _ args: CVarArg...) -> Bool {
@@ -2724,14 +2599,12 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTreeNodeStr(_ label: String?) -> Bool {
 	label!.withCString { labelPtr in
 		return igTreeNodeStr(labelPtr)
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTreeNodeVPtr(_ ptr_id: UnsafeRawPointer!, _ fmt: String?, _ args: CVarArg...) -> Bool {
@@ -2740,7 +2613,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igTreeNodeVPtr(ptr_id,fmtPtr,varArgsPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiTreeNodeVStr(_ str_id: String?, _ fmt: String?, _ args: CVarArg...) -> Bool {
@@ -2751,7 +2623,6 @@ public typealias ImGuiContext = OpaquePointer
 			}
 		}
 	}
-
 }
 
 @inlinable public func ImGuiTreePop() -> Void {
@@ -2766,7 +2637,6 @@ public typealias ImGuiContext = OpaquePointer
 	str_id!.withCString { str_idPtr in
 		return igTreePushStr(str_idPtr)
 	}
-
 }
 
 @inlinable public func ImGuiUnindent(_ indent_w: Float) -> Void {
@@ -2783,7 +2653,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igVSliderFloat(labelPtr,size,v,v_min,v_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiVSliderInt(_ label: String?, _ size: ImVec2, _ v: UnsafeMutablePointer<Int32>!, _ v_min: Int32, _ v_max: Int32, _ format: String?) -> Bool {
@@ -2792,7 +2661,6 @@ public typealias ImGuiContext = OpaquePointer
 			return igVSliderInt(labelPtr,size,v,v_min,v_max,formatPtr)
 		}
 	}
-
 }
 
 @inlinable @discardableResult public func ImGuiVSliderScalar(_ label: String?, _ size: ImVec2, _ data_type: ImGuiDataType, _ p_data: UnsafeMutableRawPointer!, _ p_min: UnsafeRawPointer!, _ p_max: UnsafeRawPointer!, _ format: String?, _ power: Float) -> Bool {
@@ -2801,14 +2669,12 @@ public typealias ImGuiContext = OpaquePointer
 			return igVSliderScalar(labelPtr,size,data_type,p_data,p_min,p_max,formatPtr,power)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiValueBool(_ `prefix`: String?, _ b: Bool) -> Void {
 	`prefix`!.withCString { prefixPtr in
 		return igValueBool(prefixPtr,b)
 	}
-
 }
 
 @inlinable public func ImGuiValueFloat(_ `prefix`: String?, _ v: Float, _ float_format: String?) -> Void {
@@ -2817,20 +2683,17 @@ public typealias ImGuiContext = OpaquePointer
 			return igValueFloat(prefixPtr,v,float_formatPtr)
 		}
 	}
-
 }
 
 @inlinable public func ImGuiValueInt(_ `prefix`: String?, _ v: Int32) -> Void {
 	`prefix`!.withCString { prefixPtr in
 		return igValueInt(prefixPtr,v)
 	}
-
 }
 
 @inlinable public func ImGuiValueUint(_ `prefix`: String?, _ v: UInt32) -> Void {
 	`prefix`!.withCString { prefixPtr in
 		return igValueUint(prefixPtr,v)
 	}
-
 }
 

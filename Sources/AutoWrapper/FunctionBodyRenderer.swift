@@ -64,10 +64,10 @@ struct FunctionBodyRenderer {
             let maxIndentation: Int = preCallLines.count
             for (index, (pre, post)) in zip(preCallLines, postCallLines.reversed()).enumerated() {
                 begin.append(String(repeating: "\t", count: index + 1) + pre + "\n")
-                end.append(String(repeating: "\t", count: maxIndentation - index) + post + "\n")
+                end.append("\n" + String(repeating: "\t", count: maxIndentation - index) + post)
             }
 
-            functionBody = begin + String(repeating: "\t", count: maxIndentation + 1) + callSignature + "\n" + end
+            functionBody = begin + String(repeating: "\t", count: maxIndentation + 1) + callSignature + end
         }
         return functionBody
     }

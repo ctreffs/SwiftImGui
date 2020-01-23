@@ -46,10 +46,6 @@ public struct FunctionDef: Decodable {
         def.map { $0.toSwift }.joined(separator: ", ")
     }
 
-    public func encode(c def: [ArgsT]) -> String {
-        def.map { $0.toC }.joined(separator: ",")
-    }
-
     public var encodedFuncname: String {
         guard let range = ov_cimguiname.range(of: funcname) else {
             assertionFailure("Original name should contain funcname")
@@ -112,9 +108,10 @@ public struct FunctionDef: Decodable {
     }
 
     public var toSwift: String {
-        """
+        // \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
+        return """
         \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
-        \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
+        \(FunctionBodyRenderer.render(ov_cimguiname, argsT, returnType))
         }
         """
     }

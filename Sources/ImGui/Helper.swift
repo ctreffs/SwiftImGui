@@ -5,34 +5,60 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
-import Foundation
+extension Array {
+    public subscript<R>(representable: R) -> Element where R: RawRepresentable, R.RawValue: FixedWidthInteger {
+        get { self[Int(representable.rawValue)] }
+        set { self[Int(representable.rawValue)] = newValue }
+    }
+}
+/// Compute the prefix sum of `seq`.
+public func scan<
+    S: Sequence, U
+    >(_ seq: S, _ initial: U, _ combine: (U, S.Iterator.Element) -> U) -> [U] {
+    var result: [U] = []
+    result.reserveCapacity(seq.underestimatedCount)
+    var runningResult = initial
+    for element in seq {
+        runningResult = combine(runningResult, element)
+        result.append(runningResult)
+    }
+    return result
+}
+/// https://oleb.net/blog/2016/10/swift-array-of-c-strings/
+// from: https://forums.swift.org/t/bridging-string-to-const-char-const/3804/4
+public func withArrayOfCStrings<R>(
+    _ args: [String],
+    _ body: ([UnsafePointer<CChar>?]) -> R) -> R {
+    let argsCounts = Array(args.map {
+        $0.utf8.count + 1
+    })
+    let argsOffsets = [0] + scan(argsCounts, 0, +)
+    let argsBufferSize = argsOffsets.last!
 
-extension String {
-    public func cStrPtr() -> UnsafePointer<CChar>! {
-        guard let cString: [CChar] = self.cString(using: .utf8) else {
-            assertionFailure("could not create cString with encoding from \(self)")
-            return nil
-        }
-
-        return cString.withUnsafeBufferPointer { ptr -> UnsafePointer<CChar>? in
-            guard let startAddress = ptr.baseAddress else {
-                assertionFailure("could not get start address of cString \(cString)")
-                return nil
-            }
-
-            return startAddress
-        }
+    var argsBuffer: [UInt8] = []
+    argsBuffer.reserveCapacity(argsBufferSize)
+    for arg in args {
+        argsBuffer.append(contentsOf: arg.utf8)
+        argsBuffer.append(0)
     }
 
-    public mutating func cMutableStrPtr() -> UnsafeMutablePointer<CChar>! {
-        return UnsafeMutablePointer<CChar>(mutating: self.cStrPtr())
+    return argsBuffer.withUnsafeBufferPointer {
+        argsBuffer in
+        let ptr = UnsafeRawPointer(argsBuffer.baseAddress!)
+            .bindMemory(to: CChar.self, capacity: argsBuffer.count)
+        var cStrings: [UnsafePointer<CChar>?] = argsOffsets.map {
+            ptr + $0
+        }
+        cStrings[cStrings.count - 1] = nil
+        return body(cStrings)
     }
 }
 
-extension Array {
-    public subscript<R>(representable: R) -> Element where R: RawRepresentable, R.RawValue: FixedWidthInteger {
-        get { return self[Int(representable.rawValue)] }
-        set { self[Int(representable.rawValue)] = newValue }
+public func withArrayOfCStringsBasePointer<Result>(_ strings: [String], _ body: (UnsafePointer<UnsafePointer<Int8>?>?) -> Result) -> Result {
+    withArrayOfCStrings(strings) { arrayPtr in
+        arrayPtr.withUnsafeBufferPointer { bufferPtr in
+            body(bufferPtr.baseAddress)
+        }
     }
 }
 
@@ -45,12 +71,12 @@ public struct CArray<T> {
     }
 
     public var count: Int {
-        return ptr.count
+        ptr.count
     }
 
     public subscript<I>(index: I) -> T where I: FixedWidthInteger {
         get {
-            return ptr[Int(index)]
+            ptr[Int(index)]
         }
         set {
             ptr[Int(index)] = newValue
@@ -59,7 +85,7 @@ public struct CArray<T> {
 
     public subscript<R>(representable: R) -> T where R: RawRepresentable, R.RawValue: FixedWidthInteger {
         get {
-            return self[representable.rawValue]
+            self[representable.rawValue]
         }
         set {
             self[representable.rawValue] = newValue
@@ -67,6 +93,7 @@ public struct CArray<T> {
     }
 }
 
+// swiftlint:disable large_tuple
 extension CArray {
     public init(_ cArray: inout (T, T)) {
         self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
@@ -100,23 +127,23 @@ extension CArray {
         self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
     }
 
+    // swiftlint:disable:next line_length
     public init(_ cArray: inout (T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T)) {
         self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
     }
 }
 
-
 /// Offset of _MEMBER within _TYPE. Standardized as offsetof() in modern C++.
 public func IM_OFFSETOF<T>(_ member: PartialKeyPath<T>) -> Int {
-    return MemoryLayout<T>.offset(of: member)!
+    MemoryLayout<T>.offset(of: member)!
 }
 
 /// Size of a static C-style array. Don't use on pointers!
 public func IM_ARRAYSIZE<T>(_ cTupleArray: T) -> Int {
     //#define IM_ARRAYSIZE(_ARR)          ((int)(sizeof(_ARR)/sizeof(*_ARR)))
-    let m = Mirror(reflecting: cTupleArray)
-    precondition(m.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
-    return m.children.count
+    let mirror = Mirror(reflecting: cTupleArray)
+    precondition(mirror.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
+    return mirror.children.count
 }
 
 /// Debug Check Version

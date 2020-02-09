@@ -6,13 +6,12 @@
 //
 
 // Conversion process is not perfect yet so we have a small list of exceptions
-enum Exceptions {
-
+public enum Exceptions {
     /// Set of missing functions that are not exposed to Swift automatically,
     /// but are present in definitions.json
     ///
     /// causes "Use of unresolved identifier '...'" compiler error.
-    static let unresolvedIdentifier: Set<String> = [
+    public static let unresolvedIdentifier: Set<String> = [
         "ImVector_capacity",
         "ImVector_clear",
         "ImVector_empty",
@@ -26,17 +25,17 @@ enum Exceptions {
     ]
 
     /// causes "Use of undeclared type '...'" compiler error.
-    static let undeclardTypes: [String: Declaration] = [
+    public static let undeclardTypes: [String: Declaration] = [
         "ImGuiContext": Declaration(name: "ImGuiContext", typealiasType: "OpaquePointer"),
         "ImDrawListSharedData": Declaration(name: "ImDrawListSharedData", typealiasType: "OpaquePointer")
     ]
 }
 
-struct Declaration {
-    let name: String
-    let typealiasType: String
-    var dataType: DataType {
-        return DataType(meta: .primitive, type: .custom(name), isConst: true)
+public struct Declaration {
+    public let name: String
+    public let typealiasType: String
+    public var dataType: DataType {
+        DataType(meta: .primitive, type: .custom(name), isConst: true)
     }
 }
 

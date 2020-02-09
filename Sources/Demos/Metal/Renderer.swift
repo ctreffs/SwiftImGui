@@ -11,7 +11,7 @@ import MetalKit
 
 var show_demo_window: Bool = true
 var show_another_window: Bool = false
-var clear_color: (Float, Float, Float) = (x: 0.28, y: 0.36, z: 0.5)
+var clear_color: SIMD3<Float> = .init(x: 0.28, y: 0.36, z: 0.5)
 var f: Float = 0.0
 var counter: Int = 0
 
@@ -59,9 +59,9 @@ extension Renderer: MTKViewDelegate {
                 return
             }
 
-            renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: Double(clear_color.0),
-                                                                                green: Double(clear_color.1),
-                                                                                blue: Double(clear_color.2),
+            renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: Double(clear_color.x),
+                                                                                green: Double(clear_color.x),
+                                                                                blue: Double(clear_color.z),
                                                                                 alpha: 1.0)
 
             // Here, you could do additional rendering work, including other passes as necessary.
@@ -83,7 +83,7 @@ extension Renderer: MTKViewDelegate {
             // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
 
             // Create a window called "Hello, world!" and append into it.
-            ImGuiBegin("Hello, world!", &show_demo_window, 0)
+            ImGuiBegin("Begin", &show_demo_window, 0)
 
             // Display some text (you can use a format strings too)
             ImGuiTextV("This is some useful text.")
@@ -92,11 +92,11 @@ extension Renderer: MTKViewDelegate {
             ImGuiCheckbox("Demo Window", &show_demo_window)
             ImGuiCheckbox("Another Window", &show_another_window)
 
-            ImGuiSliderFloat("Float Slider", &f, 0.0, 1.0, nil, 1) // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGuiSliderFloat("Float Slider", &f, 0.0, 1.0, "", 1) // Edit 1 float using a slider from 0.0f to 1.0f
 
             ImGuiColorEdit3("clear color", &clear_color, 0) // Edit 3 floats representing a color
 
-            if ImGuiButton("Button", ImVec2(x: 0,y: 0)) { // Buttons return true when clicked (most widgets return true when edited/activated)
+            if ImGuiButton("Button", ImVec2(x: 100,y: 20)) { // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter += 1
             }
 
@@ -120,7 +120,7 @@ extension Renderer: MTKViewDelegate {
                 ImGuiBegin("Another Window", &show_another_window, 0)  // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
 
                 ImGuiTextV("Hello from another window!")
-                if ImGuiButton("Close Me", ImVec2(x: 0, y: 0)) {
+                if ImGuiButton("Close Me", ImVec2(x: 100, y: 20)) {
                     show_another_window = false
                 }
                 ImGuiEnd()

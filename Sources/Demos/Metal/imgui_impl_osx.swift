@@ -26,7 +26,9 @@ func ImGui_ImplOSX_Init() {
     //io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;          // We can honor io.WantSetMousePos requests (optional, rarely used)
     //io.BackendFlags |= ImGuiBackendFlags_PlatformHasViewports;    // We can create multi-viewports on the Platform side (optional)
     //io.BackendFlags |= ImGuiBackendFlags_HasMouseHoveredViewport; // We can set io.MouseHoveredViewport correctly (optional, not easy)
-    io.pointee.BackendPlatformName = "imgui_metal_osx".cStrPtr()
+    "imgui_metal_osx".withCString {
+        io.pointee.BackendPlatformName = $0
+    }
     
     // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
     let offset_for_function_keys: Int32 = 256 - 0xF700

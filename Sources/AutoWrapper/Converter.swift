@@ -10,7 +10,7 @@ import struct Foundation.Data
 import class Foundation.JSONDecoder
 
 public func convert(filePath: String, validOnly: Bool, to convertedOutput: (String) throws -> Void = { print($0) }) throws {
-    let file: URL = URL(fileURLWithPath: filePath)
+    let file = URL(fileURLWithPath: filePath)
     let data: Data = try Data(contentsOf: file)
     let decoder = JSONDecoder()
 

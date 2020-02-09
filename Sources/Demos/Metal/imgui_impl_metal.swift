@@ -7,7 +7,6 @@
 
 import CImGui
 import ImGui
-import Foundation
 import AppKit
 import Metal
 import MetalKit
@@ -22,7 +21,9 @@ func ImGui_ImplMetal_Init(_ device: MTLDevice) -> Bool {
     let io = ImGuiGetIO()!
     
 
-    io.pointee.BackendRendererName = "imgui_impl_metal".cStrPtr()
+    "imgui_impl_metal".withCString {
+        io.pointee.BackendRendererName = $0
+    }
 
     // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
     io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasVtxOffset.rawValue)

@@ -5,29 +5,30 @@
 //  Created by Christian Treffs on 25.10.19.
 //
 
-struct DataType: Decodable {
-    let meta: MetaType
-    let isConst: Bool
-    let type: ValueType
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable function_body_length
+public struct DataType: Decodable {
+    public let meta: MetaType
+    public let isConst: Bool
+    public let type: ValueType
 
-    init(meta: MetaType, type: ValueType, isConst: Bool) {
+    public init(meta: MetaType, type: ValueType, isConst: Bool) {
         self.meta = meta
         self.type = type
         self.isConst = isConst
     }
 
-    @inlinable var isValid: Bool {
-        return meta != .unknown && type != .unknown && type != .generic
+    @inlinable public var isValid: Bool {
+        meta != .unknown && type != .unknown && type != .generic
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         self.init(string: raw)
     }
 
-    init(string: String) {
-
+    public init(string: String) {
         var string = string
 
         // const
@@ -70,7 +71,6 @@ struct DataType: Decodable {
                 self.meta = .arrayFixedSize(count)
                 self.type = dataType.type
             }
-
         } else if let firstAsterisk = string.firstIndex(of: "*") {
             // TODO: parse complex types
 
@@ -89,23 +89,21 @@ struct DataType: Decodable {
                 case .exception:
                     self.meta = dataType.meta
                     self.type = dataType.type
+
                 default:
                     self.meta = .pointer
                     self.type = dataType.type
                 }
-
             } else {
                 // TODO: handle array pointer
                 self.type = .unknown
                 self.meta = .unknown
             }
-
         } else if let ref = string.firstIndex(of: "&") {
             // i.e. float&, ImVector&
             let dataType = DataType(string: String(string[string.startIndex..<ref]))
             self.meta = .reference
             self.type = dataType.type
-
         } else {
             // primitive custom types ImVec2, ImVector, T ...
 
@@ -117,24 +115,23 @@ struct DataType: Decodable {
 
             self.meta = .primitive
             self.type = .custom(string)
-
         }
 
         // FIXME: special handle 'T'
 
     }
 
-    enum Context {
+    public enum Context {
         case argSwift
         case argC
         case ret
     }
 
-    func wrapIn(_ context: Context, _ toWrap: String) -> String {
-
+    public func wrapIn(_ context: Context, _ toWrap: String) -> String {
         switch meta {
         case .primitive:
             return toWrap
+
         case .array where isConst == true && type == .char:
             return "[String]"
         case .array where isConst == true:
@@ -146,13 +143,20 @@ struct DataType: Decodable {
             return "inout [\(toWrap)]"
         //return "inout UnsafePointer<\(toWrap)>!"
         case let .arrayFixedSize(size) where isConst == false:
-            // tuple
-            return "inout (\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
+            if type.isNumber && size < 5 {
+                // SIMD type
+                return "inout SIMD\(size)<\(toWrap)>"
+            } else {
+                // tuple
+                return "inout (\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
+            }
+
         case let .arrayFixedSize(size):
-            return "(\((0..<size).map({_ in toWrap }).joined(separator: ",")))"
+            return "(\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
         case .pointer where isConst == true && type == .char:
             // const char* -> String
             return toWrap
+
         case .pointer where isConst == false && type == .char:
             // char* -> String
             return "inout \(toWrap)"
@@ -177,14 +181,12 @@ struct DataType: Decodable {
         case let .exception(decl):
             return decl.name
         }
-
     }
 
-    func toString(_ context: Context, wrapped: Bool = true) -> String {
+    public func toString(_ context: Context, wrapped: Bool = true) -> String {
         let out: String
 
         switch type {
-
         case .void:
             out = "Void"
         case .bool:
@@ -207,6 +209,7 @@ struct DataType: Decodable {
             out = "CVarArg..."
         case let .custom(value):
             out = value
+
         case .unknown:
             out = "<#CODE#>"
         case .generic:
@@ -218,94 +221,7 @@ struct DataType: Decodable {
         } else {
             return out
         }
-
     }
-
-    //
-    //    var toSwift: String {
-    //        switch (type, meta, isConst) {
-    //        case (.void, _, _):
-    //            return "Void"
-    //        case (.bool, _, _):
-    //            return "Bool"
-    //        case (.int, _, _):
-    //            return "Int32"
-    //        case (.uint, _, _):
-    //            return "UInt32"
-    //        case (.char, _, _):
-    //            return "CChar"
-    //        case (.float, _, _):
-    //            return "Float"
-    //        case (.double, _, _):
-    //            return "Double"
-    //        case (.size_t, _, _):
-    //            return "Int"
-    //        case (.va_list, _, _):
-    //            return "CVarArg..."
-    //        case let (_,.arrayFixedSize(count), const) where const == true:
-    //            return "(\((0..<count).map { _ in type.toSwift }.joined(separator: ",")))"
-    //        case let (_,.arrayFixedSize(count), const) where const == false:
-    //            return "inout [\(type)]"
-    //        case let .reference(dataType):
-    //            return "inout \(dataType.toSwift)"
-    //        case let .pointer(dataType) where dataType == .char:
-    //            return "String"
-    //        case let .pointer(dataType):
-    //            return "inout \(dataType.toSwift)"
-    //        case let .custom(string):
-    //            return string
-    //        case .unknown:
-    //            return "<#TYPE#>"
-    //        }
-    //    }
-    //
-    //    var returnSwift: String {
-    //        switch self {
-    //           case .void:
-    //               return "Void"
-    //           case .bool:
-    //               return "Bool"
-    //           case .int:
-    //               return "Int32"
-    //           case .uint:
-    //               return "UInt32"
-    //           case .char:
-    //               return "CChar"
-    //           case .float:
-    //               return "Float"
-    //           case .double:
-    //               return "Double"
-    //           case .size_t:
-    //               return "Int"
-    //           case .va_list:
-    //               return "CVarArg..."
-    //           case let .arrayFixedSize(dataType, count):
-    //               //return "(\((0..<count).map { _ in dataType.toSwift }.joined(separator: ",")))"
-    //                return "UnsafeMutablePointer<\(dataType.toSwift)>!"
-    //           case let .reference(dataType):
-    //               return "UnsafeMutablePointer<\(dataType.toSwift)>!"
-    //           case let .pointer(dataType) where dataType == .char:
-    //               return "String"
-    //           case let .pointer(dataType):
-    //               return "UnsafeMutablePointer<\(dataType.toSwift)>!"
-    //           case let .custom(string):
-    //               return string
-    //           case .unknown:
-    //               return "<#TYPE#>"
-    //           }
-    //    }
-    //
-    //    func fromSwift(name: String) -> String {
-    //        switch self {
-    //        case let .pointer(dataType) where dataType == .char:
-    //            return "\(name).cStrPtr()"
-    //        case .reference, .pointer, .arrayFixedSize:
-    //            return "&\(name)"
-    //        default:
-    //            return "\(name)"
-    //        }
-    //    }
-
 }
 
 extension DataType: Equatable { }
@@ -313,7 +229,7 @@ extension DataType: Hashable { }
 
 // MARK: - MetaType
 extension DataType {
-    enum MetaType: Equatable, Hashable {
+    public enum MetaType: Equatable, Hashable {
         case primitive
         case arrayFixedSize(Int)
         case array
@@ -323,13 +239,11 @@ extension DataType {
         case unknown
         case exception(Declaration)
     }
-
 }
 
 // MARK: - Value Type
 extension DataType {
-
-    enum ValueType: Equatable, Hashable {
+    public enum ValueType: Equatable, Hashable {
         case void
         case bool
         case int
@@ -337,14 +251,16 @@ extension DataType {
         case char
         case float
         case double
+        // swiftlint:disable:next identifier_name
         case size_t
+        // swiftlint:disable:next identifier_name
         case va_list
         case custom(String)
 
         case generic
         case unknown
 
-        init?(rawValue: String) {
+        public init?(rawValue: String) {
             switch rawValue {
             case "void":
                 self = .void
@@ -366,10 +282,23 @@ extension DataType {
                 self = .va_list
             case "T":
                 self = .generic
+
             default:
                 return nil
             }
         }
 
+        @inlinable public var isNumber: Bool {
+            switch self {
+            case .int,
+                 .uint,
+                 .float,
+                 .double:
+                return true
+
+            default:
+                return false
+            }
+        }
     }
 }

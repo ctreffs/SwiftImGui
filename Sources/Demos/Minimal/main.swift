@@ -30,7 +30,7 @@ for n in 0..<20 {
     // ImGui::Text("Hello, world!");
     ImGuiTextV("Hello, world!")
     // ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-    ImGuiSliderFloat("float", &f, 0.0, 1.0, nil, 1)
+    ImGuiSliderFloat("float", &f, 0.0, 1.0, "", 1)
     // ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
     ImGuiTextV("Application average %.3f ms/frame (%.1f FPS)", 1000.0 / io.pointee.Framerate, io.pointee.Framerate)
     

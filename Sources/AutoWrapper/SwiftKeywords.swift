@@ -5,7 +5,8 @@
 //  Created by Christian Treffs on 25.10.19.
 //
 
-enum SwiftKeyword: String {
+// swiftlint:disable identifier_name
+public enum SwiftKeyword: String {
     case `Self`
     case `Type`
     case `as`
@@ -83,11 +84,10 @@ enum SwiftKeyword: String {
     case `where`
     case `while`
     case `willSet`
-
 }
 
 extension String {
-    var swiftEscaped: String {
+    public var swiftEscaped: String {
         guard let swiftKeyword = SwiftKeyword(rawValue: self) else {
             return self
         }

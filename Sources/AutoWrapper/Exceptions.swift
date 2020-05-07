@@ -12,13 +12,13 @@ public enum Exceptions {
     ///
     /// causes "Use of unresolved identifier '...'" compiler error.
     public static let unresolvedIdentifier: Set<String> = [
+        "ImVector__grow_capacity",
         "ImVector_capacity",
         "ImVector_clear",
         "ImVector_empty",
-        "ImVector__grow_capacity",
         "ImVector_pop_back",
         "ImVector_reserve",
-        "ImVector_resize",
+        "ImVector_resizeNil",
         "ImVector_size",
         "ImVector_size_in_bytes",
         "ImVector_swap"

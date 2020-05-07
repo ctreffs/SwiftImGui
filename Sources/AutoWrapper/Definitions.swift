@@ -47,28 +47,26 @@ public struct FunctionDef: Decodable {
     }
 
     public var encodedFuncname: String {
-        guard let range = ov_cimguiname.range(of: funcname) else {
+        guard let range = ov_cimguiname.range(of: funcname), !range.isEmpty else {
             assertionFailure("Original name should contain funcname")
             return funcname
         }
 
-        let name: String = funcname.components(separatedBy: "_")
-            .map {
-                // uppercase first character
-                $0.replacingCharacters(in: $0.startIndex..<$0.index(after: $0.startIndex), with: $0.prefix(1).uppercased())
-            }
-        .joined()
+        let name: String = funcname
 
-        let prefix: String
-        let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
-
+        var prefix: String
         if let namespace = self.namespace, !namespace.isEmpty {
             prefix = namespace
         } else {
             prefix = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
         }
 
-        let combinedName = prefix + name + suffix
+        if Exceptions.stripPrefix.contains(prefix) {
+            prefix = ""
+        }
+
+        //let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
+        let combinedName = prefix + name
         return combinedName.replacingOccurrences(of: "_", with: "")
     }
 

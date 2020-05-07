@@ -4,7 +4,6 @@ import XCTest
 final class ImGuiTests: XCTestCase {
     func testImGuiVersion() {
         XCTAssertNotNil(ImGuiGetVersion())
-        XCTAssertEqual(ImGuiGetVersion(), "1.74 WIP")
         IMGUI_CHECKVERSION()
     }
 

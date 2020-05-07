@@ -1,28 +1,12 @@
 # Swift ImGui
 [![Build Status](https://travis-ci.com/ctreffs/SwiftImGui.svg?branch=master)](https://travis-ci.com/ctreffs/SwiftImGui)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![swift version](https://img.shields.io/badge/swift-5.0+-brightgreen.svg)](https://swift.org/download)
-<<<<<<< HEAD
-[![platforms](https://img.shields.io/badge/platforms-%20macOS%20|%20iOS%20|%20tvOS%20|%20watchOS-brightgreen.svg)](#)
-[![platforms](https://img.shields.io/badge/platforms-linux-brightgreen.svg)](#)
-
-<div style="margin: auto 0; text-align: center;"><img src="docs/swiftimgui.gif" height="300" align="middle"/></div>
-
-
-This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  
-It provides a **swiftly** and **typesafe** API and is easily maintainable and updatable, since it relies heavily on auto-generation.
-
-There are a working [demo examples](Sources/Demos/) provided as part of the library.
-
-## 🚀 Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine and provide a code example.
-=======
+[![swift version](https://img.shields.io/badge/swift-5.1+-brightgreen.svg)](https://swift.org/download)
 [![platforms](https://img.shields.io/badge/platforms-%20macOS%20|%20iOS%20|%20tvOS-brightgreen.svg)](#)
 [![platforms](https://img.shields.io/badge/platforms-linux-brightgreen.svg)](#)
 
 <p align="center">
-	<img src="docs/swiftimgui.gif" height="300" alt="swiftimgui-gif"/>
+	<img src="docs/swiftimgui.gif" width="100%" alt="swiftimgui-gif"/>
 </p>   
 
 This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  
@@ -33,7 +17,6 @@ There are working [demo examples](Sources/Demos/), too, provided as part of the 
 ## 🚀 Getting Started
 
 These instructions will get your copy of the project up and running on your local machine and provide a code example.
->>>>>>> f4fc09e68bdf6b49552d4c3c04153fe53aacd99f
 
 ### 📋 Prerequisites
 
@@ -43,23 +26,19 @@ These instructions will get your copy of the project up and running on your loca
 
 ### 💻 Installing
 
-Swift ImGui is available for all platforms that support [Swift 5.0](https://swift.org/) and higher and the [Swift Package Manager (SPM)](https://github.com/apple/swift-package-manager).
+Swift ImGui is available for all platforms that support [Swift 5.1](https://swift.org/) and higher and the [Swift Package Manager (SPM)](https://github.com/apple/swift-package-manager).
 
 Extend the following lines in your `Package.swift` file or use it to create a new project.
 
 ```swift
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 
 import PackageDescription
 
 let package = Package(
     name: "YourPackageName",
     dependencies: [
-<<<<<<< HEAD
-        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.0.0")
-=======
         .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.1.1")
->>>>>>> f4fc09e68bdf6b49552d4c3c04153fe53aacd99f
     ],
     targets: [
         .target(
@@ -105,63 +84,29 @@ ImGuiDestroyContext(ctx)
 
 ## 🆕 Update SwiftImGui
 
-<<<<<<< HEAD
-SwiftImGui uses a mutli stage process to update to the latest imgui version.   
-All necessary steps are available and automated via [`Makefile`](Makefile).   
-In repository root run:
-=======
-SwiftImGui uses a multi-stage process to update to the latest imgui version.   
-All necessary steps are provided in an automated fashion via a [`Makefile`](Makefile).   
-Run the following commands in the repository's root directory:
->>>>>>> f4fc09e68bdf6b49552d4c3c04153fe53aacd99f
-
-1. `make buildCImGui` - Update cimgui submodule && generate C interface
-2. `make wrapLibImGui` - Update SwiftImGui && auto-wrap C interface
-
+SwiftImGui uses a mutli-stage process to update to the latest imgui version. See [HOWTO.md](docs/HOWTO.md) for details.
 
 ## 💁 Help needed
 
-<<<<<<< HEAD
-This project is in an early stage an needs a lot of love.
+This project needs a lot of love.
 If you are interested in contributing please feel free to do so!
 
 Things that need to be done among others are:
 
-- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped. 543 will be wrapped properly.)
+- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 81 'invalid' functions that will not be wrapped. 799 will be wrapped properly.)
 - [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
 - [ ] Find a solution for manual adjustments in cimgui generator template
 - [ ] Write some more tests
 
 ## 🏷️ Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](tags). 
-=======
-This project is in an early stage and needs a lot of love.
-If you are interested in contributing, please feel free to do so!
-
-Things that need to be done are, among others:
-
-- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 55 'invalid' functions that will not be wrapped; 543 will be wrapped properly)
-- [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
-- [ ] Find a way to automate the remaining necessary manual adjustments in the cimgui generator template
-- [ ] Support for [Cocoapods](https://cocoapods.org) packaging
-- [ ] Support for [Carthage](https://github.com/Carthage/Carthage) packaging
-- [ ] Write some additional tests to improve coverage
-
-## 🏷️ Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](/releases). 
->>>>>>> f4fc09e68bdf6b49552d4c3c04153fe53aacd99f
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [releases on this repository](https://github.com/ctreffs/SwiftImGui/releases). 
 
 ## ✍️ Authors
 
 * [Christian Treffs](https://github.com/ctreffs)
 
-<<<<<<< HEAD
-See also the list of [contributors](https://github.com/ctreffs/SwiftImGui/blob/master/project/contributors) who participated in this project.
-=======
-See also the list of [contributors](https://github.com/ctreffs/SwiftImGui/contributors) who participated in this project.
->>>>>>> f4fc09e68bdf6b49552d4c3c04153fe53aacd99f
+See also the list of [contributors](https://github.com/ctreffs/SwiftImGui/graphs/contributors) who participated in this project.
 
 ## 🔏 Licenses
 

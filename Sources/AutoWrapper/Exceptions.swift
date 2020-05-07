@@ -12,6 +12,13 @@ public enum Exceptions {
     ///
     /// causes "Use of unresolved identifier '...'" compiler error.
     public static let unresolvedIdentifier: Set<String> = [
+        "ImChunkStream_clear",
+        "ImChunkStream_empty",
+        "ImChunkStream_size",
+        "ImPool_Clear",
+        "ImPool_GetSize",
+        "ImPool_RemovePoolIdx",
+        "ImPool_Reserve",
         "ImVector__grow_capacity",
         "ImVector_capacity",
         "ImVector_clear",
@@ -19,6 +26,7 @@ public enum Exceptions {
         "ImVector_pop_back",
         "ImVector_reserve",
         "ImVector_resizeNil",
+        "ImVector_shrink",
         "ImVector_size",
         "ImVector_size_in_bytes",
         "ImVector_swap"
@@ -26,8 +34,8 @@ public enum Exceptions {
 
     /// causes "Use of undeclared type '...'" compiler error.
     public static let undeclardTypes: [String: Declaration] = [
-        "ImGuiContext": Declaration(name: "ImGuiContext", typealiasType: "OpaquePointer"),
-        "ImDrawListSharedData": Declaration(name: "ImDrawListSharedData", typealiasType: "OpaquePointer")
+        "ImChunkStream": Declaration(name: "ImChunkStream", typealiasType: "OpaquePointer"),
+        "ImPool": Declaration(name: "ImPool", typealiasType: "OpaquePointer")
     ]
 }
 

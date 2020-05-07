@@ -38,7 +38,7 @@ import PackageDescription
 let package = Package(
     name: "YourPackageName",
     dependencies: [
-        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.1.1")
+        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.2.0")
     ],
     targets: [
         .target(
@@ -73,8 +73,10 @@ for n in 0..<20 {
     io.pointee.DisplaySize = ImVec2(x: 1920, y: 1080)
     io.pointee.DeltaTime = 1.0 / 60.0
     ImGuiNewFrame()
+    var f: Float = 0.0
     ImGuiTextV("Hello, world!")
-    ImGuiSliderFloat("float", &f, 0.0, 1.0, nil, 1)
+    ImGuiSliderFloat("float", &f, 0.0, 1.0, "", 1)
+    ImGuiTextV("Application average %.3f ms/frame (%.1f FPS)", 1000.0 / io.pointee.Framerate, io.pointee.Framerate)
     ImGuiShowDemoWindow(nil)
     ImGuiRender()
 }

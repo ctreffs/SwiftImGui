@@ -52,20 +52,9 @@ public struct FunctionDef: Decodable {
             return funcname
         }
 
-        let name: String = funcname.components(separatedBy: "_")
-            .map {
-                if $0.count > 1 {
-                    // uppercase first character
-                    return $0.replacingCharacters(in: $0.startIndex..<$0.index(after: $0.startIndex), with: $0.prefix(1).uppercased())
-                } else {
-                    return $0
-                }
-            }
-        .joined()
+        let name: String = funcname
 
         var prefix: String
-        let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
-
         if let namespace = self.namespace, !namespace.isEmpty {
             prefix = namespace
         } else {
@@ -76,7 +65,8 @@ public struct FunctionDef: Decodable {
             prefix = ""
         }
 
-        let combinedName = prefix + name + suffix
+        //let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
+        let combinedName = prefix + name
         return combinedName.replacingOccurrences(of: "_", with: "")
     }
 

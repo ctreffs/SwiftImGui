@@ -84,36 +84,29 @@ ImGuiDestroyContext(ctx)
 
 ## 🆕 Update SwiftImGui
 
-SwiftImGui uses a multi-stage process to update to the latest imgui version.   
-All necessary steps are provided in an automated fashion via a [`Makefile`](Makefile).   
-Run the following commands in the repository's root directory:
-
-1. `make buildCImGui` - Update cimgui submodule && generate C interface
-2. `make wrapLibImGui` - Update SwiftImGui && auto-wrap C interface
-
+SwiftImGui uses a mutli-stage process to update to the latest imgui version. See [HOWTO.md](docs/HOWTO.md) for details.
 
 ## 💁 Help needed
 
-This project is in an early stage and needs a lot of love.
-If you are interested in contributing, please feel free to do so!
+This project needs a lot of love.
+If you are interested in contributing please feel free to do so!
 
-Things that need to be done are, among others:
+Things that need to be done among others are:
 
-- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 78 'invalid' functions that will not be wrapped; 802 will be wrapped properly)
-- [ ] Some functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
-- [ ] Support for [Cocoapods](https://cocoapods.org) packaging
-- [ ] Support for [Carthage](https://github.com/Carthage/Carthage) packaging
-- [ ] Write some additional tests to improve coverage
+- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 81 'invalid' functions that will not be wrapped. 799 will be wrapped properly.)
+- [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
+- [ ] Find a solution for manual adjustments in cimgui generator template
+- [ ] Write some more tests
 
 ## 🏷️ Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](/releases). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [releases on this repository](https://github.com/ctreffs/SwiftImGui/releases). 
 
 ## ✍️ Authors
 
 * [Christian Treffs](https://github.com/ctreffs)
 
-See also the list of [contributors](https://github.com/ctreffs/SwiftImGui/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/ctreffs/SwiftImGui/graphs/contributors) who participated in this project.
 
 ## 🔏 Licenses
 

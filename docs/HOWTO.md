@@ -6,7 +6,9 @@ This file serves more as a reminder to me, so don't expect it to be complete.
 
 ### Steps
 
+0. Be sure to clone with clone recursive: `git clone --recursive git@github.com:ctreffs/SwiftImGui.git`
 1. In submodule 3rdparty/cimgui
+	0. `git submodule update --init --recursive` 
 	1. Merge latest master from <https://github.com/cimgui/cimgui>
 	2. Apply fixes if neccessary (i.e. generator.sh updates or #defines - see i.e. Adjust generator to include the correct defs	78ebaaf	Christian Treffs <ctreffs@gmail.com>	24. Oct 2019 at 16:03)
 	3. Commit and push to generator-fix branch

@@ -157,9 +157,12 @@ public struct DataType: Decodable {
             // const char* -> String
             return toWrap
 
-        case .pointer where isConst == false && type == .char:
-            // char* -> String
+        case .pointer where isConst == false && type == .char && context != .ret:
+            // char* -> inout String
             return "inout \(toWrap)"
+        case .pointer where isConst == false && type == .char && context == .ret:
+            // char* -> String
+            return "\(toWrap)"
         case .pointer where isConst == true && type == .void:
             return "UnsafeRawPointer!"
         case .pointer where isConst == false && type == .void:

@@ -41,8 +41,7 @@ final class ViewController: NSViewController {
         // we receive events for all controls, not just Dear ImGui widgets. If we had native controls in our
         // window, we'd want to be much more careful than just ingesting the complete event stream, though we
         // do make an effort to be good citizens by passing along events when Dear ImGui doesn't want to capture.
-        let eventMask: NSEvent.EventTypeMask = [ .keyDown, .keyUp, .flagsChanged, .scrollWheel ]
-        NSEvent.addLocalMonitorForEvents(matching: eventMask) { [unowned self](event) -> NSEvent? in
+        NSEvent.addLocalMonitorForEvents(matching: .any) { [unowned self](event) -> NSEvent? in
             let wantsCapture: Bool = ImGui_ImplOSX_HandleEvent(event, self.view)
             if event.type == .keyDown && wantsCapture {
                 return nil

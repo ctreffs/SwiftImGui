@@ -4,13 +4,8 @@ import PackageDescription
 var package = Package(
     name: "ImGui",
     products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(name: "ImGui", targets: ["ImGui"]),
         .library(name: "CImGui", targets: ["CImGui"])
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
     ],
     targets: [
         .target(name: "ImGui", dependencies: ["CImGui"]),
@@ -21,16 +16,10 @@ var package = Package(
     cxxLanguageStandard: .cxx11
 )
 
-#if canImport(Metal) && os(macOS)
-let metalDemo: (Product, Target) =
-    (.executable(name: "DemoMetal-macOS", targets: ["DemoMetal"]),
-     .target(name: "DemoMetal", dependencies: ["ImGui"], path: "Sources/Demos/Metal"))
-package.products.append(metalDemo.0)
-package.targets.append(metalDemo.1)
-#endif
+package.products.append(.executable(name: "DemoMinimal", targets: ["DemoMinimal"]))
+package.targets.append(.target(name: "DemoMinimal", dependencies: ["ImGui"], path: "Sources/Demos/Minimal"))
 
-let minimumDemo: (Product, Target) =
-(.executable(name: "DemoMinimal", targets: ["DemoMinimal"]),
- .target(name: "DemoMinimal", dependencies: ["ImGui"], path: "Sources/Demos/Minimal"))
-package.products.append(minimumDemo.0)
-package.targets.append(minimumDemo.1)
+#if canImport(Metal) && os(macOS)
+package.products.append(.executable(name: "DemoMetal-macOS", targets: ["DemoMetal"]))
+package.targets.append(.target(name: "DemoMetal", dependencies: ["ImGui"], path: "Sources/Demos/Metal"))
+#endif

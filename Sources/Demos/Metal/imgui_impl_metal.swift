@@ -303,10 +303,10 @@ class MetalContext {
                                              [0.0, 0.0, 1/(F-N), 0.0],
                                              [(R+L)/(L-R), (T+B)/(B-T), N/(F-N), 1.0])
 
-        commandEncoder.setVertexBytes(UnsafeRawPointer(&ortho_projection),
-                                      length: MemoryLayout<simd_float4x4>.size,
-                                      index: 1)
-
+        withUnsafeMutablePointer(to: &ortho_projection) {
+            commandEncoder.setVertexBytes($0, length: MemoryLayout<simd_float4x4>.size, index: 1)
+        }
+        
         commandEncoder.setRenderPipelineState(renderPipelineState)
 
         commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, index: 0)

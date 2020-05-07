@@ -16,10 +16,9 @@ var g_MouseCursorHidden: Bool = false
 func ImGui_ImplOSX_Init() {
     let io = ImGuiGetIO()!
     
-    
-    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DockingEnable.rawValue)
-    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleViewports.rawValue)
-    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleFonts.rawValue)
+    //io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DockingEnable.rawValue)
+    //io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleViewports.rawValue)
+    //io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleFonts.rawValue)
     
     // Setup back-end capabilities flags
     io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_HasMouseCursors.rawValue)         // We can honor GetMouseCursor() values (optional)
@@ -32,30 +31,31 @@ func ImGui_ImplOSX_Init() {
     
     // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
     let offset_for_function_keys: Int32 = 256 - 0xF700
-    var keyMap = CArray(&io.pointee.KeyMap)
     
-    keyMap[ImGuiKey_Tab]             = Int32(Character("\t").asciiValue!)
-    keyMap[ImGuiKey_LeftArrow]       = Int32(NSLeftArrowFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_RightArrow]      = Int32(NSRightArrowFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_UpArrow]         = Int32(NSUpArrowFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_DownArrow]       = Int32(NSDownArrowFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_PageUp]          = Int32(NSPageUpFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_PageDown]        = Int32(NSPageDownFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_Home]            = Int32(NSHomeFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_End]             = Int32(NSEndFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_Insert]          = Int32(NSInsertFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_Delete]          = Int32(NSDeleteFunctionKey) + offset_for_function_keys
-    keyMap[ImGuiKey_Backspace]       = 127
-    keyMap[ImGuiKey_Space]           = 32
-    keyMap[ImGuiKey_Enter]           = 13
-    keyMap[ImGuiKey_Escape]          = 27
-    keyMap[ImGuiKey_KeyPadEnter]     = 13
-    keyMap[ImGuiKey_A]               = Int32(Character("A").asciiValue!)
-    keyMap[ImGuiKey_C]               = Int32(Character("C").asciiValue!)
-    keyMap[ImGuiKey_V]               = Int32(Character("V").asciiValue!)
-    keyMap[ImGuiKey_X]               = Int32(Character("X").asciiValue!)
-    keyMap[ImGuiKey_Y]               = Int32(Character("Y").asciiValue!)
-    keyMap[ImGuiKey_Z]               = Int32(Character("Z").asciiValue!)
+    CArray<ImGuiKey>.write(&io.pointee.KeyMap) { keyMap in
+        keyMap[Int(ImGuiKey_Tab.rawValue)]             = Int32(Character("\t").asciiValue!)
+        keyMap[Int(ImGuiKey_LeftArrow.rawValue)]       = Int32(NSLeftArrowFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_RightArrow.rawValue)]      = Int32(NSRightArrowFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_UpArrow.rawValue)]         = Int32(NSUpArrowFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_DownArrow.rawValue)]       = Int32(NSDownArrowFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_PageUp.rawValue)]          = Int32(NSPageUpFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_PageDown.rawValue)]        = Int32(NSPageDownFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_Home.rawValue)]            = Int32(NSHomeFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_End.rawValue)]             = Int32(NSEndFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_Insert.rawValue)]          = Int32(NSInsertFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_Delete.rawValue)]          = Int32(NSDeleteFunctionKey) + offset_for_function_keys
+        keyMap[Int(ImGuiKey_Backspace.rawValue)]       = 127
+        keyMap[Int(ImGuiKey_Space.rawValue)]           = 32
+        keyMap[Int(ImGuiKey_Enter.rawValue)]           = 13
+        keyMap[Int(ImGuiKey_Escape.rawValue)]          = 27
+        keyMap[Int(ImGuiKey_KeyPadEnter.rawValue)]     = 13
+        keyMap[Int(ImGuiKey_A.rawValue)]               = Int32(Character("A").asciiValue!)
+        keyMap[Int(ImGuiKey_C.rawValue)]               = Int32(Character("C").asciiValue!)
+        keyMap[Int(ImGuiKey_V.rawValue)]               = Int32(Character("V").asciiValue!)
+        keyMap[Int(ImGuiKey_X.rawValue)]               = Int32(Character("X").asciiValue!)
+        keyMap[Int(ImGuiKey_Y.rawValue)]               = Int32(Character("Y").asciiValue!)
+        keyMap[Int(ImGuiKey_Z.rawValue)]               = Int32(Character("Z").asciiValue!)
+    }
     
     // Load cursors. Some of them are undocumented.
     g_MouseCursorHidden = false
@@ -126,12 +126,15 @@ func ImGui_ImplOSX_UpdateMouseCursor() {
 }
 
 func set<T>(_ tuple: inout (T, T, T, T, T), value: T, at index: Int) {
-    UnsafeMutableBufferPointer(start: &tuple.0, count: MemoryLayout.size(ofValue: tuple))[index] = value
+    withUnsafeMutablePointer(to: &tuple.0) {
+        $0[index] = value
+    }
 }
 
 func get<T>(value tuple: inout (T, T, T, T, T), at index: Int) -> T {
-    let ptr = UnsafeMutableBufferPointer(start: &tuple.0, count: MemoryLayout.size(ofValue: tuple))
-    return ptr[index]
+    return withUnsafeMutablePointer(to: &tuple.0) {
+        return $0[index]
+    }
 }
 
 @discardableResult func ImGui_ImplOSX_HandleEvent(_ event: NSEvent, _ view: NSView) -> Bool {
@@ -139,21 +142,21 @@ func get<T>(value tuple: inout (T, T, T, T, T), at index: Int) -> T {
     
     if event.type == .leftMouseDown || event.type == .rightMouseDown || event.type == .otherMouseDown {
         let button = event.buttonNumber
-        var mouseButtons = CArray(&io.pointee.MouseDown)
-        if button >= 0 && button < mouseButtons.count {
-            mouseButtons[button] = true
+        CArray<Bool>.write(&io.pointee.MouseDown) { mouseButtons in
+            if button >= 0 && button < mouseButtons.count {
+                mouseButtons[Int(button)] = true
+            }
         }
-        
         return io.pointee.WantCaptureMouse
     }
     
     if event.type == .leftMouseUp || event.type == .rightMouseUp || event.type == .otherMouseUp {
         let button = event.buttonNumber
-        var mouseButtons = CArray(&io.pointee.MouseDown)
-        if button >= 0 && button < mouseButtons.count {
-            mouseButtons[button] = false
+        CArray<Bool>.write(&io.pointee.MouseDown) { mouseButtons in
+            if button >= 0 && button < mouseButtons.count {
+                mouseButtons[button] = false
+            }
         }
-        
         return io.pointee.WantCaptureMouse
     }
     
@@ -247,8 +250,10 @@ func get<T>(value tuple: inout (T, T, T, T, T), at index: Int) -> T {
 func resetKeys() {
     let io = ImGuiGetIO()!
    
-    var keysDown = CArray(&io.pointee.KeysDown)
-    for n in 0..<keysDown.count {
-        keysDown[n] = false
+    CArray<Bool>.write(&io.pointee.KeysDown) { keysDown in
+        for n in 0..<keysDown.count {
+            keysDown[Int(n)] = false
+        }
     }
+    
 }

@@ -30,7 +30,7 @@ copyLibImGui:
 	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui_src)
 
 generateCInterface:
-	cd $(imgui_src)/generator && luajit ./generator.lua clang sdl glfw glut metal
+	cd $(imgui_src)/generator && luajit ./generator.lua gcc true sdl glfw glut metal
 
 buildCImGui: updateCLibImGui generateCInterface copyLibImGui
 

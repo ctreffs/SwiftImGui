@@ -63,73 +63,25 @@ public func withArrayOfCStringsBasePointer<Result>(_ strings: [String], _ body: 
 }
 
 /// https://forums.developer.apple.com/thread/72120
-public struct CArray<T> {
-    @usableFromInline var ptr: UnsafeMutableBufferPointer<T>
-
-    public init(_ start: inout T, _ count: Int) {
-        ptr = UnsafeMutableBufferPointer(start: &start, count: count)
-    }
-
-    public var count: Int {
-        ptr.count
-    }
-
-    public subscript<I>(index: I) -> T where I: FixedWidthInteger {
-        get {
-            ptr[Int(index)]
-        }
-        set {
-            ptr[Int(index)] = newValue
+/// https://forums.swift.org/t/fixed-size-array-hacks/32962/4
+/// https://github.com/stephentyrone/swift-numerics/blob/static-array/Sources/StaticArray/StaticArray.swift
+public enum CArray<T> {
+    @discardableResult
+    @_transparent
+    public static func write<C, O>(_ cArray: inout C, _ body: (UnsafeMutableBufferPointer<T>) throws -> O) rethrows -> O {
+        try withUnsafeMutablePointer(to: &cArray) {
+            try body(UnsafeMutableBufferPointer<T>(start: UnsafeMutableRawPointer($0).assumingMemoryBound(to: T.self),
+                                                   count: (MemoryLayout<C>.stride / MemoryLayout<T>.stride)))
         }
     }
 
-    public subscript<R>(representable: R) -> T where R: RawRepresentable, R.RawValue: FixedWidthInteger {
-        get {
-            self[representable.rawValue]
+    @discardableResult
+    @_transparent
+    public static func read<C, O>(_ cArray: C, _ body: (UnsafeBufferPointer<T>) throws -> O) rethrows -> O {
+        try withUnsafePointer(to: cArray) {
+            try body(UnsafeBufferPointer<T>(start: UnsafeRawPointer($0).assumingMemoryBound(to: T.self),
+                                            count: (MemoryLayout<C>.stride / MemoryLayout<T>.stride)))
         }
-        set {
-            self[representable.rawValue] = newValue
-        }
-    }
-}
-
-// swiftlint:disable large_tuple
-extension CArray {
-    public init(_ cArray: inout (T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    public init(_ cArray: inout (T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    public init(_ cArray: inout (T, T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    public init(_ cArray: inout (T, T, T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    public init(_ cArray: inout (T, T, T, T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    public init(_ cArray: inout (T, T, T, T, T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    public init(_ cArray: inout (T, T, T, T, T, T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    public init(_ cArray: inout (T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
-    }
-
-    // swiftlint:disable:next line_length
-    public init(_ cArray: inout (T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T)) {
-        self.init(&cArray.0, MemoryLayout.size(ofValue: cArray))
     }
 }
 

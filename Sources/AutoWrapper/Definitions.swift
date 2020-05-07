@@ -63,13 +63,17 @@ public struct FunctionDef: Decodable {
             }
         .joined()
 
-        let prefix: String
+        var prefix: String
         let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
 
         if let namespace = self.namespace, !namespace.isEmpty {
             prefix = namespace
         } else {
             prefix = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
+        }
+
+        if Exceptions.stripPrefix.contains(prefix) {
+            prefix = ""
         }
 
         let combinedName = prefix + name + suffix

@@ -101,7 +101,7 @@ struct FunctionBodyRenderer {
             return [.line("&\(arg.escapedName)")]
 
         case let .arrayFixedSize(count) where arg.type.isConst == false:
-            if arg.type.type.isNumber && count < 5 {
+            if arg.type.type.isNumber && count < 5 || arg.type.type == .custom("ImVec2") {
                 // SIMD vector
                 return [
                     .preLine("withUnsafeMutablePointer(to: &\(arg.escapedName)) { \(arg.name)MutPtr in"),

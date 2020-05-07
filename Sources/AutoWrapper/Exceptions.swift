@@ -29,13 +29,20 @@ public enum Exceptions {
         "ImVector_shrink",
         "ImVector_size",
         "ImVector_size_in_bytes",
-        "ImVector_swap"
+        "ImVector_swap",
+        "igImFontAtlasBuildMultiplyRectAlpha8",
+        "igImFontAtlasBuildMultiplyCalcLookupTable",
+        "igImTriangleBarycentricCoords"
     ]
 
     /// causes "Use of undeclared type '...'" compiler error.
     public static let undeclardTypes: [String: Declaration] = [
         "ImChunkStream": Declaration(name: "ImChunkStream", typealiasType: "OpaquePointer"),
         "ImPool": Declaration(name: "ImPool", typealiasType: "OpaquePointer")
+    ]
+
+    public static let stripPrefix: Set<String> = [
+        "ig"
     ]
 }
 

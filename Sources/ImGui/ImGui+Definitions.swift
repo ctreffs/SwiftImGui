@@ -2303,10 +2303,6 @@ public typealias ImGuiContext = OpaquePointer
 	return String(cString: ImGuiTextBuffer_begin(this))
 }
 
-@inlinable public func ImGuiTextBufferCStr(_ this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> String? {
-	return String(cString: ImGuiTextBuffer_c_str(this))
-}
-
 @inlinable public func ImGuiTextBufferClear(_ this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> Void {
 	return ImGuiTextBuffer_clear(this)
 }
@@ -2325,6 +2321,10 @@ public typealias ImGuiContext = OpaquePointer
 
 @inlinable public func ImGuiTextBufferSize(_ this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> Int32 {
 	return ImGuiTextBuffer_size(this)
+}
+
+@inlinable public func ImGuiTextBuffercStr(_ this: UnsafeMutablePointer<ImGuiTextBuffer>!) -> String? {
+	return String(cString: ImGuiTextBuffer_c_str(this))
 }
 
 @inlinable public func ImGuiTextColoredV(_ col: ImVec4, _ fmt: String?, _ args: CVarArg...) -> Void {
@@ -2519,9 +2519,5 @@ public typealias ImGuiContext = OpaquePointer
 	`prefix`!.withCString { prefixPtr in
 		return igValueUint(prefixPtr,v)
 	}
-}
-
-@inlinable public func ImVectorResizeNil(_ this: UnsafeMutablePointer<ImVector>!, _ new_size: Int32) -> Void {
-	return ImVector_resizeNil(this,new_size)
 }
 

@@ -1,7 +1,7 @@
 # Wrap cimgui
 
-For the time beeing it is not possible to wrap cimgui out of the box fully automatically.
-Some manual steps are neccessary.
+For the time beeing it is not possible to wrap cimgui out of the box fully automated.
+Some manual steps are stil neccessary.
 This file serves more as a reminder to me, so don't expect it to be complete.
 
 ### Steps
@@ -17,9 +17,9 @@ This file serves more as a reminder to me, so don't expect it to be complete.
 6. Commit updated CImGui files
 7. Repeat until no compile errors:
 	1. Add exceptions to `Sources/AutoWrapper/Exceptions.swift`
-	2. Refactor stuff in AutoGenerator if neccessary.
+	2. Extend stuff in AutoGenerator if neccessary.
 	3. Run `make lint`
 	4. Run `make wrapLibImGui` (builds the AutoGenerator and generates Swift files)
-8. Build and run demos
-9. Update README
+8. Build, fix and run demos
+9. Update README.md
 10. Commit, push, tag, release 

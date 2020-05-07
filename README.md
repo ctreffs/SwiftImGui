@@ -6,7 +6,7 @@
 [![platforms](https://img.shields.io/badge/platforms-linux-brightgreen.svg)](#)
 
 <p align="center">
-	<img src="docs/swiftimgui.gif" height="300" alt="swiftimgui-gif"/>
+	<img src="docs/swiftimgui.gif" width="100%" alt="swiftimgui-gif"/>
 </p>   
 
 This is a **lightweight**, **auto-generated** and **thin** Swift wrapper around the popular and excellent [**dear imgui**](https://github.com/ocornut/imgui) library.  

@@ -47,15 +47,19 @@ public struct FunctionDef: Decodable {
     }
 
     public var encodedFuncname: String {
-        guard let range = ov_cimguiname.range(of: funcname) else {
+        guard let range = ov_cimguiname.range(of: funcname), !range.isEmpty else {
             assertionFailure("Original name should contain funcname")
             return funcname
         }
 
         let name: String = funcname.components(separatedBy: "_")
             .map {
-                // uppercase first character
-                $0.replacingCharacters(in: $0.startIndex..<$0.index(after: $0.startIndex), with: $0.prefix(1).uppercased())
+                if $0.count > 1 {
+                    // uppercase first character
+                    return $0.replacingCharacters(in: $0.startIndex..<$0.index(after: $0.startIndex), with: $0.prefix(1).uppercased())
+                } else {
+                    return $0
+                }
             }
         .joined()
 

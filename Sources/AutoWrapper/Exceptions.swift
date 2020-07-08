@@ -12,6 +12,10 @@ public enum Exceptions {
     ///
     /// causes "Use of unresolved identifier '...'" compiler error.
     public static let unresolvedIdentifier: Set<String> = [
+        "igImFontAtlasBuildMultiplyCalcLookupTable",
+        "igImFontAtlasBuildMultiplyRectAlpha8",
+        "igImTriangleBarycentricCoords",
+        "igDockBuilderCopyDockSpace",
         "ImChunkStream_clear",
         "ImChunkStream_empty",
         "ImChunkStream_size",
@@ -29,10 +33,7 @@ public enum Exceptions {
         "ImVector_shrink",
         "ImVector_size",
         "ImVector_size_in_bytes",
-        "ImVector_swap",
-        "igImFontAtlasBuildMultiplyRectAlpha8",
-        "igImFontAtlasBuildMultiplyCalcLookupTable",
-        "igImTriangleBarycentricCoords"
+        "ImVector_swap"
     ]
 
     /// causes "Use of undeclared type '...'" compiler error.

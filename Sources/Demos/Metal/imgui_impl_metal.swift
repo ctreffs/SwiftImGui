@@ -26,6 +26,9 @@ func ImGui_ImplMetal_Init(_ device: MTLDevice) -> Bool {
     }
 
     // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
+    io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_HasMouseHoveredViewport.rawValue)
+    io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_PlatformHasViewports.rawValue)
+    io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasViewports.rawValue)
     io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_RendererHasVtxOffset.rawValue)
 
     ImGui_ImplMetal_CreateDeviceObjects(device)

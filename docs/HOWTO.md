@@ -16,6 +16,14 @@ This file serves more as a reminder to me, so don't expect it to be complete.
 3. Commit updated submodule pin
 4. Run `make generateCInterface` (generates new cimgui.* files)
 5. Run `make copyLibImGui` (copies generated files into Sources/CImGui/)
+6. Recompile
+	7. If anything does not compile reset changes in `cimgui.h` to:
+
+		``` 
+			+#ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS.
+			-#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+		```
+
 6. Commit updated CImGui files
 7. Repeat until no compile errors:
 	1. Add exceptions to `Sources/AutoWrapper/Exceptions.swift`

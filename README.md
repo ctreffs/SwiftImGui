@@ -38,7 +38,7 @@ import PackageDescription
 let package = Package(
     name: "YourPackageName",
     dependencies: [
-        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.2.0")
+        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.77.0")
     ],
     targets: [
         .target(

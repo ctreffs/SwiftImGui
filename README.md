@@ -75,7 +75,7 @@ for n in 0..<20 {
     ImGuiNewFrame()
     var f: Float = 0.0
     ImGuiTextV("Hello, world!")
-    ImGuiSliderFloat("float", &f, 0.0, 1.0, "", 1)
+    ImGuiSliderFloat("float", &f, 0.0, 1.0, nil, 1)
     ImGuiTextV("Application average %.3f ms/frame (%.1f FPS)", 1000.0 / io.pointee.Framerate, io.pointee.Framerate)
     ImGuiShowDemoWindow(nil)
     ImGuiRender()

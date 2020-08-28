@@ -62,6 +62,15 @@ public func withArrayOfCStringsBasePointer<Result>(_ strings: [String], _ body: 
     }
 }
 
+extension Optional where Wrapped == String {
+    @inlinable public func withOptionalCString<Result>(_ body: (UnsafePointer<Int8>?) throws -> Result) rethrows -> Result {
+        guard let string = self else {
+            return try body(nil)
+        }
+        return try string.withCString(body)
+    }
+}
+
 /// https://forums.developer.apple.com/thread/72120
 /// https://forums.swift.org/t/fixed-size-array-hacks/32962/4
 /// https://github.com/stephentyrone/swift-numerics/blob/static-array/Sources/StaticArray/StaticArray.swift

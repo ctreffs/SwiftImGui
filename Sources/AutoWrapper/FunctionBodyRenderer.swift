@@ -126,7 +126,7 @@ struct FunctionBodyRenderer {
         case .pointer where arg.type.type == .char && arg.type.isConst == true:
             // const char*
             return [
-                .preLine("\(arg.escapedName)!.withCString { \(arg.name)Ptr in"),
+                .preLine("\(arg.escapedName).withOptionalCString { \(arg.name)Ptr in"),
                 .line("\(arg.name)Ptr"),
                 .postLine("}")
             ]
@@ -134,7 +134,7 @@ struct FunctionBodyRenderer {
         case .pointer where arg.type.type == .char && arg.type.isConst == false:
             // char*
             return [
-                .preLine("\(arg.escapedName)!.withCString { \(arg.name)Ptr in"),
+                .preLine("\(arg.escapedName).withOptionalCString { \(arg.name)Ptr in"),
                 .line("UnsafeMutablePointer(mutating: \(arg.name)Ptr)"),
                 .postLine("}")
             ]

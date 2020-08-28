@@ -30,8 +30,9 @@ public enum Exceptions {
         "ImVector_size",
         "ImVector_size_in_bytes",
         "ImVector_swap",
-        "igImFontAtlasBuildMultiplyRectAlpha8",
         "igImFontAtlasBuildMultiplyCalcLookupTable",
+        "igImFontAtlasBuildMultiplyRectAlpha8",
+        "igImFontAtlasBuildRender1bppRectFromString",
         "igImTriangleBarycentricCoords"
     ]
 

@@ -186,7 +186,7 @@ public struct DataType: Decodable {
         }
     }
 
-    public func toString(_ context: Context, wrapped: Bool = true) -> String {
+    public func toString(_ context: Context, wrapped: Bool = true, defaultArg: Bool = false) -> String {
         let out: String
 
         switch type {
@@ -198,6 +198,8 @@ public struct DataType: Decodable {
             out = "Int32"
         case .uint:
             out = "UInt32"
+        case .char where meta == .pointer && defaultArg && isConst:
+            out = "String? = nil"
         case .char where meta == .pointer:
             out = "String?"
         case .char:

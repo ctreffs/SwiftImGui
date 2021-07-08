@@ -12,9 +12,7 @@ extension Array {
     }
 }
 /// Compute the prefix sum of `seq`.
-public func scan<
-    S: Sequence, U
-    >(_ seq: S, _ initial: U, _ combine: (U, S.Iterator.Element) -> U) -> [U] {
+public func scan<S: Sequence, U>(_ seq: S, _ initial: U, _ combine: (U, S.Iterator.Element) -> U) -> [U] {
     var result: [U] = []
     result.reserveCapacity(seq.underestimatedCount)
     var runningResult = initial
@@ -101,7 +99,7 @@ public func IM_OFFSETOF<T>(_ member: PartialKeyPath<T>) -> Int {
 
 /// Size of a static C-style array. Don't use on pointers!
 public func IM_ARRAYSIZE<T>(_ cTupleArray: T) -> Int {
-    //#define IM_ARRAYSIZE(_ARR)          ((int)(sizeof(_ARR)/sizeof(*_ARR)))
+    // #define IM_ARRAYSIZE(_ARR)          ((int)(sizeof(_ARR)/sizeof(*_ARR)))
     let mirror = Mirror(reflecting: cTupleArray)
     precondition(mirror.displayStyle == Mirror.DisplayStyle.tuple, "IM_ARRAYSIZE may only be applied to C array tuples")
     return mirror.children.count

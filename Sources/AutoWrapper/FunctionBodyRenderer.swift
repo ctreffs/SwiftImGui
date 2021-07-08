@@ -105,17 +105,17 @@ struct FunctionBodyRenderer {
                 // SIMD vector
                 return [
                     .preLine("withUnsafeMutablePointer(to: &\(arg.escapedName)) { \(arg.name)MutPtr in"),
-                    .preLine("\(arg.name)MutPtr.withMemoryRebound(to: \(arg.type.toString(.argSwift, wrapped: false)).self, capacity: \(count)) { \(arg.name)Ptr in"),
+                    .preLine("\(arg.name)MutPtr.withMemoryRebound(to: \(arg.type.toString(arg, .argSwift, wrapped: false)).self, capacity: \(count)) { \(arg.name)Ptr in"),
                     .line("\(arg.name)Ptr"),
                     .postLine("}"),
                     .postLine("}")
                 ]
             } else {
-                return [.line("UnsafeMutableBufferPointer<\(arg.type.toString(.argSwift, wrapped: false))>(start: &\(arg.escapedName).0, count: \(count)).baseAddress!")]
+                return [.line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: &\(arg.escapedName).0, count: \(count)).baseAddress!")]
             }
 
         case let .arrayFixedSize(count):
-            return [.line("UnsafeMutableBufferPointer<\(arg.type.toString(.argSwift, wrapped: false))>(start: &\(arg.escapedName).0, count: \(count)).baseAddress!")]
+            return [.line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: &\(arg.escapedName).0, count: \(count)).baseAddress!")]
 
         case .pointer where arg.type.isConst == false && arg.type.type == .void:
             return [.line(arg.escapedName)]

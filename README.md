@@ -1,8 +1,11 @@
 # Swift ImGui
-[![Build Status](https://travis-ci.com/ctreffs/SwiftImGui.svg?branch=master)](https://travis-ci.com/ctreffs/SwiftImGui)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)  
+
+[![macOS](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-macos.yml/badge.svg)](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-macos.yml)
+[![Linux](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-linux.yml)
+[![Windows](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-windows.yml/badge.svg)](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-windows.yml)
+[![platform-compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fctreffs%2FSwiftImGui%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ctreffs/SwiftImGui)   
 [![swift-version-compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fctreffs%2FSwiftImGui%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/ctreffs/SwiftImGui)
-[![platform-compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fctreffs%2FSwiftImGui%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ctreffs/SwiftImGui)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)  
 
 <p align="center">
 	<img src="docs/swiftimgui.gif" width="100%" alt="swiftimgui-gif"/>
@@ -21,23 +24,22 @@ These instructions will get your copy of the project up and running on your loca
 
 * [Swift Package Manager (SPM)](https://github.com/apple/swift-package-manager)
 * [Swiftlint](https://github.com/realm/SwiftLint) for linting - (optional)
-* [SwiftEnv](https://swiftenv.fuller.li/) for Swift version management - (optional)
 
 ### 💻 Installing
 
-Swift ImGui is available for all platforms that support [Swift 5.1](https://swift.org/) and higher and the [Swift Package Manager (SPM)](https://github.com/apple/swift-package-manager).
+Swift ImGui is available for all platforms that support [Swift 5.3](https://swift.org/) and higher and the [Swift Package Manager (SPM)](https://github.com/apple/swift-package-manager).
 
 Extend the following lines in your `Package.swift` file or use it to create a new project.
 
 ```swift
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
     name: "YourPackageName",
     dependencies: [
-        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.78.0")
+        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.82.0")
     ],
     targets: [
         .target(
@@ -94,8 +96,8 @@ If you are interested in contributing please feel free to do so!
 
 Things that need to be done among others are:
 
-- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 81 'invalid' functions that will not be wrapped. 799 will be wrapped properly.)
-- [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
+- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 105 'invalid' functions that will not be wrapped. 927 will be wrapped properly.)
+- [ ] Some functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
 - [ ] Find a solution for manual adjustments in cimgui generator template
 - [ ] Write some more tests
 

@@ -35,7 +35,7 @@ public struct FunctionDef: Decodable {
     public let stname: String
     public let argsT: [ArgsT]
     public let ret: DataType?
-    public let templated: Bool = false
+    public let templated = false
     public let namespace: String?
 
     @inlinable public var isValid: Bool {
@@ -65,7 +65,7 @@ public struct FunctionDef: Decodable {
             prefix = ""
         }
 
-        //let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
+        // let suffix = String(ov_cimguiname[range.upperBound..<ov_cimguiname.endIndex])
         let combinedName = prefix + name
         return combinedName.replacingOccurrences(of: "_", with: "")
     }
@@ -108,7 +108,7 @@ public struct FunctionDef: Decodable {
     public var toSwift: String {
         // \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
         return """
-        \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
+        \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(nil, .ret)) {
         \(FunctionBodyRenderer.render(ov_cimguiname, argsT, returnType))
         }
         """

@@ -2,77 +2,56 @@ imgui_src := 3rdparty/cimgui
 c_imgui_src := Sources/CImGui
 swift_imgui_src := Sources/ImGui
 release_dir := .build/release
+autowrapper_assets := Sources/AutoWrapper/Assets
 
+.PHONY: lint
 lint:
 	swiftlint autocorrect --format
 	swiftlint lint --quiet
 
-lintErrorOnly:
-	@swiftlint autocorrect --format --quiet
-	@swiftlint lint --quiet | grep error
+.PHONY: setupEnv
+setupEnv:
+	brew install luajit
 
-genLinuxTests:
-	swift test --generate-linuxmain
-	swiftlint autocorrect --format --path Tests/
+.PHONY: build-release
+build-release:
+	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
 
-test: genLinuxTests
-	swift test
+.PHONY: test
+test:
+	swift test -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
 
-submodule:
-	git submodule update --init --recursive
+.PHONY: generateCInterface
+generateCInterface:
+	cd $(imgui_src)/generator && luajit ./generator.lua gcc "internal" glfw glut metal sdl
 
-updateCLibImGui: submodule
-
+.PHONY: copyLibImGui
 copyLibImGui:
+	cp $(imgui_src)/cimgui.h $(c_imgui_src)/include
+	cp $(imgui_src)/cimgui.cpp $(c_imgui_src)
 	cp $(imgui_src)/imgui/*.h $(c_imgui_src)/imgui
 	cp $(imgui_src)/imgui/*.cpp $(c_imgui_src)/imgui
-	cp $(imgui_src)/generator/output/cimgui.h $(c_imgui_src)/include
-	cp $(imgui_src)/generator/output/cimgui.cpp $(c_imgui_src)
+	cp $(imgui_src)/generator/output/definitions.json $(autowrapper_assets)/definitions.json
 
-generateCInterface:
-	cd $(imgui_src)/generator && luajit ./generator.lua gcc true sdl glfw glut metal
-
-buildCImGui: updateCLibImGui generateCInterface copyLibImGui
-
+.PHONY: buildAutoWrapper
 buildAutoWrapper:
 	swift build -c release --product AutoWrapper
 
-buildRelease:
-	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage
-
-runCI:
-	swift package reset
-	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
-	swift test -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
-
+.PHONY: wrapLibImGui
 wrapLibImGui: buildAutoWrapper
-	$(release_dir)/AutoWrapper $(imgui_src)/generator/output/definitions.json $(swift_imgui_src)/ImGui+Definitions.swift
-	#$(release_dir)/AutoWrapper $(imgui_src)/generator/output/impl_definitions.json $(swift_imgui_src)/ImGui+ImplDefinitions.swift
+	$(release_dir)/AutoWrapper
 
-clean:
-	swift package reset
-	rm -rdf .swiftpm/xcode
-	rm -rdf .build/
-	rm Package.resolved
-	rm .DS_Store
+.PHONY: applyFixIfDefsPatch
+applyFixIfDefsPatch: 
+	git apply patch_fix_ifdefs.diff
+	
+.PHONY: resetSubmodule
+resetSubmodule:
+	cd $(imgui_src) && git checkout -- .
 
-cleanArtifacts:
-	swift package clean
+.PHONY: update
+update: generateCInterface copyLibImGui wrapLibImGui applyFixIfDefsPatch resetSubmodule
 
-latest:
-	swift package update
-
-resolve:
-	swift package resolve
-
-genXcode:
-	swift package generate-xcodeproj --enable-code-coverage --skip-extra-files 
-
-
-genXcodeOpen: genXcode
-	open *.xcodeproj
-
-precommit: lint genLinuxTests
-
+.PHONY: testReadme
 testReadme:
 	markdown-link-check -p -v ./README.md

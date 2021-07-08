@@ -7,6 +7,12 @@
 
 import CImGui
 
+extension ImVec1: Equatable {
+    public static func == (lhs: ImVec1, rhs: ImVec1) -> Bool {
+        lhs.x == rhs.x
+    }
+}
+
 extension ImVec2: Equatable {
     public static func == (lhs: ImVec2, rhs: ImVec2) -> Bool {
         lhs.x == rhs.x &&

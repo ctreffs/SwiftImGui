@@ -13,14 +13,12 @@ lint:
 setupEnv:
 	brew install luajit
 
-.PHONY: buildRelease
-buildRelease:
-	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage
-
-.PHONY: runCI
-runCI:
-	swift package reset
+.PHONY: build-release
+build-release:
 	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
+
+.PHONY: test
+test:
 	swift test -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage -Xcc -Wno-modules-import-nested-redundant -Xcc -Wno-return-type-c-linkage
 
 .PHONY: generateCInterface

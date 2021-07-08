@@ -1,0 +1,48 @@
+name: macOS
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  macos-test-build-release-xcode:
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        xcode: ["12.4"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Select Xcode ${{ matrix.xcode }}
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+      - name: Test
+        run: make test
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+      - name: Upload test artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: test-artifacts-${{ matrix.xcode }}-${{ github.run_id }}
+          path: |
+            .build/**/*.json
+            .build/**/*.xctest
+      - name: Build Release
+        run: make build-release
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+      - name: Upload build artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: build-artifacts-${{ matrix.xcode }}-${{ github.run_id }}
+          path: |
+            *.lcov
+            .build/*.yaml
+            .build/**/*.a
+            .build/**/*.so
+            .build/**/*.dylib
+            .build/**/*.dSYM 
+            .build/**/*.json

@@ -46,9 +46,13 @@ wrapLibImGui: buildAutoWrapper
 .PHONY: applyFixIfDefsPatch
 applyFixIfDefsPatch: 
 	git apply patch_fix_ifdefs.diff
+	
+.PHONY: resetSubmodule
+resetSubmodule:
+	cd $(imgui_src) && git checkout -- .
 
 .PHONY: update
-update: generateCInterface copyLibImGui wrapLibImGui applyFixIfDefsPatch
+update: generateCInterface copyLibImGui wrapLibImGui applyFixIfDefsPatch resetSubmodule
 
 .PHONY: testReadme
 testReadme:

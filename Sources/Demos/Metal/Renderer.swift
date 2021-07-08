@@ -60,7 +60,7 @@ extension Renderer: MTKViewDelegate {
             }
 
             renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: Double(clear_color.x),
-                                                                                green: Double(clear_color.x),
+                                                                                green: Double(clear_color.y),
                                                                                 blue: Double(clear_color.z),
                                                                                 alpha: 1.0)
 

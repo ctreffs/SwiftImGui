@@ -21,7 +21,6 @@ These instructions will get your copy of the project up and running on your loca
 
 * [Swift Package Manager (SPM)](https://github.com/apple/swift-package-manager)
 * [Swiftlint](https://github.com/realm/SwiftLint) for linting - (optional)
-* [SwiftEnv](https://swiftenv.fuller.li/) for Swift version management - (optional)
 
 ### 💻 Installing
 
@@ -37,7 +36,7 @@ import PackageDescription
 let package = Package(
     name: "YourPackageName",
     dependencies: [
-        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.78.0")
+        .package(url: "https://github.com/ctreffs/SwiftImGui.git", from: "1.82.0")
     ],
     targets: [
         .target(
@@ -94,8 +93,8 @@ If you are interested in contributing please feel free to do so!
 
 Things that need to be done among others are:
 
-- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 81 'invalid' functions that will not be wrapped. 799 will be wrapped properly.)
-- [ ] Some vector functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
+- [ ] Extend the AutoWrapper to wrap more cimgui functions (currently there are 105 'invalid' functions that will not be wrapped. 927 will be wrapped properly.)
+- [ ] Some functions are not available via the c interface - see `Sources/AutoWrapper/Exceptions.swift`
 - [ ] Find a solution for manual adjustments in cimgui generator template
 - [ ] Write some more tests
 

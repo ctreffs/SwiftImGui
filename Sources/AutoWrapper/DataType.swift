@@ -45,6 +45,7 @@ public struct DataType: Decodable {
         if let unsigned = string.range(of: "unsigned") {
             string.removeSubrange(unsigned)
             string = string.replacingOccurrences(of: "int", with: "uint")
+            string = string.replacingOccurrences(of: "char", with: "uint8")
             string = string.trimmingCharacters(in: .whitespaces)
         }
 
@@ -186,7 +187,7 @@ public struct DataType: Decodable {
         }
     }
 
-    public func toString(_ context: Context, wrapped: Bool = true, defaultArg: Bool = false) -> String {
+    public func toString(_ argsT: ArgsT?, _ context: Context, wrapped: Bool = true, defaultArg: Bool = false) -> String {
         let out: String
 
         switch type {
@@ -196,7 +197,9 @@ public struct DataType: Decodable {
             out = "Bool"
         case .int:
             out = "Int32"
-        case .uint:
+        case .uint8:
+            out = "UInt8"
+        case .uint32:
             out = "UInt32"
         case .char where meta == .pointer && defaultArg && isConst:
             out = "String? = nil"
@@ -252,7 +255,8 @@ extension DataType {
         case void
         case bool
         case int
-        case uint
+        case uint8
+        case uint32
         case char
         case float
         case double
@@ -273,8 +277,10 @@ extension DataType {
                 self = .bool
             case "int":
                 self = .int
+            case "uint8":
+                self = .uint8
             case "uint":
-                self = .uint
+                self = .uint32
             case "char":
                 self = .char
             case "float":
@@ -296,7 +302,7 @@ extension DataType {
         @inlinable public var isNumber: Bool {
             switch self {
             case .int,
-                 .uint,
+                 .uint32,
                  .float,
                  .double:
                 return true

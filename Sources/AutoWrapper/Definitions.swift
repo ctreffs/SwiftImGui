@@ -108,7 +108,7 @@ public struct FunctionDef: Decodable {
     public var toSwift: String {
         // \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
         return """
-        \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(.ret)) {
+        \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(nil, .ret)) {
         \(FunctionBodyRenderer.render(ov_cimguiname, argsT, returnType))
         }
         """

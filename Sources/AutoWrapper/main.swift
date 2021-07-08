@@ -7,6 +7,7 @@
 
 import struct Foundation.URL
 import struct Foundation.Data
+import class Foundation.Bundle
 
 public struct ConversionError: Swift.Error {
     public let localizedDescription: String
@@ -30,9 +31,11 @@ if CommandLine.arguments.count == 3 {
     kInputFiles = [CommandLine.arguments[1]]
     kOutputFiles = [CommandLine.arguments[2]]
 } else {
-    let src = getDirectory() + "/../../3rdparty/cimgui/generator/output/"
+    guard let definitions = Bundle.module.path(forResource: "definitions", ofType: "json") else {
+        fatalError("definitions.json asset missing!")
+    }
+    kInputFiles = [definitions]
     let dest = getDirectory() + "/../ImGui/"
-    kInputFiles = ["definitions.json"].map { "\(src)\($0)" }
     kOutputFiles = ["ImGui+Definitions.swift"].map { "\(dest)\($0)" }
 }
 

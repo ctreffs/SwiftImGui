@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 import PackageDescription
 
 var package = Package(
@@ -9,8 +9,14 @@ var package = Package(
     ],
     targets: [
         .target(name: "ImGui", dependencies: ["CImGui"]),
-        .target(name: "CImGui", path: "Sources/CImGui", cxxSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")]),
-        .target(name: "AutoWrapper"),
+        .target(name: "CImGui",
+                path: "Sources/CImGui",
+                cSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")],
+                cxxSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")]),
+        .target(name: "AutoWrapper",
+                resources: [
+                    .copy("Assets/definitions.json")
+                ]),
         .testTarget(name: "ImGuiTests", dependencies: ["ImGui"])
     ],
     cxxLanguageStandard: .cxx11

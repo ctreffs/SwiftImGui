@@ -1,8 +1,11 @@
 # Swift ImGui
-[![Build Status](https://travis-ci.com/ctreffs/SwiftImGui.svg?branch=master)](https://travis-ci.com/ctreffs/SwiftImGui)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)  
+
+[![macOS](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-macos.yml/badge.svg)](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-macos.yml)
+[![Linux](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-linux.yml)
+[![Windows](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-windows.yml/badge.svg)](https://github.com/ctreffs/SwiftImGui/actions/workflows/ci-windows.yml)
+[![platform-compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fctreffs%2FSwiftImGui%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ctreffs/SwiftImGui)   
 [![swift-version-compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fctreffs%2FSwiftImGui%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/ctreffs/SwiftImGui)
-[![platform-compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fctreffs%2FSwiftImGui%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/ctreffs/SwiftImGui)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)  
 
 <p align="center">
 	<img src="docs/swiftimgui.gif" width="100%" alt="swiftimgui-gif"/>

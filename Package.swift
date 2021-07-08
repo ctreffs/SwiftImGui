@@ -4,8 +4,7 @@ import PackageDescription
 var package = Package(
     name: "ImGui",
     products: [
-        .library(name: "ImGui", targets: ["ImGui"]),
-        .library(name: "CImGui", targets: ["CImGui"])
+        .library(name: "ImGui", targets: ["ImGui"])
     ],
     targets: [
         .target(name: "ImGui", dependencies: ["CImGui"]),
@@ -19,6 +18,7 @@ var package = Package(
                 ]),
         .testTarget(name: "ImGuiTests", dependencies: ["ImGui"])
     ],
+    cLanguageStandard: .c11,
     cxxLanguageStandard: .cxx11
 )
 

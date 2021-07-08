@@ -13,8 +13,6 @@ lint:
 setupEnv:
 	brew install luajit
 
-
-
 .PHONY: buildRelease
 buildRelease:
 	swift build -c release -Xcxx -Wno-modules-import-nested-redundant -Xcxx -Wno-return-type-c-linkage

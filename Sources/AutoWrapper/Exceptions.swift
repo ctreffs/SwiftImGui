@@ -12,6 +12,7 @@ public enum Exceptions {
     ///
     /// causes "Use of unresolved identifier '...'" compiler error.
     public static let unresolvedIdentifier: Set<String> = [
+        "igDockBuilderCopyDockSpace",
         "igErrorCheckEndFrameRecover",
         "igImFontAtlasBuildMultiplyCalcLookupTable",
         "igImFontAtlasBuildMultiplyRectAlpha8",

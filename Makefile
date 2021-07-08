@@ -43,8 +43,12 @@ buildAutoWrapper:
 wrapLibImGui: buildAutoWrapper
 	$(release_dir)/AutoWrapper
 
+.PHONY: applyFixIfDefsPatch
+applyFixIfDefsPatch: 
+	git apply patch_fix_ifdefs.diff
+
 .PHONY: update
-update: generateCInterface copyLibImGui wrapLibImGui
+update: generateCInterface copyLibImGui wrapLibImGui applyFixIfDefsPatch
 
 .PHONY: testReadme
 testReadme:

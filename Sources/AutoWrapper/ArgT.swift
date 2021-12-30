@@ -52,6 +52,10 @@ public struct ArgsT: Decodable {
     public let ret: String?
     public let signature: String?
 
+    private let escapingCallbackExceptions: Set<String> = [
+        "ImGuiErrorLogCallback"
+    ]
+
     public enum Keys: String, CodingKey {
         case name
         case type
@@ -83,7 +87,8 @@ public struct ArgsT: Decodable {
 
     public var toSwift: String {
         switch self.type.type {
-        case let .custom(name) where name.hasSuffix("Callback") && escapedName.contains("callback"):
+        case let .custom(name) where name.hasSuffix("Callback") && escapedName.contains("callback")
+                && !escapingCallbackExceptions.contains(name):
             return "_ \(escapedName): @escaping \(self.type.toString(self, .argSwift))"
         default:
             return "_ \(escapedName): \(self.type.toString(self, .argSwift, defaultArg: true))"

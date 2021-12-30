@@ -11,6 +11,10 @@ public typealias ImPool = OpaquePointer
 public typealias ImSpanAllocator = OpaquePointer
 
 
+@inlinable public func ImAbs(_ x: Int32) -> Int32 {
+	return igImAbs_Int(x)
+}
+
 @inlinable public func ImAbs(_ x: Float) -> Float {
 	return igImAbs_Float(x)
 }
@@ -97,6 +101,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImDot(_ a: ImVec2, _ b: ImVec2) -> Float {
 	return igImDot(a,b)
+}
+
+@inlinable public func ImDrawCmdGetTexID(_ this: UnsafeMutablePointer<ImDrawCmd>!) -> ImTextureID {
+	return ImDrawCmd_GetTexID(this)
 }
 
 @inlinable public func ImDrawDataBuilderClear(_ this: UnsafeMutablePointer<ImDrawDataBuilder>!) -> Void {
@@ -403,6 +411,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	return ImDrawListSplitter_SetCurrentChannel(this,draw_list,channel_idx)
 }
 
+@inlinable public func ImDrawListTryMergeDrawCmds(_ this: UnsafeMutablePointer<ImDrawList>!) -> Void {
+	return ImDrawList__TryMergeDrawCmds(this)
+}
+
 @inlinable @discardableResult public func ImFileClose(_ file: ImFileHandle) -> Bool {
 	return igImFileClose(file)
 }
@@ -441,6 +453,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImFloor(_ pOut: UnsafeMutablePointer<ImVec2>!, _ v: ImVec2) -> Void {
 	return igImFloor_Vec2(pOut,v)
+}
+
+@inlinable public func ImFloorSigned(_ f: Float) -> Float {
+	return igImFloorSigned(f)
 }
 
 @inlinable public func ImFontAddGlyph(_ this: UnsafeMutablePointer<ImFont>!, _ src_cfg: UnsafePointer<ImFontConfig>!, _ c: ImWchar, _ x0: Float, _ y0: Float, _ x1: Float, _ y1: Float, _ u0: Float, _ v0: Float, _ u1: Float, _ v1: Float, _ advance_x: Float) -> Void {
@@ -691,10 +707,6 @@ public typealias ImSpanAllocator = OpaquePointer
 	}
 }
 
-@inlinable public func ImFontSetFallbackChar(_ this: UnsafeMutablePointer<ImFont>!, _ c: ImWchar) -> Void {
-	return ImFont_SetFallbackChar(this,c)
-}
-
 @inlinable public func ImFontSetGlyphVisible(_ this: UnsafeMutablePointer<ImFont>!, _ c: ImWchar, _ visible: Bool) -> Void {
 	return ImFont_SetGlyphVisible(this,c,visible)
 }
@@ -783,6 +795,18 @@ public typealias ImSpanAllocator = OpaquePointer
 	}
 }
 
+@inlinable @discardableResult public func ImGuiBeginComboPopup(_ popup_id: ImGuiID, _ bb: ImRect, _ flags: ImGuiComboFlags) -> Bool {
+	return igBeginComboPopup(popup_id,bb,flags)
+}
+
+@inlinable @discardableResult public func ImGuiBeginComboPreview() -> Bool {
+	return igBeginComboPreview()
+}
+
+@inlinable public func ImGuiBeginDisabled(_ disabled: Bool) -> Void {
+	return igBeginDisabled(disabled)
+}
+
 @inlinable @discardableResult public func ImGuiBeginDragDropSource(_ flags: ImGuiDragDropFlags) -> Bool {
 	return igBeginDragDropSource(flags)
 }
@@ -817,6 +841,14 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable @discardableResult public func ImGuiBeginMenuBar() -> Bool {
 	return igBeginMenuBar()
+}
+
+@inlinable @discardableResult public func ImGuiBeginMenuEx(_ label: String? = nil, _ icon: String? = nil, _ enabled: Bool) -> Bool {
+	label.withOptionalCString { labelPtr in
+		icon.withOptionalCString { iconPtr in
+			return igBeginMenuEx(labelPtr,iconPtr,enabled)
+		}
+	}
 }
 
 @inlinable @discardableResult public func ImGuiBeginPopup(_ str_id: String? = nil, _ flags: ImGuiWindowFlags) -> Bool {
@@ -885,12 +917,22 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igBeginTooltip()
 }
 
-@inlinable public func ImGuiBeginTooltipEx(_ extra_flags: ImGuiWindowFlags, _ tooltip_flags: ImGuiTooltipFlags) -> Void {
-	return igBeginTooltipEx(extra_flags,tooltip_flags)
+@inlinable public func ImGuiBeginTooltipEx(_ tooltip_flags: ImGuiTooltipFlags, _ extra_window_flags: ImGuiWindowFlags) -> Void {
+	return igBeginTooltipEx(tooltip_flags,extra_window_flags)
+}
+
+@inlinable @discardableResult public func ImGuiBeginViewportSideBar(_ name: String? = nil, _ viewport: UnsafeMutablePointer<ImGuiViewport>!, _ dir: ImGuiDir, _ size: Float, _ window_flags: ImGuiWindowFlags) -> Bool {
+	name.withOptionalCString { namePtr in
+		return igBeginViewportSideBar(namePtr,viewport,dir,size,window_flags)
+	}
 }
 
 @inlinable public func ImGuiBringWindowToDisplayBack(_ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
 	return igBringWindowToDisplayBack(window)
+}
+
+@inlinable public func ImGuiBringWindowToDisplayBehind(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ above_window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
+	return igBringWindowToDisplayBehind(window,above_window)
 }
 
 @inlinable public func ImGuiBringWindowToDisplayFront(_ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
@@ -935,10 +977,6 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiCalcItemWidth() -> Float {
 	return igCalcItemWidth()
-}
-
-@inlinable public func ImGuiCalcListClipping(_ items_count: Int32, _ items_height: Float, _ out_items_display_start: UnsafeMutablePointer<Int32>!, _ out_items_display_end: UnsafeMutablePointer<Int32>!) -> Void {
-	return igCalcListClipping(items_count,items_height,out_items_display_start,out_items_display_end)
 }
 
 @inlinable public func ImGuiCalcTextSize(_ pOut: UnsafeMutablePointer<ImVec2>!, _ text: String? = nil, _ text_end: String? = nil, _ hide_text_after_double_hash: Bool, _ wrap_width: Float) -> Void {
@@ -1025,6 +1063,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiClosePopupToLevel(_ remaining: Int32, _ restore_focus_to_window_under_popup: Bool) -> Void {
 	return igClosePopupToLevel(remaining,restore_focus_to_window_under_popup)
+}
+
+@inlinable public func ImGuiClosePopupsExceptModals() -> Void {
+	return igClosePopupsExceptModals()
 }
 
 @inlinable public func ImGuiClosePopupsOverWindow(_ ref_window: UnsafeMutablePointer<ImGuiWindow>!, _ restore_focus_to_window_under_popup: Bool) -> Void {
@@ -1199,6 +1241,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igDebugDrawItemRect(col)
 }
 
+@inlinable public func ImGuiDebugHookIdInfo(_ id: ImGuiID, _ data_type: ImGuiDataType, _ data_id: UnsafeRawPointer!, _ data_id_end: UnsafeRawPointer!) -> Void {
+	return igDebugHookIdInfo(id,data_type,data_id,data_id_end)
+}
+
 @inlinable public func ImGuiDebugNodeColumns(_ columns: UnsafeMutablePointer<ImGuiOldColumns>!) -> Void {
 	return igDebugNodeColumns(columns)
 }
@@ -1211,6 +1257,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	label.withOptionalCString { labelPtr in
 		return igDebugNodeDrawList(window,draw_list,labelPtr)
 	}
+}
+
+@inlinable public func ImGuiDebugNodeFont(_ font: UnsafeMutablePointer<ImFont>!) -> Void {
+	return igDebugNodeFont(font)
 }
 
 @inlinable public func ImGuiDebugNodeStorage(_ storage: UnsafeMutablePointer<ImGuiStorage>!, _ label: String? = nil) -> Void {
@@ -1419,6 +1469,14 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igEndCombo()
 }
 
+@inlinable public func ImGuiEndComboPreview() -> Void {
+	return igEndComboPreview()
+}
+
+@inlinable public func ImGuiEndDisabled() -> Void {
+	return igEndDisabled()
+}
+
 @inlinable public func ImGuiEndDragDropSource() -> Void {
 	return igEndDragDropSource()
 }
@@ -1471,12 +1529,20 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igEndTooltip()
 }
 
+@inlinable public func ImGuiErrorCheckEndWindowRecover(_ log_callback: ImGuiErrorLogCallback, _ user_data: UnsafeMutableRawPointer!) -> Void {
+	return igErrorCheckEndWindowRecover(log_callback,user_data)
+}
+
 @inlinable public func ImGuiFindBestWindowPosForPopup(_ pOut: UnsafeMutablePointer<ImVec2>!, _ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
 	return igFindBestWindowPosForPopup(pOut,window)
 }
 
 @inlinable public func ImGuiFindBestWindowPosForPopupEx(_ pOut: UnsafeMutablePointer<ImVec2>!, _ ref_pos: ImVec2, _ size: ImVec2, _ last_dir: UnsafeMutablePointer<ImGuiDir>!, _ r_outer: ImRect, _ r_avoid: ImRect, _ policy: ImGuiPopupPositionPolicy) -> Void {
 	return igFindBestWindowPosForPopupEx(pOut,ref_pos,size,last_dir,r_outer,r_avoid,policy)
+}
+
+@inlinable public func ImGuiFindBottomMostVisibleWindowWithinBeginStack(_ window: UnsafeMutablePointer<ImGuiWindow>!) -> UnsafeMutablePointer<ImGuiWindow>! {
+	return igFindBottomMostVisibleWindowWithinBeginStack(window)
 }
 
 @inlinable public func ImGuiFindOrCreateColumns(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ id: ImGuiID) -> UnsafeMutablePointer<ImGuiOldColumns>! {
@@ -1513,6 +1579,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	}
 }
 
+@inlinable public func ImGuiFindWindowDisplayIndex(_ window: UnsafeMutablePointer<ImGuiWindow>!) -> Int32 {
+	return igFindWindowDisplayIndex(window)
+}
+
 @inlinable public func ImGuiFindWindowSettings(_ id: ImGuiID) -> UnsafeMutablePointer<ImGuiWindowSettings>! {
 	return igFindWindowSettings(id)
 }
@@ -1523,14 +1593,6 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiFocusWindow(_ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
 	return igFocusWindow(window)
-}
-
-@inlinable @discardableResult public func ImGuiFocusableItemRegister(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ id: ImGuiID) -> Bool {
-	return igFocusableItemRegister(window,id)
-}
-
-@inlinable public func ImGuiFocusableItemUnregister(_ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
-	return igFocusableItemUnregister(window)
 }
 
 @inlinable public func ImGuiGcAwakeTransientWindowBuffers(_ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
@@ -1753,6 +1815,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igGetInputTextState(id)
 }
 
+@inlinable public func ImGuiGetItemFlags() -> ImGuiItemFlags {
+	return igGetItemFlags()
+}
+
 @inlinable public func ImGuiGetItemID() -> ImGuiID {
 	return igGetItemID()
 }
@@ -1773,10 +1839,6 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igGetItemStatusFlags()
 }
 
-@inlinable public func ImGuiGetItemsFlags() -> ImGuiItemFlags {
-	return igGetItemsFlags()
-}
-
 @inlinable public func ImGuiGetKeyIndex(_ imgui_key: ImGuiKey) -> Int32 {
 	return igGetKeyIndex(imgui_key)
 }
@@ -1791,6 +1853,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiGetMergedKeyModFlags() -> ImGuiKeyModFlags {
 	return igGetMergedKeyModFlags()
+}
+
+@inlinable public func ImGuiGetMouseClickedCount(_ button: ImGuiMouseButton) -> Int32 {
+	return igGetMouseClickedCount(button)
 }
 
 @inlinable public func ImGuiGetMouseCursor() -> ImGuiMouseCursor {
@@ -1815,6 +1881,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiGetNavInputAmount2d(_ pOut: UnsafeMutablePointer<ImVec2>!, _ dir_sources: ImGuiNavDirSourceFlags, _ mode: ImGuiInputReadMode, _ slow_factor: Float, _ fast_factor: Float) -> Void {
 	return igGetNavInputAmount2d(pOut,dir_sources,mode,slow_factor,fast_factor)
+}
+
+@inlinable public func ImGuiGetPopupAllowedExtentRect(_ pOut: UnsafeMutablePointer<ImRect>!, _ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
+	return igGetPopupAllowedExtentRect(pOut,window)
 }
 
 @inlinable public func ImGuiGetScrollMaxX() -> Float {
@@ -1861,6 +1931,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igGetTime()
 }
 
+@inlinable public func ImGuiGetTopMostAndVisiblePopupModal() -> UnsafeMutablePointer<ImGuiWindow>! {
+	return igGetTopMostAndVisiblePopupModal()
+}
+
 @inlinable public func ImGuiGetTopMostPopupModal() -> UnsafeMutablePointer<ImGuiWindow>! {
 	return igGetTopMostPopupModal()
 }
@@ -1873,20 +1947,12 @@ public typealias ImSpanAllocator = OpaquePointer
 	return String(cString: igGetVersion())
 }
 
-@inlinable public func ImGuiGetWindowAllowedExtentRect(_ pOut: UnsafeMutablePointer<ImRect>!, _ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
-	return igGetWindowAllowedExtentRect(pOut,window)
-}
-
 @inlinable public func ImGuiGetWindowContentRegionMax(_ pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
 	return igGetWindowContentRegionMax(pOut)
 }
 
 @inlinable public func ImGuiGetWindowContentRegionMin(_ pOut: UnsafeMutablePointer<ImVec2>!) -> Void {
 	return igGetWindowContentRegionMin(pOut)
-}
-
-@inlinable public func ImGuiGetWindowContentRegionWidth() -> Float {
-	return igGetWindowContentRegionWidth()
 }
 
 @inlinable public func ImGuiGetWindowDrawList() -> UnsafeMutablePointer<ImDrawList>! {
@@ -1901,8 +1967,12 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igGetWindowPos(pOut)
 }
 
-@inlinable public func ImGuiGetWindowResizeID(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ n: Int32) -> ImGuiID {
-	return igGetWindowResizeID(window,n)
+@inlinable public func ImGuiGetWindowResizeBorderID(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ dir: ImGuiDir) -> ImGuiID {
+	return igGetWindowResizeBorderID(window,dir)
+}
+
+@inlinable public func ImGuiGetWindowResizeCornerID(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ n: Int32) -> ImGuiID {
+	return igGetWindowResizeCornerID(window,n)
 }
 
 @inlinable public func ImGuiGetWindowScrollbarID(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ axis: ImGuiAxis) -> ImGuiID {
@@ -1921,6 +1991,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igGetWindowWidth()
 }
 
+@inlinable public func ImGuiIOAddFocusEvent(_ this: UnsafeMutablePointer<ImGuiIO>!, _ focused: Bool) -> Void {
+	return ImGuiIO_AddFocusEvent(this,focused)
+}
+
 @inlinable public func ImGuiIOAddInputCharacter(_ this: UnsafeMutablePointer<ImGuiIO>!, _ c: UInt32) -> Void {
 	return ImGuiIO_AddInputCharacter(this,c)
 }
@@ -1937,6 +2011,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiIOClearInputCharacters(_ this: UnsafeMutablePointer<ImGuiIO>!) -> Void {
 	return ImGuiIO_ClearInputCharacters(this)
+}
+
+@inlinable public func ImGuiIOClearInputKeys(_ this: UnsafeMutablePointer<ImGuiIO>!) -> Void {
+	return ImGuiIO_ClearInputKeys(this)
 }
 
 @inlinable public func ImGuiImage(_ user_texture_id: ImTextureID, _ size: ImVec2, _ uv0: ImVec2, _ uv1: ImVec2, _ tint_col: ImVec4, _ border_col: ImVec4) -> Void {
@@ -2133,8 +2211,20 @@ public typealias ImSpanAllocator = OpaquePointer
 	return ImGuiInputTextState_CursorClamp(this)
 }
 
+@inlinable public func ImGuiInputTextStateGetCursorPos(_ this: UnsafeMutablePointer<ImGuiInputTextState>!) -> Int32 {
+	return ImGuiInputTextState_GetCursorPos(this)
+}
+
 @inlinable public func ImGuiInputTextStateGetRedoAvailCount(_ this: UnsafeMutablePointer<ImGuiInputTextState>!) -> Int32 {
 	return ImGuiInputTextState_GetRedoAvailCount(this)
+}
+
+@inlinable public func ImGuiInputTextStateGetSelectionEnd(_ this: UnsafeMutablePointer<ImGuiInputTextState>!) -> Int32 {
+	return ImGuiInputTextState_GetSelectionEnd(this)
+}
+
+@inlinable public func ImGuiInputTextStateGetSelectionStart(_ this: UnsafeMutablePointer<ImGuiInputTextState>!) -> Int32 {
+	return ImGuiInputTextState_GetSelectionStart(this)
 }
 
 @inlinable public func ImGuiInputTextStateGetUndoAvailCount(_ this: UnsafeMutablePointer<ImGuiInputTextState>!) -> Int32 {
@@ -2197,8 +2287,8 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igIsAnyMouseDown()
 }
 
-@inlinable @discardableResult public func ImGuiIsClippedEx(_ bb: ImRect, _ id: ImGuiID, _ clip_even_when_logged: Bool) -> Bool {
-	return igIsClippedEx(bb,id,clip_even_when_logged)
+@inlinable @discardableResult public func ImGuiIsClippedEx(_ bb: ImRect, _ id: ImGuiID) -> Bool {
+	return igIsClippedEx(bb,id)
 }
 
 @inlinable @discardableResult public func ImGuiIsDragDropPayloadBeingAccepted() -> Bool {
@@ -2331,8 +2421,8 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igIsWindowAppearing()
 }
 
-@inlinable @discardableResult public func ImGuiIsWindowChildOf(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ potential_parent: UnsafeMutablePointer<ImGuiWindow>!) -> Bool {
-	return igIsWindowChildOf(window,potential_parent)
+@inlinable @discardableResult public func ImGuiIsWindowChildOf(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ potential_parent: UnsafeMutablePointer<ImGuiWindow>!, _ popup_hierarchy: Bool) -> Bool {
+	return igIsWindowChildOf(window,potential_parent,popup_hierarchy)
 }
 
 @inlinable @discardableResult public func ImGuiIsWindowCollapsed() -> Bool {
@@ -2351,8 +2441,12 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igIsWindowNavFocusable(window)
 }
 
-@inlinable @discardableResult public func ImGuiItemAdd(_ bb: ImRect, _ id: ImGuiID, _ nav_bb: UnsafePointer<ImRect>!) -> Bool {
-	return igItemAdd(bb,id,nav_bb)
+@inlinable @discardableResult public func ImGuiIsWindowWithinBeginStackOf(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ potential_parent: UnsafeMutablePointer<ImGuiWindow>!) -> Bool {
+	return igIsWindowWithinBeginStackOf(window,potential_parent)
+}
+
+@inlinable @discardableResult public func ImGuiItemAdd(_ bb: ImRect, _ id: ImGuiID, _ nav_bb: UnsafePointer<ImRect>!, _ extra_flags: ImGuiItemFlags) -> Bool {
+	return igItemAdd(bb,id,nav_bb,extra_flags)
 }
 
 @inlinable @discardableResult public func ImGuiItemHoverable(_ bb: ImRect, _ id: ImGuiID) -> Bool {
@@ -2381,14 +2475,6 @@ public typealias ImSpanAllocator = OpaquePointer
 	}
 }
 
-@inlinable public func ImGuiLastItemDataBackup(_ this: UnsafeMutablePointer<ImGuiLastItemDataBackup>!) -> Void {
-	return ImGuiLastItemDataBackup_Backup(this)
-}
-
-@inlinable public func ImGuiLastItemDataBackupRestore(_ this: UnsafeMutablePointer<ImGuiLastItemDataBackup>!) -> Void {
-	return ImGuiLastItemDataBackup_Restore(this)
-}
-
 @inlinable @discardableResult public func ImGuiListBox(_ label: String? = nil, _ current_item: UnsafeMutablePointer<Int32>!, _ items: [String], _ items_count: Int32, _ height_in_items: Int32) -> Bool {
 	label.withOptionalCString { labelPtr in
 		withArrayOfCStringsBasePointer(items) { itemsPtr in
@@ -2401,8 +2487,24 @@ public typealias ImSpanAllocator = OpaquePointer
 	return ImGuiListClipper_Begin(this,items_count,items_height)
 }
 
+@inlinable public func ImGuiListClipperDataReset(_ this: UnsafeMutablePointer<ImGuiListClipperData>!, _ clipper: UnsafeMutablePointer<ImGuiListClipper>!) -> Void {
+	return ImGuiListClipperData_Reset(this,clipper)
+}
+
 @inlinable public func ImGuiListClipperEnd(_ this: UnsafeMutablePointer<ImGuiListClipper>!) -> Void {
 	return ImGuiListClipper_End(this)
+}
+
+@inlinable public func ImGuiListClipperForceDisplayRangeByIndices(_ this: UnsafeMutablePointer<ImGuiListClipper>!, _ item_min: Int32, _ item_max: Int32) -> Void {
+	return ImGuiListClipper_ForceDisplayRangeByIndices(this,item_min,item_max)
+}
+
+@inlinable public func ImGuiListClipperRangeFromIndices(_ min: Int32, _ max: Int32) -> ImGuiListClipperRange {
+	return ImGuiListClipperRange_FromIndices(min,max)
+}
+
+@inlinable public func ImGuiListClipperRangeFromPositions(_ y1: Float, _ y2: Float, _ off_min: Int32, _ off_max: Int32) -> ImGuiListClipperRange {
+	return ImGuiListClipperRange_FromPositions(y1,y2,off_min,off_max)
 }
 
 @inlinable @discardableResult public func ImGuiListClipperStep(_ this: UnsafeMutablePointer<ImGuiListClipper>!) -> Bool {
@@ -2495,16 +2597,16 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igMemFree(ptr)
 }
 
-@inlinable public func ImGuiMenuColumnsCalcExtraSpace(_ this: UnsafeMutablePointer<ImGuiMenuColumns>!, _ avail_w: Float) -> Float {
-	return ImGuiMenuColumns_CalcExtraSpace(this,avail_w)
+@inlinable public func ImGuiMenuColumnsCalcNextTotalWidth(_ this: UnsafeMutablePointer<ImGuiMenuColumns>!, _ update_offsets: Bool) -> Void {
+	return ImGuiMenuColumns_CalcNextTotalWidth(this,update_offsets)
 }
 
-@inlinable public func ImGuiMenuColumnsDeclColumns(_ this: UnsafeMutablePointer<ImGuiMenuColumns>!, _ w0: Float, _ w1: Float, _ w2: Float) -> Float {
-	return ImGuiMenuColumns_DeclColumns(this,w0,w1,w2)
+@inlinable public func ImGuiMenuColumnsDeclColumns(_ this: UnsafeMutablePointer<ImGuiMenuColumns>!, _ w_icon: Float, _ w_label: Float, _ w_shortcut: Float, _ w_mark: Float) -> Float {
+	return ImGuiMenuColumns_DeclColumns(this,w_icon,w_label,w_shortcut,w_mark)
 }
 
-@inlinable public func ImGuiMenuColumnsUpdate(_ this: UnsafeMutablePointer<ImGuiMenuColumns>!, _ count: Int32, _ spacing: Float, _ clear: Bool) -> Void {
-	return ImGuiMenuColumns_Update(this,count,spacing,clear)
+@inlinable public func ImGuiMenuColumnsUpdate(_ this: UnsafeMutablePointer<ImGuiMenuColumns>!, _ spacing: Float, _ window_reappearing: Bool) -> Void {
+	return ImGuiMenuColumns_Update(this,spacing,window_reappearing)
 }
 
 @inlinable @discardableResult public func ImGuiMenuItem(_ label: String? = nil, _ shortcut: String? = nil, _ selected: Bool, _ enabled: Bool) -> Bool {
@@ -2523,8 +2625,30 @@ public typealias ImSpanAllocator = OpaquePointer
 	}
 }
 
+@inlinable @discardableResult public func ImGuiMenuItemEx(_ label: String? = nil, _ icon: String? = nil, _ shortcut: String? = nil, _ selected: Bool, _ enabled: Bool) -> Bool {
+	label.withOptionalCString { labelPtr in
+		icon.withOptionalCString { iconPtr in
+			shortcut.withOptionalCString { shortcutPtr in
+				return igMenuItemEx(labelPtr,iconPtr,shortcutPtr,selected,enabled)
+			}
+		}
+	}
+}
+
+@inlinable public func ImGuiNavInitRequestApplyResult() -> Void {
+	return igNavInitRequestApplyResult()
+}
+
 @inlinable public func ImGuiNavInitWindow(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ force_reinit: Bool) -> Void {
 	return igNavInitWindow(window,force_reinit)
+}
+
+@inlinable public func ImGuiNavItemDataClear(_ this: UnsafeMutablePointer<ImGuiNavItemData>!) -> Void {
+	return ImGuiNavItemData_Clear(this)
+}
+
+@inlinable public func ImGuiNavMoveRequestApplyResult() -> Void {
+	return igNavMoveRequestApplyResult()
 }
 
 @inlinable @discardableResult public func ImGuiNavMoveRequestButNoResultYet() -> Bool {
@@ -2535,16 +2659,20 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igNavMoveRequestCancel()
 }
 
-@inlinable public func ImGuiNavMoveRequestForward(_ move_dir: ImGuiDir, _ clip_dir: ImGuiDir, _ bb_rel: ImRect, _ move_flags: ImGuiNavMoveFlags) -> Void {
-	return igNavMoveRequestForward(move_dir,clip_dir,bb_rel,move_flags)
+@inlinable public func ImGuiNavMoveRequestForward(_ move_dir: ImGuiDir, _ clip_dir: ImGuiDir, _ move_flags: ImGuiNavMoveFlags, _ scroll_flags: ImGuiScrollFlags) -> Void {
+	return igNavMoveRequestForward(move_dir,clip_dir,move_flags,scroll_flags)
+}
+
+@inlinable public func ImGuiNavMoveRequestResolveWithLastItem(_ result: UnsafeMutablePointer<ImGuiNavItemData>!) -> Void {
+	return igNavMoveRequestResolveWithLastItem(result)
+}
+
+@inlinable public func ImGuiNavMoveRequestSubmit(_ move_dir: ImGuiDir, _ clip_dir: ImGuiDir, _ move_flags: ImGuiNavMoveFlags, _ scroll_flags: ImGuiScrollFlags) -> Void {
+	return igNavMoveRequestSubmit(move_dir,clip_dir,move_flags,scroll_flags)
 }
 
 @inlinable public func ImGuiNavMoveRequestTryWrapping(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ move_flags: ImGuiNavMoveFlags) -> Void {
 	return igNavMoveRequestTryWrapping(window,move_flags)
-}
-
-@inlinable public func ImGuiNavMoveResultClear(_ this: UnsafeMutablePointer<ImGuiNavMoveResult>!) -> Void {
-	return ImGuiNavMoveResult_Clear(this)
 }
 
 @inlinable public func ImGuiNewFrame() -> Void {
@@ -2569,8 +2697,12 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiOpenPopup(_ str_id: String? = nil, _ popup_flags: ImGuiPopupFlags) -> Void {
 	str_id.withOptionalCString { str_idPtr in
-		return igOpenPopup(str_idPtr,popup_flags)
+		return igOpenPopup_Str(str_idPtr,popup_flags)
 	}
+}
+
+@inlinable public func ImGuiOpenPopup(_ id: ImGuiID, _ popup_flags: ImGuiPopupFlags) -> Void {
+	return igOpenPopup_ID(id,popup_flags)
 }
 
 @inlinable public func ImGuiOpenPopupEx(_ id: ImGuiID, _ popup_flags: ImGuiPopupFlags) -> Void {
@@ -2879,15 +3011,27 @@ public typealias ImSpanAllocator = OpaquePointer
 	return String(cString: igSaveIniSettingsToMemory(out_ini_size))
 }
 
-@inlinable public func ImGuiScrollToBringRectIntoView(_ pOut: UnsafeMutablePointer<ImVec2>!, _ window: UnsafeMutablePointer<ImGuiWindow>!, _ item_rect: ImRect) -> Void {
-	return igScrollToBringRectIntoView(pOut,window,item_rect)
+@inlinable public func ImGuiScrollToBringRectIntoView(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ rect: ImRect) -> Void {
+	return igScrollToBringRectIntoView(window,rect)
+}
+
+@inlinable public func ImGuiScrollToItem(_ flags: ImGuiScrollFlags) -> Void {
+	return igScrollToItem(flags)
+}
+
+@inlinable public func ImGuiScrollToRect(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ rect: ImRect, _ flags: ImGuiScrollFlags) -> Void {
+	return igScrollToRect(window,rect,flags)
+}
+
+@inlinable public func ImGuiScrollToRectEx(_ pOut: UnsafeMutablePointer<ImVec2>!, _ window: UnsafeMutablePointer<ImGuiWindow>!, _ rect: ImRect, _ flags: ImGuiScrollFlags) -> Void {
+	return igScrollToRectEx(pOut,window,rect,flags)
 }
 
 @inlinable public func ImGuiScrollbar(_ axis: ImGuiAxis) -> Void {
 	return igScrollbar(axis)
 }
 
-@inlinable @discardableResult public func ImGuiScrollbarEx(_ bb: ImRect, _ id: ImGuiID, _ axis: ImGuiAxis, _ p_scroll_v: UnsafeMutablePointer<Float>!, _ avail_v: Float, _ contents_v: Float, _ flags: ImDrawFlags) -> Bool {
+@inlinable @discardableResult public func ImGuiScrollbarEx(_ bb: ImRect, _ id: ImGuiID, _ axis: ImGuiAxis, _ p_scroll_v: UnsafeMutablePointer<ImS64>!, _ avail_v: ImS64, _ contents_v: ImS64, _ flags: ImDrawFlags) -> Bool {
 	return igScrollbarEx(bb,id,axis,p_scroll_v,avail_v,contents_v,flags)
 }
 
@@ -2913,6 +3057,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiSetActiveID(_ id: ImGuiID, _ window: UnsafeMutablePointer<ImGuiWindow>!) -> Void {
 	return igSetActiveID(id,window)
+}
+
+@inlinable public func ImGuiSetActiveIdUsingNavAndKeys() -> Void {
+	return igSetActiveIdUsingNavAndKeys()
 }
 
 @inlinable public func ImGuiSetClipboardText(_ text: String? = nil) -> Void {
@@ -2987,15 +3135,15 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igSetKeyboardFocusHere(offset)
 }
 
-@inlinable public func ImGuiSetLastItemData(_ window: UnsafeMutablePointer<ImGuiWindow>!, _ item_id: ImGuiID, _ status_flags: ImGuiItemStatusFlags, _ item_rect: ImRect) -> Void {
-	return igSetLastItemData(window,item_id,status_flags,item_rect)
+@inlinable public func ImGuiSetLastItemData(_ item_id: ImGuiID, _ in_flags: ImGuiItemFlags, _ status_flags: ImGuiItemStatusFlags, _ item_rect: ImRect) -> Void {
+	return igSetLastItemData(item_id,in_flags,status_flags,item_rect)
 }
 
 @inlinable public func ImGuiSetMouseCursor(_ cursor_type: ImGuiMouseCursor) -> Void {
 	return igSetMouseCursor(cursor_type)
 }
 
-@inlinable public func ImGuiSetNavID(_ id: ImGuiID, _ nav_layer: Int32, _ focus_scope_id: ImGuiID, _ rect_rel: ImRect) -> Void {
+@inlinable public func ImGuiSetNavID(_ id: ImGuiID, _ nav_layer: ImGuiNavLayer, _ focus_scope_id: ImGuiID, _ rect_rel: ImRect) -> Void {
 	return igSetNavID(id,nav_layer,focus_scope_id,rect_rel)
 }
 
@@ -3177,6 +3325,10 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igShowDemoWindow(p_open)
 }
 
+@inlinable public func ImGuiShowFontAtlas(_ atlas: UnsafeMutablePointer<ImFontAtlas>!) -> Void {
+	return igShowFontAtlas(atlas)
+}
+
 @inlinable public func ImGuiShowFontSelector(_ label: String? = nil) -> Void {
 	label.withOptionalCString { labelPtr in
 		return igShowFontSelector(labelPtr)
@@ -3185,6 +3337,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImGuiShowMetricsWindow(_ p_open: UnsafeMutablePointer<Bool>!) -> Void {
 	return igShowMetricsWindow(p_open)
+}
+
+@inlinable public func ImGuiShowStackToolWindow(_ p_open: UnsafeMutablePointer<Bool>!) -> Void {
+	return igShowStackToolWindow(p_open)
 }
 
 @inlinable public func ImGuiShowStyleEditor(_ ref: UnsafeMutablePointer<ImGuiStyle>!) -> Void {
@@ -3445,8 +3601,12 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igTabBarProcessReorder(tab_bar)
 }
 
-@inlinable public func ImGuiTabBarQueueReorder(_ tab_bar: UnsafeMutablePointer<ImGuiTabBar>!, _ tab: UnsafePointer<ImGuiTabItem>!, _ dir: Int32) -> Void {
-	return igTabBarQueueReorder(tab_bar,tab,dir)
+@inlinable public func ImGuiTabBarQueueReorder(_ tab_bar: UnsafeMutablePointer<ImGuiTabBar>!, _ tab: UnsafePointer<ImGuiTabItem>!, _ offset: Int32) -> Void {
+	return igTabBarQueueReorder(tab_bar,tab,offset)
+}
+
+@inlinable public func ImGuiTabBarQueueReorderFromMousePos(_ tab_bar: UnsafeMutablePointer<ImGuiTabBar>!, _ tab: UnsafePointer<ImGuiTabItem>!, _ mouse_pos: ImVec2) -> Void {
+	return igTabBarQueueReorderFromMousePos(tab_bar,tab,mouse_pos)
 }
 
 @inlinable public func ImGuiTabBarRemoveTab(_ tab_bar: UnsafeMutablePointer<ImGuiTabBar>!, _ tab_id: ImGuiID) -> Void {
@@ -3526,7 +3686,11 @@ public typealias ImSpanAllocator = OpaquePointer
 }
 
 @inlinable public func ImGuiTableGcCompactTransientBuffers(_ table: UnsafeMutablePointer<ImGuiTable>!) -> Void {
-	return igTableGcCompactTransientBuffers(table)
+	return igTableGcCompactTransientBuffers_TablePtr(table)
+}
+
+@inlinable public func ImGuiTableGcCompactTransientBuffers(_ table: UnsafeMutablePointer<ImGuiTableTempData>!) -> Void {
+	return igTableGcCompactTransientBuffers_TableTempDataPtr(table)
 }
 
 @inlinable public func ImGuiTableGetBoundSettings(_ table: UnsafeMutablePointer<ImGuiTable>!) -> UnsafeMutablePointer<ImGuiTableSettings>! {
@@ -3643,8 +3807,8 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igTableSetBgColor(target,color,column_n)
 }
 
-@inlinable public func ImGuiTableSetColumnEnabled(_ column_n: Int32, _ enabled: Bool) -> Void {
-	return igTableSetColumnEnabled(column_n,enabled)
+@inlinable public func ImGuiTableSetColumnEnabled(_ column_n: Int32, _ v: Bool) -> Void {
+	return igTableSetColumnEnabled(column_n,v)
 }
 
 @inlinable @discardableResult public func ImGuiTableSetColumnIndex(_ column_n: Int32) -> Bool {
@@ -4019,6 +4183,18 @@ public typealias ImSpanAllocator = OpaquePointer
 	return ImGuiViewport_GetWorkCenter(pOut,this)
 }
 
+@inlinable public func ImGuiViewportPCalcWorkRectPos(_ pOut: UnsafeMutablePointer<ImVec2>!, _ this: UnsafeMutablePointer<ImGuiViewportP>!, _ off_min: ImVec2) -> Void {
+	return ImGuiViewportP_CalcWorkRectPos(pOut,this,off_min)
+}
+
+@inlinable public func ImGuiViewportPCalcWorkRectSize(_ pOut: UnsafeMutablePointer<ImVec2>!, _ this: UnsafeMutablePointer<ImGuiViewportP>!, _ off_min: ImVec2, _ off_max: ImVec2) -> Void {
+	return ImGuiViewportP_CalcWorkRectSize(pOut,this,off_min,off_max)
+}
+
+@inlinable public func ImGuiViewportPGetBuildWorkRect(_ pOut: UnsafeMutablePointer<ImRect>!, _ this: UnsafeMutablePointer<ImGuiViewportP>!) -> Void {
+	return ImGuiViewportP_GetBuildWorkRect(pOut,this)
+}
+
 @inlinable public func ImGuiViewportPGetMainRect(_ pOut: UnsafeMutablePointer<ImRect>!, _ this: UnsafeMutablePointer<ImGuiViewportP>!) -> Void {
 	return ImGuiViewportP_GetMainRect(pOut,this)
 }
@@ -4083,6 +4259,14 @@ public typealias ImSpanAllocator = OpaquePointer
 	return ImGuiWindow_Rect(pOut,this)
 }
 
+@inlinable public func ImGuiWindowRectAbsToRel(_ pOut: UnsafeMutablePointer<ImRect>!, _ window: UnsafeMutablePointer<ImGuiWindow>!, _ r: ImRect) -> Void {
+	return igWindowRectAbsToRel(pOut,window,r)
+}
+
+@inlinable public func ImGuiWindowRectRelToAbs(_ pOut: UnsafeMutablePointer<ImRect>!, _ window: UnsafeMutablePointer<ImGuiWindow>!, _ r: ImRect) -> Void {
+	return igWindowRectRelToAbs(pOut,window,r)
+}
+
 @inlinable public func ImGuiWindowSettingsGetName(_ this: UnsafeMutablePointer<ImGuiWindowSettings>!) -> String? {
 	return String(cString: ImGuiWindowSettings_GetName(this))
 }
@@ -4107,6 +4291,10 @@ public typealias ImSpanAllocator = OpaquePointer
 
 @inlinable public func ImInvLength(_ lhs: ImVec2, _ fail_value: Float) -> Float {
 	return igImInvLength(lhs,fail_value)
+}
+
+@inlinable @discardableResult public func ImIsFloatAboveGuaranteedIntegerPrecision(_ f: Float) -> Bool {
+	return igImIsFloatAboveGuaranteedIntegerPrecision(f)
 }
 
 @inlinable @discardableResult public func ImIsPowerOfTwo(_ v: Int32) -> Bool {
@@ -4303,6 +4491,14 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igImRotate(pOut,v,cos_a,sin_a)
 }
 
+@inlinable public func ImRsqrt(_ x: Float) -> Float {
+	return igImRsqrt_Float(x)
+}
+
+@inlinable public func ImRsqrt(_ x: Double) -> Double {
+	return igImRsqrt_double(x)
+}
+
 @inlinable public func ImSaturate(_ f: Float) -> Float {
 	return igImSaturate(f)
 }
@@ -4409,6 +4605,12 @@ public typealias ImSpanAllocator = OpaquePointer
 	}
 }
 
+@inlinable public func ImTextCharToUtf8(_ out_buf: inout (CChar,CChar,CChar,CChar,CChar), _ c: UInt32) -> String? {
+	withUnsafeMutablePointer(to: &out_buf.0) {
+		return String(cString: igImTextCharToUtf8(UnsafeMutableBufferPointer<CChar>(start: $0, count: 5).baseAddress!,c))
+	}
+}
+
 @inlinable public func ImTextCountCharsFromUtf8(_ in_text: String? = nil, _ in_text_end: String? = nil) -> Int32 {
 	in_text.withOptionalCString { in_textPtr in
 		in_text_end.withOptionalCString { in_text_endPtr in
@@ -4429,9 +4631,9 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igImTextCountUtf8BytesFromStr(in_text,in_text_end)
 }
 
-@inlinable public func ImTextStrToUtf8(_ buf: inout String?, _ buf_size: Int32, _ in_text: UnsafePointer<ImWchar>!, _ in_text_end: UnsafePointer<ImWchar>!) -> Int32 {
-	buf.withOptionalCString { bufPtr in
-		return igImTextStrToUtf8(UnsafeMutablePointer(mutating: bufPtr),buf_size,in_text,in_text_end)
+@inlinable public func ImTextStrToUtf8(_ out_buf: inout String?, _ out_buf_size: Int32, _ in_text: UnsafePointer<ImWchar>!, _ in_text_end: UnsafePointer<ImWchar>!) -> Int32 {
+	out_buf.withOptionalCString { out_bufPtr in
+		return igImTextStrToUtf8(UnsafeMutablePointer(mutating: out_bufPtr),out_buf_size,in_text,in_text_end)
 	}
 }
 

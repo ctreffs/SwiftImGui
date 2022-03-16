@@ -36,9 +36,9 @@ fileprivate var s_clipboard: UnsafeMutablePointer<CChar>? = nil
 func ImGui_ImplOSX_Init(_ view: NSView) -> Bool {
     let io = ImGuiGetIO()!
     
-    //io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DockingEnable.rawValue)
-    //io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleViewports.rawValue)
-    //io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleFonts.rawValue)
+    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DockingEnable.rawValue)
+    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleViewports.rawValue)
+    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_DpiEnableScaleFonts.rawValue)
     
     // Setup back-end capabilities flags
     io.pointee.BackendFlags |= Int32(ImGuiBackendFlags_HasMouseCursors.rawValue)         // We can honor GetMouseCursor() values (optional)

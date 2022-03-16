@@ -111,11 +111,19 @@ struct FunctionBodyRenderer {
                     .postLine("}")
                 ]
             } else {
-                return [.line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: &\(arg.escapedName).0, count: \(count)).baseAddress!")]
+                return [
+                    .preLine("withUnsafeMutablePointer(to: &\(arg.escapedName).0) {"),
+                    .line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: $0, count: \(count)).baseAddress!"),
+                    .postLine("}")
+                ]
             }
 
         case let .arrayFixedSize(count):
-            return [.line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: &\(arg.escapedName).0, count: \(count)).baseAddress!")]
+            return [
+                .preLine("withUnsafeMutablePointer(to: &\(arg.escapedName).0) {"),
+                .line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: $0, count: \(count)).baseAddress!"),
+                .postLine("}")
+            ]
 
         case .pointer where arg.type.isConst == false && arg.type.type == .void:
             return [.line(arg.escapedName)]

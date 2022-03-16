@@ -19,15 +19,15 @@ index 47ec48b..38136d5 100644
 +#ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
  typedef struct ImGuiTableColumnSettings ImGuiTableColumnSettings;
  typedef struct ImGuiTableCellData ImGuiTableCellData;
- typedef struct ImGuiViewportP ImGuiViewportP;
+ typedef struct ImGuiStackTool ImGuiStackTool;
 @@ -2240,7 +2240,7 @@ struct SDL_Window;
  typedef union SDL_Event SDL_Event;
  #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
  
 -#ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 +#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
- typedef ImGuiStorage::ImGuiStoragePair ImGuiStoragePair;
- typedef ImGuiTextFilter::ImGuiTextRange ImGuiTextRange;
+ typedef struct ImGuiStorage::ImGuiStoragePair ImGuiStoragePair;
+ typedef struct ImGuiTextFilter::ImGuiTextRange ImGuiTextRange;
  typedef ImStb::STB_TexteditState STB_TexteditState;
 -- 
 2.31.0

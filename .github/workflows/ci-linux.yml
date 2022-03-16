@@ -2,9 +2,10 @@ name: Linux
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, docking ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, docking ]
+  workflow_dispatch:
 
 jobs:
   linux-test-build-release:

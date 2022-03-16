@@ -5,13 +5,14 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   macos-test-build-release-xcode:
     runs-on: macOS-latest
     strategy:
       matrix:
-        xcode: ["12.4"]
+        xcode: ["13.2.1"]
     steps:
       - name: Checkout
         uses: actions/checkout@master

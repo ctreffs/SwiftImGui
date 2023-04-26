@@ -27,7 +27,7 @@ public enum SwiftKeyword: String {
     case `else`
     case `enum`
     case `extension`
-    case fallthrough
+    case `fallthrough`
     case `false`
     case `fileprivate`
     case final

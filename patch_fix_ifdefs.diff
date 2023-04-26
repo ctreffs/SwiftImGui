@@ -1,14 +1,5 @@
-From 6854310a3d0332c2c697882891b8d0ed89688184 Mon Sep 17 00:00:00 2001
-From: Christian Treffs <ctreffs@gmail.com>
-Date: Thu, 8 Jul 2021 19:48:59 +0200
-Subject: [PATCH] Fix ifdefs
-
----
- Sources/CImGui/include/cimgui.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
 diff --git a/Sources/CImGui/include/cimgui.h b/Sources/CImGui/include/cimgui.h
-index 47ec48b..38136d5 100644
+index 5688e9d..699bce8 100644
 --- a/Sources/CImGui/include/cimgui.h
 +++ b/Sources/CImGui/include/cimgui.h
 @@ -38,7 +38,7 @@ typedef unsigned __int64 ImU64;
@@ -17,10 +8,10 @@ index 47ec48b..38136d5 100644
  
 -#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 +#ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
- typedef struct ImGuiTableColumnSettings ImGuiTableColumnSettings;
- typedef struct ImGuiTableCellData ImGuiTableCellData;
- typedef struct ImGuiStackTool ImGuiStackTool;
-@@ -2240,7 +2240,7 @@ struct SDL_Window;
+ 
+ typedef struct ImDrawChannel ImDrawChannel;
+ typedef struct ImDrawCmd ImDrawCmd;
+@@ -2774,7 +2774,7 @@ struct SDL_Window;
  typedef union SDL_Event SDL_Event;
  #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
  
@@ -29,6 +20,3 @@ index 47ec48b..38136d5 100644
  typedef struct ImGuiStorage::ImGuiStoragePair ImGuiStoragePair;
  typedef struct ImGuiTextFilter::ImGuiTextRange ImGuiTextRange;
  typedef ImStb::STB_TexteditState STB_TexteditState;
--- 
-2.31.0
-

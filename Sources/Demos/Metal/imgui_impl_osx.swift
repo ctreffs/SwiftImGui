@@ -67,7 +67,7 @@ func ImGui_ImplOSX_Init(_ view: NSView) -> Bool {
         keyMap[Int(ImGuiKey_Space.rawValue)] = ImGuiKey(kVK_Space)
         keyMap[Int(ImGuiKey_Enter.rawValue)] = ImGuiKey(kVK_Return)
         keyMap[Int(ImGuiKey_Escape.rawValue)] = ImGuiKey(kVK_Escape)
-        keyMap[Int(ImGuiKey_KeyPadEnter.rawValue)] = ImGuiKey(kVK_ANSI_KeypadEnter)
+        keyMap[Int(ImGuiKey_KeypadEnter.rawValue)] = ImGuiKey(kVK_ANSI_KeypadEnter)
         keyMap[Int(ImGuiKey_A.rawValue)] = ImGuiKey(kVK_ANSI_A)
         keyMap[Int(ImGuiKey_C.rawValue)] = ImGuiKey(kVK_ANSI_C)
         keyMap[Int(ImGuiKey_V.rawValue)] = ImGuiKey(kVK_ANSI_V)
@@ -484,5 +484,11 @@ class ImFocusObserver: NSObject {
         // release any pressed keys when application loses focus, otherwise they would remain
         // stuck in a pressed state. https://github.com/ocornut/imgui/issues/3832
         resetKeys()
+    }
+}
+
+private extension ImGuiKey {
+    init(_ int: Int) {
+        self.init(rawValue: UInt32(int))
     }
 }

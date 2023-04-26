@@ -4,10 +4,13 @@ swift_imgui_src := Sources/ImGui
 release_dir := .build/release
 autowrapper_assets := Sources/AutoWrapper/Assets
 
-.PHONY: lint
-lint:
-	swiftlint autocorrect --format
-	swiftlint lint --quiet
+SWIFT_PACKAGE_VERSION := $(shell swift package tools-version)
+
+# Lint fix and format code.
+.PHONY: lint-fix
+lint-fix:
+	mint run swiftlint --fix --quiet
+	mint run swiftformat --quiet --swiftversion ${SWIFT_PACKAGE_VERSION} .
 
 .PHONY: setupEnv
 setupEnv:

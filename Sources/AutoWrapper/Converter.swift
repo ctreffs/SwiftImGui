@@ -5,9 +5,9 @@
 //  Created by Christian Treffs on 25.10.19.
 //
 
-import struct Foundation.URL
 import struct Foundation.Data
 import class Foundation.JSONDecoder
+import struct Foundation.URL
 
 public func convert(filePath: String, validOnly: Bool, to convertedOutput: (String) throws -> Void = { print($0) }) throws {
     let file = URL(fileURLWithPath: filePath)
@@ -15,8 +15,8 @@ public func convert(filePath: String, validOnly: Bool, to convertedOutput: (Stri
     let decoder = JSONDecoder()
 
     let defs = try decoder.decode(Definitions.self, from: data)
-    var invalidFuncsCount: Int = 0
-    var validFuncsCount: Int = 0
+    var invalidFuncsCount = 0
+    var validFuncsCount = 0
 
     let getValidFunctionDefs: (Definition) -> Set<FunctionDef> = { defs in
         let valid = defs.validFunctions
@@ -32,7 +32,7 @@ public func convert(filePath: String, validOnly: Bool, to convertedOutput: (Stri
         .flatMap { $0 }
         .flatMap { getFunctionDefs($0) }
         .sorted()
-        .map { $0.toSwift }
+        .map(\.toSwift)
         .joined(separator: "\n\n")
 
     defer {

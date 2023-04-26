@@ -1,12 +1,12 @@
 import ImGui
 
-//IMGUI_CHECKVERSION();
+// IMGUI_CHECKVERSION();
 IMGUI_CHECKVERSION()
 
-//ImGui::CreateContext();
+// ImGui::CreateContext();
 let ctx = ImGuiCreateContext(nil)
 
-//ImGuiIO& io = ImGui::GetIO();
+// ImGuiIO& io = ImGui::GetIO();
 let io = ImGuiGetIO()!
 
 /// Build font atlas
@@ -17,7 +17,7 @@ var bytesPerPixel: Int32 = 0
 // io.Fonts->GetTexDataAsRGBA32(&tex_pixels, &tex_w, &tex_h);
 ImFontAtlas_GetTexDataAsRGBA32(io.pointee.Fonts, &pixels, &width, &height, &bytesPerPixel)
 
-for n in 0..<20 {
+for n in 0 ..< 20 {
     print("NewFrame() \(n)")
     // io.DisplaySize = ImVec2(1920, 1080);
     io.pointee.DisplaySize = ImVec2(x: 1920, y: 1080)
@@ -25,7 +25,7 @@ for n in 0..<20 {
     io.pointee.DeltaTime = 1.0 / 60.0
     // ImGui::NewFrame();
     ImGuiNewFrame()
-    
+
     var f: Float = 0.0
     // ImGui::Text("Hello, world!");
     ImGuiTextV("Hello, world!")
@@ -33,10 +33,10 @@ for n in 0..<20 {
     ImGuiSliderFloat("float", &f, 0.0, 1.0, nil, 1)
     // ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
     ImGuiTextV("Application average %.3f ms/frame (%.1f FPS)", 1000.0 / io.pointee.Framerate, io.pointee.Framerate)
-    
+
     // ImGui::ShowDemoWindow(NULL);
     ImGuiShowDemoWindow(nil)
-    
+
     // ImGui::Render();
     ImGuiRender()
 }

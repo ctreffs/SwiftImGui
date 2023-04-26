@@ -9,19 +9,22 @@ on:
 
 jobs:
   macos-test-build-release-xcode:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     strategy:
       matrix:
-        xcode: ["13.2.1"]
+        xcode: ["13.4.1", "14.2"]
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v3.5.2
+
       - name: Select Xcode ${{ matrix.xcode }}
         run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+
       - name: Test
         run: make test
         env:
           DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+      
       - name: Upload test artifacts
         if: failure()
         uses: actions/upload-artifact@v2.2.3
@@ -30,10 +33,12 @@ jobs:
           path: |
             .build/**/*.json
             .build/**/*.xctest
+      
       - name: Build Release
         run: make build-release
         env:
           DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer
+      
       - name: Upload build artifacts
         if: failure()
         uses: actions/upload-artifact@v2.2.3

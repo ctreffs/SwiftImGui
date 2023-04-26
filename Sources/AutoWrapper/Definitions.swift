@@ -39,11 +39,11 @@ public struct FunctionDef: Decodable {
     public let namespace: String?
 
     @inlinable public var isValid: Bool {
-        argsT.allSatisfy { $0.isValid } && returnType.isValid && !Exceptions.unresolvedIdentifier.contains(ov_cimguiname)
+        argsT.allSatisfy(\.isValid) && returnType.isValid && !Exceptions.unresolvedIdentifier.contains(ov_cimguiname)
     }
 
     public func encode(swift def: [ArgsT]) -> String {
-        def.map { $0.toSwift }.joined(separator: ", ")
+        def.map(\.toSwift).joined(separator: ", ")
     }
 
     public var encodedFuncname: String {
@@ -55,10 +55,10 @@ public struct FunctionDef: Decodable {
         let name: String = funcname
 
         var prefix: String
-        if let namespace = self.namespace, !namespace.isEmpty {
+        if let namespace = namespace, !namespace.isEmpty {
             prefix = namespace
         } else {
-            prefix = String(ov_cimguiname[ov_cimguiname.startIndex..<range.lowerBound])
+            prefix = String(ov_cimguiname[ov_cimguiname.startIndex ..< range.lowerBound])
         }
 
         if Exceptions.stripPrefix.contains(prefix) {
@@ -71,7 +71,7 @@ public struct FunctionDef: Decodable {
     }
 
     public var returnType: DataType {
-        guard let ret = self.ret else {
+        guard let ret = ret else {
             return DataType(meta: .primitive, type: .void, isConst: false)
         }
 
@@ -107,15 +107,16 @@ public struct FunctionDef: Decodable {
 
     public var toSwift: String {
         // \t\(innerReturn)\(wrapCCall("\(self.ov_cimguiname)(\(encode(c: self.argsT)))"))
-        return """
-        \(funcDefs) \(encodedFuncname)(\(encode(swift: self.argsT))) -> \(returnType.toString(nil, .ret)) {
+        """
+        \(funcDefs) \(encodedFuncname)(\(encode(swift: argsT))) -> \(returnType.toString(nil, .ret)) {
         \(FunctionBodyRenderer.render(ov_cimguiname, argsT, returnType))
         }
         """
     }
 }
-extension FunctionDef: Equatable { }
-extension FunctionDef: Hashable { }
+
+extension FunctionDef: Equatable {}
+extension FunctionDef: Hashable {}
 extension FunctionDef: Comparable {
     public static func < (lhs: FunctionDef, rhs: FunctionDef) -> Bool {
         lhs.encodedFuncname < rhs.encodedFuncname
@@ -134,7 +135,7 @@ public struct Definition: Decodable {
     public let constructors: [ConstructorDef]
 
     public var validFunctions: Set<FunctionDef> {
-        functions.filter { $0.isValid }
+        functions.filter(\.isValid)
     }
 
     public init(from decoder: Decoder) throws {
@@ -144,21 +145,21 @@ public struct Definition: Decodable {
         var destructors: [DestructorDef] = []
         var constructors: [ConstructorDef] = []
 
-        if container.contains(.funcname) && !container.contains(.destructor) && !container.contains(.constructor) {
+        if container.contains(.funcname), !container.contains(.destructor), !container.contains(.constructor) {
             do {
-                functions.insert(try FunctionDef(from: decoder))
+                try functions.insert(FunctionDef(from: decoder))
             } catch {
                 print("DECODING ERROR FunctionDef", decoder.codingPath, error.localizedDescription)
             }
         } else if container.contains(.destructor) {
             do {
-                destructors.append(try DestructorDef(from: decoder))
+                try destructors.append(DestructorDef(from: decoder))
             } catch {
                 print("DECODING ERROR DestructorDef", decoder.codingPath, error.localizedDescription)
             }
         } else if container.contains(.constructor) {
             do {
-                constructors.append(try ConstructorDef(from: decoder))
+                try constructors.append(ConstructorDef(from: decoder))
             } catch {
                 print("DECODING ERROR ConstructorDef", decoder.codingPath, error.localizedDescription)
             }

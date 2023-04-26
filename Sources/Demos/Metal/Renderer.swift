@@ -21,12 +21,11 @@ final class Renderer: NSObject {
     let commandQueue: MTLCommandQueue
 
     init(_ view: MTKView) {
-        self.device = view.device!
+        device = view.device!
         commandQueue = device.makeCommandQueue()!
 
         //        precondition(!ImGuiDebugCheckVersionAndDataLayout())
 
-        
         _ = ImGuiCreateContext(nil)
         ImGuiStyleColorsDark(nil)
 
@@ -37,7 +36,7 @@ final class Renderer: NSObject {
 @available(OSX 10.11, *)
 extension Renderer: MTKViewDelegate {
     func draw(in view: MTKView) {
-        guard view.bounds.size.width > 0 && view.bounds.size.height > 0 else {
+        guard view.bounds.size.width > 0, view.bounds.size.height > 0 else {
             return
         }
         autoreleasepool {
@@ -50,8 +49,6 @@ extension Renderer: MTKViewDelegate {
 
             io.pointee.DisplayFramebufferScale = ImVec2(x: frameBufferScale, y: frameBufferScale)
             io.pointee.DeltaTime = 1.0 / Float(view.preferredFramesPerSecond)
-
-            
 
             let commandBuffer = commandQueue.makeCommandBuffer()!
 
@@ -96,28 +93,26 @@ extension Renderer: MTKViewDelegate {
 
             ImGuiColorEdit3("clear color", &clear_color, 0) // Edit 3 floats representing a color
 
-            if ImGuiButton("Button", ImVec2(x: 100,y: 20)) { // Buttons return true when clicked (most widgets return true when edited/activated)
+            if ImGuiButton("Button", ImVec2(x: 100, y: 20)) { // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter += 1
             }
 
-            //SameLine(offset_from_start_x: 0, spacing: 0)
+            // SameLine(offset_from_start_x: 0, spacing: 0)
 
             ImGuiSameLine(0, 2)
             ImGuiTextV(String(format: "counter = %d", counter))
 
             let avg: Float = (1000.0 / io.pointee.Framerate)
             let fps = io.pointee.Framerate
-            
+
             ImGuiTextV(String(format: "Application average %.3f ms/frame (%.1f FPS)", avg, fps))
-                              
 
             ImGuiEnd()
-            //End()
+            // End()
 
             // 3. Show another simple window.
             if show_another_window {
-
-                ImGuiBegin("Another Window", &show_another_window, 0)  // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+                ImGuiBegin("Another Window", &show_another_window, 0) // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
 
                 ImGuiTextV("Hello from another window!")
                 if ImGuiButton("Close Me", ImVec2(x: 100, y: 20)) {
@@ -136,12 +131,10 @@ extension Renderer: MTKViewDelegate {
             commandBuffer.present(view.currentDrawable!)
 
             commandBuffer.commit()
-
         }
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    func mtkView(_: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function, size)
     }
-
 }

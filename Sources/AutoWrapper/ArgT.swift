@@ -20,30 +20,31 @@ public struct ArgType: Decodable {
 
         // const
         if let range = raw.range(of: "const") {
-            self.isConst = true
+            isConst = true
             raw.removeSubrange(range)
             raw = raw.replacingOccurrences(of: "const", with: "")
             raw = raw.trimmingCharacters(in: .whitespaces)
         } else {
-            self.isConst = false
+            isConst = false
         }
 
         // unsigned
         if let unsigned = raw.range(of: "unsigned") {
-            self.isUnsigned = true
+            isUnsigned = true
             raw.removeSubrange(unsigned)
             raw = raw.trimmingCharacters(in: .whitespaces)
         } else {
-            self.isUnsigned = false
+            isUnsigned = false
         }
 
         precondition(!raw.contains("const"))
         precondition(!raw.contains("unsigned"))
-        self.type = DataType(string: raw)
+        type = DataType(string: raw)
     }
 }
-extension ArgType: Equatable { }
-extension ArgType: Hashable { }
+
+extension ArgType: Equatable {}
+extension ArgType: Hashable {}
 
 public struct ArgsT: Decodable {
     public let escapedName: String
@@ -53,7 +54,7 @@ public struct ArgsT: Decodable {
     public let signature: String?
 
     private let escapingCallbackExceptions: Set<String> = [
-        "ImGuiErrorLogCallback"
+        "ImGuiErrorLogCallback",
     ]
 
     public enum Keys: String, CodingKey {
@@ -66,9 +67,9 @@ public struct ArgsT: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         let rawName = try container.decode(String.self, forKey: .name)
-        self.type = try container.decode(DataType.self, forKey: .type)
+        type = try container.decode(DataType.self, forKey: .type)
 
-        self.name = rawName
+        name = rawName
         let escapedName = rawName.swiftEscaped
         switch escapedName {
         case "...":
@@ -77,8 +78,8 @@ public struct ArgsT: Decodable {
             self.escapedName = escapedName
         }
 
-        self.ret = try container.decodeIfPresent(String.self, forKey: .ret)
-        self.signature = try container.decodeIfPresent(String.self, forKey: .signature)
+        ret = try container.decodeIfPresent(String.self, forKey: .ret)
+        signature = try container.decodeIfPresent(String.self, forKey: .signature)
     }
 
     @inlinable public var isValid: Bool {
@@ -86,15 +87,15 @@ public struct ArgsT: Decodable {
     }
 
     public var toSwift: String {
-        switch self.type.type {
+        switch type.type {
         case let .custom(name) where name.hasSuffix("Callback") && escapedName.contains("callback")
-                && !escapingCallbackExceptions.contains(name):
-            return "_ \(escapedName): @escaping \(self.type.toString(self, .argSwift))"
+            && !escapingCallbackExceptions.contains(name):
+            return "_ \(escapedName): @escaping \(type.toString(self, .argSwift))"
         default:
-            return "_ \(escapedName): \(self.type.toString(self, .argSwift, defaultArg: true))"
+            return "_ \(escapedName): \(type.toString(self, .argSwift, defaultArg: true))"
         }
     }
 }
 
-extension ArgsT: Equatable { }
-extension ArgsT: Hashable { }
+extension ArgsT: Equatable {}
+extension ArgsT: Hashable {}

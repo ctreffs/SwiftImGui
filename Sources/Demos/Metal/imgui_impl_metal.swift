@@ -5,21 +5,19 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
+import AppKit
 import CImGui
 import ImGui
-import AppKit
 import Metal
 import MetalKit
 
 @available(OSX 10.11, *)
-var g_sharedMetalContext: MetalContext = MetalContext()
+var g_sharedMetalContext: MetalContext = .init()
 
 @available(OSX 10.11, *)
 @discardableResult
 func ImGui_ImplMetal_Init(_ device: MTLDevice) -> Bool {
-
     let io = ImGuiGetIO()!
-    
 
     "imgui_impl_metal".withCString {
         io.pointee.BackendRendererName = $0
@@ -46,7 +44,8 @@ func ImGui_ImplMetal_NewFrame(_ renderPassDescriptor: MTLRenderPassDescriptor) {
 @available(OSX 10.11, *)
 func ImGui_ImplMetal_RenderDrawData(_ draw_data: ImDrawData,
                                     _ commandBuffer: MTLCommandBuffer,
-                                    _ commandEncoder: MTLRenderCommandEncoder) {
+                                    _ commandEncoder: MTLRenderCommandEncoder)
+{
     g_sharedMetalContext.renderDrawData(drawData: draw_data,
                                         commandBuffer: commandBuffer,
                                         commandEncoder: commandEncoder)
@@ -68,7 +67,7 @@ func ImGui_ImplMetal_CreateFontsTexture(_ device: MTLDevice) -> Bool {
     let io = ImGuiGetIO()!
 
     let texId: ImTextureID = withUnsafePointer(to: &g_sharedMetalContext.fontTexture!) { ptr in
-        return UnsafeMutableRawPointer(mutating: ptr)
+        UnsafeMutableRawPointer(mutating: ptr)
     }
 
     io.pointee.Fonts.pointee.TexID = texId // ImTextureID == void*
@@ -104,12 +103,10 @@ class MetalBuffer {
 @available(OSX 10.11, *)
 extension MetalBuffer: Equatable {
     static func == (lhs: MetalBuffer, rhs: MetalBuffer) -> Bool {
-        return lhs.buffer.length == rhs.buffer.length &&
+        lhs.buffer.length == rhs.buffer.length &&
             lhs.buffer.contents() == rhs.buffer.contents() &&
             lhs.lastReuseTime == rhs.lastReuseTime
-
     }
-
 }
 
 // An object that encapsulates the data necessary to uniquely identify a
@@ -128,16 +125,17 @@ struct FramebufferDescriptor {
         stencilPixelFormat = renderPassDescriptor.stencilAttachment.texture?.pixelFormat ?? .invalid
     }
 }
+
 @available(OSX 10.11, *)
 extension FramebufferDescriptor: Equatable {
     static func == (lhs: FramebufferDescriptor, rhs: FramebufferDescriptor) -> Bool {
-        return lhs.sampleCount == rhs.sampleCount &&
+        lhs.sampleCount == rhs.sampleCount &&
             lhs.colorPixelFormat == rhs.colorPixelFormat &&
             lhs.depthPixelFormat == rhs.depthPixelFormat &&
             lhs.stencilPixelFormat == rhs.stencilPixelFormat
     }
-
 }
+
 @available(OSX 10.11, *)
 extension FramebufferDescriptor: Hashable {
     func hash(into hasher: inout Hasher) {
@@ -169,10 +167,10 @@ class MetalContext {
     }
 
     func makeDeviceObjects(with device: MTLDevice) {
-        let depthStencilDescriptor: MTLDepthStencilDescriptor = MTLDepthStencilDescriptor()
+        let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilDescriptor.depthCompareFunction = .always
-        self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
     /// We are retrieving and uploading the font atlas as a 4-channels RGBA texture here.
@@ -189,7 +187,6 @@ class MetalContext {
         var bytesPerPixel: Int32 = 0
         ImFontAtlas_GetTexDataAsRGBA32(io.pointee.Fonts, &pixels, &width, &height, &bytesPerPixel)
 
-        
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm,
                                                                          width: Int(width),
                                                                          height: Int(height),
@@ -205,7 +202,7 @@ class MetalContext {
                         withBytes: UnsafeRawPointer(pixels!),
                         bytesPerRow: Int(width) * Int(bytesPerPixel))
 
-        self.fontTexture = texture
+        fontTexture = texture
     }
 
     func dequeueReusableBuffer(ofLength length: Int, device: MTLDevice) -> MetalBuffer {
@@ -227,7 +224,7 @@ class MetalContext {
         var bestCandidate: MetalBuffer?
 
         for candidate in bufferCache {
-            if candidate.buffer.length >= length && (bestCandidate == nil || bestCandidate!.lastReuseTime > candidate.lastReuseTime) {
+            if candidate.buffer.length >= length, bestCandidate == nil || bestCandidate!.lastReuseTime > candidate.lastReuseTime {
                 bestCandidate = candidate
             }
         }
@@ -269,11 +266,12 @@ class MetalContext {
     }
 
     func setupRenderState(drawData: ImDrawData,
-                          commandBuffer: MTLCommandBuffer,
+                          commandBuffer _: MTLCommandBuffer,
                           commandEncoder: MTLRenderCommandEncoder,
                           renderPipelineState: MTLRenderPipelineState,
                           vertexBuffer: MetalBuffer,
-                          vertexBufferOffset: Int) {
+                          vertexBufferOffset: Int)
+    {
         commandEncoder.setCullMode(.none)
         commandEncoder.setDepthStencilState(g_sharedMetalContext.depthStencilState)
 
@@ -281,7 +279,7 @@ class MetalContext {
         // Our visible imgui space lies from draw_data->DisplayPos (top left) to
         // draw_data->DisplayPos+data_data->DisplaySize (bottom right). DisplayMin is typically (0,0) for single viewport apps.
 
-        let viewport: MTLViewport = MTLViewport(
+        let viewport = MTLViewport(
             originX: 0.0,
             originY: 0.0,
             width: Double(drawData.DisplaySize.x * drawData.FramebufferScale.x),
@@ -295,18 +293,18 @@ class MetalContext {
         let R: Float = drawData.DisplayPos.x + drawData.DisplaySize.x
         let T: Float = drawData.DisplayPos.y
         let B: Float = drawData.DisplayPos.y + drawData.DisplaySize.y
-        let N: Float = Float(viewport.znear)
-        let F: Float = Float(viewport.zfar)
+        let N = Float(viewport.znear)
+        let F = Float(viewport.zfar)
 
-        var ortho_projection = simd_float4x4([2.0/(R-L), 0.0, 0.0, 0.0],
-                                             [0.0, 2.0/(T-B), 0.0, 0.0],
-                                             [0.0, 0.0, 1/(F-N), 0.0],
-                                             [(R+L)/(L-R), (T+B)/(B-T), N/(F-N), 1.0])
+        var ortho_projection = simd_float4x4([2.0 / (R - L), 0.0, 0.0, 0.0],
+                                             [0.0, 2.0 / (T - B), 0.0, 0.0],
+                                             [0.0, 0.0, 1 / (F - N), 0.0],
+                                             [(R + L) / (L - R), (T + B) / (B - T), N / (F - N), 1.0])
 
         withUnsafeMutablePointer(to: &ortho_projection) {
             commandEncoder.setVertexBytes($0, length: MemoryLayout<simd_float4x4>.size, index: 1)
         }
-        
+
         commandEncoder.setRenderPipelineState(renderPipelineState)
 
         commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: 0, index: 0)
@@ -315,13 +313,13 @@ class MetalContext {
 
     func renderDrawData(drawData: ImDrawData,
                         commandBuffer: MTLCommandBuffer,
-                        commandEncoder: MTLRenderCommandEncoder) {
-
+                        commandEncoder: MTLRenderCommandEncoder)
+    {
         // Avoid rendering when minimized,
         // scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
 
-        let fb_width: Int = Int(drawData.DisplaySize.x * drawData.FramebufferScale.x)
-        let fb_height: Int = Int(drawData.DisplaySize.y * drawData.FramebufferScale.y)
+        let fb_width = Int(drawData.DisplaySize.x * drawData.FramebufferScale.x)
+        let fb_height = Int(drawData.DisplaySize.y * drawData.FramebufferScale.y)
 
         if fb_width <= 0 || fb_height <= 0 || drawData.CmdListsCount == 0 {
             return
@@ -329,8 +327,8 @@ class MetalContext {
 
         let renderPipelineState: MTLRenderPipelineState = renderPipelineStateForFrameAndDevice(commandBuffer.device)
 
-        let vertexBufferLength: Int = Int(drawData.TotalVtxCount) * MemoryLayout<ImDrawVert>.size
-        let indexBufferLength: Int = Int(drawData.TotalIdxCount) * MemoryLayout<ImDrawIdx>.size
+        let vertexBufferLength = Int(drawData.TotalVtxCount) * MemoryLayout<ImDrawVert>.size
+        let indexBufferLength = Int(drawData.TotalIdxCount) * MemoryLayout<ImDrawIdx>.size
 
         let vertexBuffer: MetalBuffer = dequeueReusableBuffer(ofLength: vertexBufferLength,
                                                               device: commandBuffer.device)
@@ -347,14 +345,14 @@ class MetalContext {
 
         // Will project scissor/clipping rectangles into framebuffer space
         let clipOff: ImVec2 = drawData.DisplayPos // (0,0) unless using multi-viewports
-        let clipScale: ImVec2 = drawData.FramebufferScale  // (1,1) unless using retina display which are often (2,2)
+        let clipScale: ImVec2 = drawData.FramebufferScale // (1,1) unless using retina display which are often (2,2)
 
         // // Render command lists
 
-        var vertexBufferOffset: Int = 0
-        var indexBufferOffset: Int = 0
+        var vertexBufferOffset = 0
+        var indexBufferOffset = 0
 
-        for n in 0..<Int(drawData.CmdListsCount) {
+        for n in 0 ..< Int(drawData.CmdListsCount) {
             var cmd_list: ImDrawList = drawData.CmdLists[n]!.pointee
 
             memcpy(vertexBuffer.buffer.contents().advanced(by: vertexBufferOffset),
@@ -365,7 +363,7 @@ class MetalContext {
                    cmd_list.IdxBuffer.Data,
                    Int(cmd_list.IdxBuffer.Size) * MemoryLayout<ImDrawIdx>.size)
 
-            for cmd_i in 0..<Int(cmd_list.CmdBuffer.Size) {
+            for cmd_i in 0 ..< Int(cmd_list.CmdBuffer.Size) {
                 var pcmd: ImDrawCmd = cmd_list.CmdBuffer.Data[cmd_i]
 
                 if let userCallback = pcmd.UserCallback {
@@ -383,12 +381,12 @@ class MetalContext {
                     }
                 } else {
                     // Project scissor/clipping rectangles into framebuffer space
-                    let clipRect: ImVec4 = ImVec4(x: (pcmd.ClipRect.x - clipOff.x) * clipScale.x,
-                                                  y: (pcmd.ClipRect.y - clipOff.y) * clipScale.y,
-                                                  z: (pcmd.ClipRect.z - clipOff.x) * clipScale.x,
-                                                  w: (pcmd.ClipRect.w - clipOff.y) * clipScale.y)
+                    let clipRect = ImVec4(x: (pcmd.ClipRect.x - clipOff.x) * clipScale.x,
+                                          y: (pcmd.ClipRect.y - clipOff.y) * clipScale.y,
+                                          z: (pcmd.ClipRect.z - clipOff.x) * clipScale.x,
+                                          w: (pcmd.ClipRect.w - clipOff.y) * clipScale.y)
 
-                    if clipRect.x < Float(fb_width) && clipRect.y < Float(fb_height) && clipRect.z >= 0.0 && clipRect.w >= 0.0 {
+                    if clipRect.x < Float(fb_width), clipRect.y < Float(fb_height), clipRect.z >= 0.0, clipRect.w >= 0.0 {
                         // Apply scissor/clipping rectangle
                         let scissorsRect = MTLScissorRect(x: Int(clipRect.x),
                                                           y: Int(clipRect.y),
@@ -414,7 +412,6 @@ class MetalContext {
                                                              indexType: indexType,
                                                              indexBuffer: indexBuffer.buffer,
                                                              indexBufferOffset: ibOffset)
-
                     }
                 }
             }
@@ -423,18 +420,16 @@ class MetalContext {
             indexBufferOffset += Int(cmd_list.IdxBuffer.Size) * MemoryLayout<ImDrawIdx>.size
         }
 
-        commandBuffer.addCompletedHandler { [weak self]_ in
+        commandBuffer.addCompletedHandler { [weak self] _ in
 
             DispatchQueue.main.async { [weak self] in
                 self?.enqueueReusableBuffer(vertexBuffer)
                 self?.enqueueReusableBuffer(indexBuffer)
             }
         }
-
     }
 
-    func renderPipelineStateForFramebufferDescriptor(_ descriptor: FramebufferDescriptor, _ device: MTLDevice) -> MTLRenderPipelineState {
-
+    func renderPipelineStateForFramebufferDescriptor(_: FramebufferDescriptor, _ device: MTLDevice) -> MTLRenderPipelineState {
         let shaderSource: String = Shaders.default
 
         let library: MTLLibrary = try! device.makeLibrary(source: shaderSource, options: nil)
@@ -442,8 +437,8 @@ class MetalContext {
         let vertexFunction: MTLFunction = library.makeFunction(name: "vertex_main")!
         let fragmentFunction: MTLFunction = library.makeFunction(name: "fragment_main")!
 
-        let vertexDescriptor: MTLVertexDescriptor = MTLVertexDescriptor()
-        
+        let vertexDescriptor = MTLVertexDescriptor()
+
         // position
         vertexDescriptor.attributes[0].offset = IM_OFFSETOF(\ImDrawVert.pos)
         vertexDescriptor.attributes[0].format = .float2

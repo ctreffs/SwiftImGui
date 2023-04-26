@@ -5,12 +5,13 @@
 //  Created by Christian Treffs on 31.08.19.
 //
 
-extension Array {
-    public subscript<R>(representable: R) -> Element where R: RawRepresentable, R.RawValue: FixedWidthInteger {
+public extension Array {
+    subscript<R>(representable: R) -> Element where R: RawRepresentable, R.RawValue: FixedWidthInteger {
         get { self[Int(representable.rawValue)] }
         set { self[Int(representable.rawValue)] = newValue }
     }
 }
+
 /// Compute the prefix sum of `seq`.
 public func scan<S: Sequence, U>(_ seq: S, _ initial: U, _ combine: (U, S.Iterator.Element) -> U) -> [U] {
     var result: [U] = []
@@ -22,11 +23,13 @@ public func scan<S: Sequence, U>(_ seq: S, _ initial: U, _ combine: (U, S.Iterat
     }
     return result
 }
+
 /// https://oleb.net/blog/2016/10/swift-array-of-c-strings/
 // from: https://forums.swift.org/t/bridging-string-to-const-char-const/3804/4
 public func withArrayOfCStrings<R>(
     _ args: [String],
-    _ body: ([UnsafePointer<CChar>?]) -> R) -> R {
+    _ body: ([UnsafePointer<CChar>?]) -> R
+) -> R {
     let argsCounts = Array(args.map {
         $0.utf8.count + 1
     })
@@ -60,8 +63,8 @@ public func withArrayOfCStringsBasePointer<Result>(_ strings: [String], _ body: 
     }
 }
 
-extension Optional where Wrapped == String {
-    @inlinable public func withOptionalCString<Result>(_ body: (UnsafePointer<Int8>?) throws -> Result) rethrows -> Result {
+public extension Optional where Wrapped == String {
+    @inlinable func withOptionalCString<Result>(_ body: (UnsafePointer<Int8>?) throws -> Result) rethrows -> Result {
         guard let string = self else {
             return try body(nil)
         }
@@ -78,7 +81,7 @@ public enum CArray<T> {
     public static func write<C, O>(_ cArray: inout C, _ body: (UnsafeMutableBufferPointer<T>) throws -> O) rethrows -> O {
         try withUnsafeMutablePointer(to: &cArray) {
             try body(UnsafeMutableBufferPointer<T>(start: UnsafeMutableRawPointer($0).assumingMemoryBound(to: T.self),
-                                                   count: (MemoryLayout<C>.stride / MemoryLayout<T>.stride)))
+                                                   count: MemoryLayout<C>.stride / MemoryLayout<T>.stride))
         }
     }
 
@@ -87,7 +90,7 @@ public enum CArray<T> {
     public static func read<C, O>(_ cArray: C, _ body: (UnsafeBufferPointer<T>) throws -> O) rethrows -> O {
         try withUnsafePointer(to: cArray) {
             try body(UnsafeBufferPointer<T>(start: UnsafeRawPointer($0).assumingMemoryBound(to: T.self),
-                                            count: (MemoryLayout<C>.stride / MemoryLayout<T>.stride)))
+                                            count: MemoryLayout<C>.stride / MemoryLayout<T>.stride))
         }
     }
 }

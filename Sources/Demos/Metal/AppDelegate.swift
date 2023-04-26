@@ -10,14 +10,14 @@ import Cocoa
 @available(OSX 10.11, *)
 final class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var window: NSWindow = NSApplication.shared.windows[0]
-    let viewController: ViewController = ViewController()
+    let viewController: ViewController = .init()
 
-    func applicationWillFinishLaunching(_ notification: Notification) {
+    func applicationWillFinishLaunching(_: Notification) {
         let view = viewController.view
         window.contentView = view
     }
 
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true
+    func applicationShouldTerminateAfterLastWindowClosed(_: NSApplication) -> Bool {
+        true
     }
 }

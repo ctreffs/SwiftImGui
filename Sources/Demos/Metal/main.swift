@@ -34,10 +34,10 @@ let quitMenuItem = NSMenuItem(title: quitTitle,
 appMenu.addItem(quitMenuItem)
 appMenuItem.submenu = appMenu
 
-let window: NSWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 1280, height: 720),
-                                styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                                backing: .buffered,
-                                defer: false)
+let window: NSWindow = .init(contentRect: NSRect(x: 0, y: 0, width: 1280, height: 720),
+                             styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                             backing: .buffered,
+                             defer: false)
 
 window.center()
 window.title = appName

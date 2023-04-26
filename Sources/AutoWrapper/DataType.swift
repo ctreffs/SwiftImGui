@@ -54,72 +54,71 @@ public struct DataType: Decodable {
 
         if let primitive = ValueType(rawValue: string) {
             // primitive types int, char, float ....
-            self.type = primitive
-            self.meta = .primitive
+            type = primitive
+            meta = .primitive
             return
         }
 
         if let startFixArr = string.firstIndex(of: "["), let endFixArr = string.firstIndex(of: "]") {
             // i.e. float[4]
-            let numRange = string.index(after: startFixArr)..<endFixArr
+            let numRange = string.index(after: startFixArr) ..< endFixArr
             let count = Int(string[numRange]) ?? -1
-            let dataType = DataType(string: String(string[string.startIndex..<startFixArr]))
+            let dataType = DataType(string: String(string[string.startIndex ..< startFixArr]))
 
             if count == -1 {
-                self.meta = .array
-                self.type = dataType.type
+                meta = .array
+                type = dataType.type
             } else {
-                self.meta = .arrayFixedSize(count)
-                self.type = dataType.type
+                meta = .arrayFixedSize(count)
+                type = dataType.type
             }
         } else if let firstAsterisk = string.firstIndex(of: "*") {
             // TODO: parse complex types
 
             guard let lastAsertisk = string.lastIndex(of: "*") else {
                 assertionFailure("should not happen since we already tested for at least one asterisk")
-                self.meta = .unknown
-                self.type = .unknown
+                meta = .unknown
+                type = .unknown
                 return
             }
 
             if firstAsterisk == lastAsertisk {
                 // only one '*' present -> simple pointer
-                let dataType = DataType(string: String(string[string.startIndex..<firstAsterisk].trimmingCharacters(in: .whitespaces)))
+                let dataType = DataType(string: String(string[string.startIndex ..< firstAsterisk].trimmingCharacters(in: .whitespaces)))
 
                 switch dataType.meta {
                 case .exception:
-                    self.meta = dataType.meta
-                    self.type = dataType.type
+                    meta = dataType.meta
+                    type = dataType.type
 
                 default:
-                    self.meta = .pointer
-                    self.type = dataType.type
+                    meta = .pointer
+                    type = dataType.type
                 }
             } else {
                 // TODO: handle array pointer
-                self.type = .unknown
-                self.meta = .unknown
+                type = .unknown
+                meta = .unknown
             }
         } else if let ref = string.firstIndex(of: "&") {
             // i.e. float&, ImVector&
-            let dataType = DataType(string: String(string[string.startIndex..<ref]))
-            self.meta = .reference
-            self.type = dataType.type
+            let dataType = DataType(string: String(string[string.startIndex ..< ref]))
+            meta = .reference
+            type = dataType.type
         } else {
             // primitive custom types ImVec2, ImVector, T ...
 
             if let exceptionType = Exceptions.undeclardTypes[string] {
-                self.meta = .exception(exceptionType)
-                self.type = .custom(string)
+                meta = .exception(exceptionType)
+                type = .custom(string)
                 return
             }
 
-            self.meta = .primitive
-            self.type = .custom(string)
+            meta = .primitive
+            type = .custom(string)
         }
 
         // FIXME: special handle 'T'
-
     }
 
     public enum Context {
@@ -144,16 +143,16 @@ public struct DataType: Decodable {
             return "inout [\(toWrap)]"
         // return "inout UnsafePointer<\(toWrap)>!"
         case let .arrayFixedSize(size) where isConst == false:
-            if type.isNumber && size < 5 {
+            if type.isNumber, size < 5 {
                 // SIMD type
                 return "inout SIMD\(size)<\(toWrap)>"
             } else {
                 // tuple
-                return "inout (\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
+                return "inout (\((0 ..< size).map { _ in toWrap }.joined(separator: ",")))"
             }
 
         case let .arrayFixedSize(size):
-            return "(\((0..<size).map({ _ in toWrap }).joined(separator: ",")))"
+            return "(\((0 ..< size).map { _ in toWrap }.joined(separator: ",")))"
         case .pointer where isConst == true && type == .char:
             // const char* -> String
             return toWrap
@@ -187,7 +186,7 @@ public struct DataType: Decodable {
         }
     }
 
-    public func toString(_ argsT: ArgsT?, _ context: Context, wrapped: Bool = true, defaultArg: Bool = false) -> String {
+    public func toString(_: ArgsT?, _ context: Context, wrapped: Bool = true, defaultArg: Bool = false) -> String {
         let out: String
 
         switch type {
@@ -232,12 +231,13 @@ public struct DataType: Decodable {
     }
 }
 
-extension DataType: Equatable { }
-extension DataType: Hashable { }
+extension DataType: Equatable {}
+extension DataType: Hashable {}
 
 // MARK: - MetaType
-extension DataType {
-    public enum MetaType: Equatable, Hashable {
+
+public extension DataType {
+    enum MetaType: Equatable, Hashable {
         case primitive
         case arrayFixedSize(Int)
         case array
@@ -250,8 +250,9 @@ extension DataType {
 }
 
 // MARK: - Value Type
-extension DataType {
-    public enum ValueType: Equatable, Hashable {
+
+public extension DataType {
+    enum ValueType: Equatable, Hashable {
         case void
         case bool
         case int

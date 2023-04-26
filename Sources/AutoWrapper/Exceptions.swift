@@ -57,7 +57,7 @@ public enum Exceptions {
         "ImVector_shrink",
         "ImVector_size",
         "ImVector_size_in_bytes",
-        "ImVector_swap"
+        "ImVector_swap",
     ]
 
     /// causes "Use of undeclared type '...'" compiler error.
@@ -65,11 +65,11 @@ public enum Exceptions {
         "ImBitArray": Declaration(name: "ImBitArray", typealiasType: "OpaquePointer"),
         "ImChunkStream": Declaration(name: "ImChunkStream", typealiasType: "OpaquePointer"),
         "ImPool": Declaration(name: "ImPool", typealiasType: "OpaquePointer"),
-        "ImSpanAllocator": Declaration(name: "ImSpanAllocator", typealiasType: "OpaquePointer")
+        "ImSpanAllocator": Declaration(name: "ImSpanAllocator", typealiasType: "OpaquePointer"),
     ]
 
     public static let stripPrefix: Set<String> = [
-        "ig"
+        "ig",
     ]
 }
 
@@ -81,5 +81,5 @@ public struct Declaration {
     }
 }
 
-extension Declaration: Equatable { }
-extension Declaration: Hashable { }
+extension Declaration: Equatable {}
+extension Declaration: Hashable {}

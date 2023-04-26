@@ -5,7 +5,7 @@
 //  Created by Christian Treffs on 23.01.20.
 //
 
-struct FunctionBodyRenderer {
+enum FunctionBodyRenderer {
     static func render(_ callName: String, _ args: [ArgsT], _ returnType: DataType) -> String {
         // determine if somethings needs to be pre- or appended depending on return type
         let prependCall: String
@@ -58,8 +58,8 @@ struct FunctionBodyRenderer {
         if preCallLines.isEmpty {
             functionBody = "\t" + callSignature
         } else {
-            var begin: String = ""
-            var end: String = ""
+            var begin = ""
+            var end = ""
 
             let maxIndentation: Int = preCallLines.count
             for (index, (pre, post)) in zip(preCallLines, postCallLines.reversed()).enumerated() {
@@ -84,7 +84,7 @@ struct FunctionBodyRenderer {
             return [
                 .preLine("withVaList(\(arg.escapedName)) { varArgsPtr in"),
                 .line("varArgsPtr"),
-                .postLine("}")
+                .postLine("}"),
             ]
 
         case .primitive:
@@ -94,7 +94,7 @@ struct FunctionBodyRenderer {
             return [
                 .preLine("withArrayOfCStringsBasePointer(\(arg.escapedName)) { \(arg.name)Ptr in"),
                 .line("\(arg.name)Ptr"),
-                .postLine("}")
+                .postLine("}"),
             ]
 
         case .array, .reference:
@@ -108,13 +108,13 @@ struct FunctionBodyRenderer {
                     .preLine("\(arg.name)MutPtr.withMemoryRebound(to: \(arg.type.toString(arg, .argSwift, wrapped: false)).self, capacity: \(count)) { \(arg.name)Ptr in"),
                     .line("\(arg.name)Ptr"),
                     .postLine("}"),
-                    .postLine("}")
+                    .postLine("}"),
                 ]
             } else {
                 return [
                     .preLine("withUnsafeMutablePointer(to: &\(arg.escapedName).0) {"),
                     .line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: $0, count: \(count)).baseAddress!"),
-                    .postLine("}")
+                    .postLine("}"),
                 ]
             }
 
@@ -122,7 +122,7 @@ struct FunctionBodyRenderer {
             return [
                 .preLine("withUnsafeMutablePointer(to: &\(arg.escapedName).0) {"),
                 .line("UnsafeMutableBufferPointer<\(arg.type.toString(arg, .argSwift, wrapped: false))>(start: $0, count: \(count)).baseAddress!"),
-                .postLine("}")
+                .postLine("}"),
             ]
 
         case .pointer where arg.type.isConst == false && arg.type.type == .void:
@@ -136,7 +136,7 @@ struct FunctionBodyRenderer {
             return [
                 .preLine("\(arg.escapedName).withOptionalCString { \(arg.name)Ptr in"),
                 .line("\(arg.name)Ptr"),
-                .postLine("}")
+                .postLine("}"),
             ]
 
         case .pointer where arg.type.type == .char && arg.type.isConst == false:
@@ -144,7 +144,7 @@ struct FunctionBodyRenderer {
             return [
                 .preLine("\(arg.escapedName).withOptionalCString { \(arg.name)Ptr in"),
                 .line("UnsafeMutablePointer(mutating: \(arg.name)Ptr)"),
-                .postLine("}")
+                .postLine("}"),
             ]
 
         case .pointer:

@@ -5,9 +5,9 @@
 //  Created by Christian Treffs on 24.10.19.
 //
 
-import struct Foundation.URL
-import struct Foundation.Data
 import class Foundation.Bundle
+import struct Foundation.Data
+import struct Foundation.URL
 
 public struct ConversionError: Swift.Error {
     public let localizedDescription: String
@@ -18,7 +18,7 @@ public func getDirectory(ofFile filePath: String = #file) -> String {
         return filePath
     }
     var dirPath = filePath
-    dirPath.removeSubrange(lastSlashIdx..<filePath.endIndex)
+    dirPath.removeSubrange(lastSlashIdx ..< filePath.endIndex)
     return dirPath
 }
 

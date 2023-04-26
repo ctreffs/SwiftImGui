@@ -11,7 +11,8 @@ var package = Package(
         .target(name: "CImGui",
                 path: "Sources/CImGui",
                 cSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")],
-                cxxSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")]),
+                cxxSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")],
+                linkerSettings: [.linkedLibrary("m", .when(platforms: [.linux]))]),
         .target(name: "AutoWrapper",
                 resources: [
                     .copy("Assets/definitions.json")

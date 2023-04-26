@@ -5003,7 +5003,3 @@ public typealias ImSpanAllocator = OpaquePointer
 	return igImUpperPowerOfTwo(v)
 }
 
-@inlinable public func ImVectorreservediscard(_ this: UnsafeMutablePointer<ImVector>!, _ new_capacity: Int32) -> Void {
-	return ImVector_reserve_discard(this,new_capacity)
-}
-

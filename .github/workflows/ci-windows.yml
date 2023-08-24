@@ -16,7 +16,7 @@ jobs:
           tag: 5.7-RELEASE
 
       - name: Checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.6.0
     
       - name: Test
         run: swift test -v --enable-test-discovery

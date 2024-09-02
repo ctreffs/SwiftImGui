@@ -27,7 +27,7 @@ jobs:
       
       - name: Upload test artifacts
         if: failure()
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v3.2.1
         with:
           name: test-artifacts-${{ matrix.xcode }}-${{ github.run_id }}
           path: |
@@ -41,7 +41,7 @@ jobs:
       
       - name: Upload build artifacts
         if: failure()
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v3.2.1
         with:
           name: build-artifacts-${{ matrix.xcode }}-${{ github.run_id }}
           path: |

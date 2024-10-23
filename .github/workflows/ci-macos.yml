@@ -15,7 +15,7 @@ jobs:
         xcode: ["13.4.1", "14.2"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.2.2
 
       - name: Select Xcode ${{ matrix.xcode }}
         run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app

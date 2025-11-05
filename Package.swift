@@ -5,6 +5,12 @@ var package = Package(
     name: "ImGui",
     products: [
         .library(name: "ImGui", targets: ["ImGui"]),
+        .target(
+            name: "ImGuiOSXBackend",
+            dependencies: ["ImGui"],
+            path: "Sources/ImGuiOSXBackend",
+            swiftSettings: [ .interoperabilityMode(.Cxx) ]
+        ),
     ],
     targets: [
         .target(name: "ImGui", dependencies: ["CImGui"]),

@@ -5,12 +5,6 @@ var package = Package(
     name: "ImGui",
     products: [
         .library(name: "ImGui", targets: ["ImGui"]),
-        .target(
-            name: "ImGuiOSXBackend",
-            dependencies: ["ImGui"],
-            path: "Sources/ImGuiOSXBackend",
-            swiftSettings: [ .interoperabilityMode(.Cxx) ]
-        ),
     ],
     targets: [
         .target(name: "ImGui", dependencies: ["CImGui"]),
@@ -19,6 +13,10 @@ var package = Package(
                 cSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")],
                 cxxSettings: [.define("CIMGUI_DEFINE_ENUMS_AND_STRUCTS")],
                 linkerSettings: [.linkedLibrary("m", .when(platforms: [.linux]))]),
+        // New: AppKit input backend (renderer-agnostic)
+        .target(name: "ImGuiOSXBackend",
+                dependencies: ["ImGui"],
+                path: "Sources/ImGuiOSXBackend"),
         .target(name: "AutoWrapper",
                 resources: [
                     .copy("Assets/definitions.json"),

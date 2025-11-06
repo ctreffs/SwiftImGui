@@ -5,6 +5,7 @@ var package = Package(
     name: "ImGui",
     products: [
         .library(name: "ImGui", targets: ["ImGui"]),
+        .library(name: "ImGuiOSXBackend", targets: ["ImGuiOSXBackend"]),
     ],
     targets: [
         .target(name: "ImGui", dependencies: ["CImGui"]),
